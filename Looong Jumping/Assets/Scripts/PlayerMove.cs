@@ -17,21 +17,32 @@ public class PlayerMove : MonoBehaviour
     private float moveSpeed;
     private float flingTime = 500f;
     private bool isOnStartLine;
+    public float groundCheckDistance = 1f;
 
+
+    public FloatingJoystick joystick;
+    public LayerMask groundLayer;
     public BoxCollider startLineCollider;
     public Button jumpButton;
     public Button accelerationButton;
 
+    public CameraContoller camera;
     private Rigidbody rb;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        joystick.gameObject.SetActive(false);
     }
 
     private void FixedUpdate()
     {
+        float x = joystick.Horizontal;
+        float y = joystick.Vertical;
+
         var position = rb.position;
+        position.x += x;
+        position.y += y;
 
         position += transform.forward * moveSpeed;
         rb.MovePosition(position);
@@ -39,6 +50,13 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
+        if (Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundLayer))
+        {
+            // ¶¥¿¡ ´ê¾ÒÀ» ¶§ÀÇ µ¿ÀÛ
+            //rb.velocity = Vector3.zero; // ¿òÁ÷ÀÓ ¸ØÃã
+            moveSpeed = 0;
+            GameManager.instance.Landing();
+        }
     }
 
     public void PerformActionOnClick()
@@ -64,7 +82,9 @@ public class PlayerMove : MonoBehaviour
             accelerationButton.gameObject.SetActive(false);
             print("Ãâ¹ß¼± ¸ø ¸ø ¸ø ¸ÂÃã");
         }
-
+        GameManager.instance.isLanding = true;
+        //camera.SetJumpingCam();
+        joystick.gameObject.SetActive(true);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -84,4 +104,5 @@ public class PlayerMove : MonoBehaviour
             isOnStartLine = false;
         }
     }
+
 }

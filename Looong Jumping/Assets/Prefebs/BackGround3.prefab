@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1301272011487129471}
   - component: {fileID: 7213512929493066169}
   - component: {fileID: 7792031711010779377}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BackGround3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,5 +118,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9999a2b6ad3140641b5a16f1bd27bc46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPos: {fileID: 1385635465719457528, guid: 36fe41e348daed44a8e0c4208c3799f9, type: 3}
+  playerPos: {fileID: 0}
   spawner: {fileID: 0}

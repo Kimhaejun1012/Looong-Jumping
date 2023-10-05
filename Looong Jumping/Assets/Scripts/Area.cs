@@ -6,7 +6,6 @@ using UnityEngine;
 public class Area : MonoBehaviour
 {
     public Transform playerPos;
-    public AreaSpawner spawner;
     private float zDistance = 20f;
 
     // Start is called before the first frame update
@@ -20,15 +19,14 @@ public class Area : MonoBehaviour
         if (playerPos.transform.position.z > transform.position.z + 10f)
         {
             Reposition();
-            spawner.areaIndex++;
+            GameManager.instance.areaIndex++;
         }
     }
 
     private void Reposition()
     {
-        var offset = new Vector3(0, 0, zDistance * spawner.areaIndex);
+        var offset = new Vector3(0, 0, zDistance * GameManager.instance.areaIndex);
         transform.position = offset;
     }
-    // Update is called once per frame
 
 }
