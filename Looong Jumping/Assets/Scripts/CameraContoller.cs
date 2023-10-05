@@ -17,4 +17,5 @@ public class CameraContoller : MonoBehaviour
     {
         transform.position = offset + player.transform.position; ;
     }
+
 }

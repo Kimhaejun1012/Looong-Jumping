@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class AreaSpawner : MonoBehaviour
 {
-    public GameObject[] grounds;
-    private float distanceZ = 10f;
     public Transform playerPos;
+    public int areaIndex = 3;
 
     void Start()
     {
+
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+
     }
+
+
+
 }
