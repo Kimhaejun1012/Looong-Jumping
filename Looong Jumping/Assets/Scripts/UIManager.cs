@@ -59,7 +59,7 @@ public class UIManager : MonoBehaviour
         {
             score = playerPos.position.z - startLine.position.z;
         }
-        scoreText.text = $"SCORE : {score}";
+        scoreText.text = $"SCORE : {(int)score}";
     }
 
     public void GameOver()
@@ -71,7 +71,7 @@ public class UIManager : MonoBehaviour
             PlayerPrefs.Save();
         }
         resultScoreText.text = scoreText.text;
-        bestScoreText.text = $"BEST SCORE : {bestScore}";
+        bestScoreText.text = $"BEST SCORE : {(int)bestScore}";
     }
     public void Restart()
     {

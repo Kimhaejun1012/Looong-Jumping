@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class CameraContoller : MonoBehaviour
 {
-    //public Transform player;
-    //public Vector3 offset;
+    public Transform player;
+    public Vector3 offset;
 
     private void Awake()
     {
+        offset = transform.position - player.position;
     }
 
     void Update()
     {
+        transform.position = offset + player.transform.position;
     }
 
     public void SetJumpingCam()

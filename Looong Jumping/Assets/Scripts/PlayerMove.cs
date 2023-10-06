@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class PlayerInfo
@@ -13,12 +14,11 @@ public class PlayerInfo
 
 public class PlayerMove : MonoBehaviour
 {
-    private float acceleration = 0.1f;
+    public float acceleration = 0.1f;
     private float moveSpeed;
-    private float flingTime = 1000f;
+    public float flingTime = 1000f;
     private bool isOnStartLine;
     public float groundCheckDistance = 0.5f;
-
 
     public FloatingJoystick joystick;
     public LayerMask groundLayer;
@@ -49,10 +49,9 @@ public class PlayerMove : MonoBehaviour
             rotateY += y;
 
             // 이동 방향을 플레이어의 전방 방향으로 설정
-            Vector3 moveDirection = transform.forward;
+            Vector3 moveDirection = rb.transform.forward;
 
             var position = rb.position;
-
             position += moveDirection * moveSpeed;
             rb.MovePosition(position);
             rb.MoveRotation(Quaternion.Euler(-rotateY, rotateX, 0));
@@ -73,6 +72,7 @@ public class PlayerMove : MonoBehaviour
             GameManager.instance.Landing();
             joystick.gameObject.SetActive(false);
         }
+
     }
 
     public void PerformActionOnClick()
@@ -115,4 +115,15 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
+    public void SpeedItem()
+    {
+        moveSpeed *= 2f;
+        Debug.Log("Item 획득");
+    }
+
+    public void HitMeteor()
+    {
+        moveSpeed = 0.5f;
+        Debug.Log($"Move Speed {moveSpeed}");
+    }
 }

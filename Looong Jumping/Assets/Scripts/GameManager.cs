@@ -5,11 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public int areaIndex = 3;
-
-    public float score;
-    public float bestScore;
-    public string bestScoreKey = "BestScore";
     public static GameManager instance
     {
         get
@@ -24,6 +19,16 @@ public class GameManager : MonoBehaviour
 
     private static GameManager m_instance;
 
+    public int areaIndex = 3;
+
+    public float score;
+    public float bestScore;
+    public string bestScoreKey = "BestScore";
+    public GameObject meteorPrefab;
+    public Transform spawnPoint;
+    public float meteorSpawnInterval = 2f;
+
+    private float nextMeteorSpawnTime;
     public bool isLanding { get; set; }
 
     private void Awake()
