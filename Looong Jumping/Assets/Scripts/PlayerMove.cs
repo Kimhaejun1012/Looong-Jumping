@@ -15,9 +15,9 @@ public class PlayerMove : MonoBehaviour
 {
     private float acceleration = 0.1f;
     private float moveSpeed;
-    private float flingTime = 500f;
+    private float flingTime = 1000f;
     private bool isOnStartLine;
-    public float groundCheckDistance = 1f;
+    public float groundCheckDistance = 0.5f;
 
 
     public FloatingJoystick joystick;
@@ -29,6 +29,9 @@ public class PlayerMove : MonoBehaviour
     public CameraContoller camera;
     private Rigidbody rb;
 
+    private float rotateX = 0f;
+    private float rotateY = 0f;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -37,15 +40,27 @@ public class PlayerMove : MonoBehaviour
 
     private void FixedUpdate()
     {
-        float x = joystick.Horizontal;
-        float y = joystick.Vertical;
+        if(!GameManager.instance.isLanding)
+        {
+            float x = joystick.Horizontal;
+            float y = joystick.Vertical;
 
-        var position = rb.position;
-        position.x += x;
-        position.y += y;
+            rotateX += x;
+            rotateY += y;
 
-        position += transform.forward * moveSpeed;
-        rb.MovePosition(position);
+            // 이동 방향을 플레이어의 전방 방향으로 설정
+            Vector3 moveDirection = transform.forward;
+
+            var position = rb.position;
+
+            position += moveDirection * moveSpeed;
+            rb.MovePosition(position);
+            rb.MoveRotation(Quaternion.Euler(-rotateY, rotateX, 0));
+        }
+        else
+        {
+            rb.rotation = Quaternion.identity;
+        }
     }
 
     private void Update()
@@ -56,6 +71,7 @@ public class PlayerMove : MonoBehaviour
             //rb.velocity = Vector3.zero; // 움직임 멈춤
             moveSpeed = 0;
             GameManager.instance.Landing();
+            joystick.gameObject.SetActive(false);
         }
     }
 
@@ -63,7 +79,6 @@ public class PlayerMove : MonoBehaviour
     {
         moveSpeed += acceleration;
         flingTime += moveSpeed;
-
     }
 
     public void PlayerJump()
@@ -73,23 +88,19 @@ public class PlayerMove : MonoBehaviour
             rb.AddForce(0f, flingTime + moveSpeed, 0f);
             jumpButton.gameObject.SetActive(false);
             accelerationButton.gameObject.SetActive(false);
-            print("출발선 맞춤");
+            UIManager.instance.ShowPerfectText();
         }
         else
         {
             rb.AddForce(0f, flingTime, 0f);
             jumpButton.gameObject.SetActive(false);
             accelerationButton.gameObject.SetActive(false);
-            print("출발선 못 못 못 맞춤");
         }
-        GameManager.instance.isLanding = true;
-        //camera.SetJumpingCam();
         joystick.gameObject.SetActive(true);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        // 플레이어가 StartLine 콜라이더에 진입한 경우
         if (other.CompareTag("StartLine"))
         {
             isOnStartLine = true;
@@ -98,7 +109,6 @@ public class PlayerMove : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        // 플레이어가 StartLine 콜라이더에서 나온 경우
         if (other.CompareTag("StartLine"))
         {
             isOnStartLine = false;
