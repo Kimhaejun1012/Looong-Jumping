@@ -14,19 +14,19 @@ public class PlayerInfo
 
 public class PlayerMove : MonoBehaviour
 {
-    public float acceleration = 0.1f;
-    private float moveSpeed;
+    public float acceleration = 0.3f;
     public float flingTime = 1000f;
-    private bool isOnStartLine;
     public float groundCheckDistance = 0.5f;
 
+    private float moveSpeed;
+    private bool isOnStartLine;
+    
     public FloatingJoystick joystick;
     public LayerMask groundLayer;
-    public BoxCollider startLineCollider;
     public Button jumpButton;
     public Button accelerationButton;
+    public ObjectSpawner spawner;
 
-    public CameraContoller camera;
     private Rigidbody rb;
 
     private float rotateX = 0f;
@@ -40,7 +40,7 @@ public class PlayerMove : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(!GameManager.instance.isLanding)
+        if (!GameManager.instance.isLanding)
         {
             float x = joystick.Horizontal;
             float y = joystick.Vertical;
@@ -48,8 +48,10 @@ public class PlayerMove : MonoBehaviour
             rotateX += x;
             rotateY += y;
 
-            // 이동 방향을 플레이어의 전방 방향으로 설정
             Vector3 moveDirection = rb.transform.forward;
+
+            //spawner.transform.position = transform.position + offset.magnitude * moveDirection;
+            //spawner.transform.LookAt(transform);
 
             var position = rb.position;
             position += moveDirection * moveSpeed;
@@ -70,9 +72,10 @@ public class PlayerMove : MonoBehaviour
             //rb.velocity = Vector3.zero; // 움직임 멈춤
             moveSpeed = 0;
             GameManager.instance.Landing();
-            joystick.gameObject.SetActive(false);
-        }
 
+            joystick.gameObject.SetActive(false);
+            Debug.Log("착지 착지 착지");
+        }
     }
 
     public void PerformActionOnClick()
@@ -86,6 +89,7 @@ public class PlayerMove : MonoBehaviour
         if(isOnStartLine)
         {
             rb.AddForce(0f, flingTime + moveSpeed, 0f);
+            //rb.rotation = Quaternion.Euler(-45f, 0f, 0f);
             jumpButton.gameObject.SetActive(false);
             accelerationButton.gameObject.SetActive(false);
             UIManager.instance.ShowPerfectText();
@@ -93,10 +97,12 @@ public class PlayerMove : MonoBehaviour
         else
         {
             rb.AddForce(0f, flingTime, 0f);
+            //rb.rotation = Quaternion.Euler(-45f, 0f, 0f);
             jumpButton.gameObject.SetActive(false);
             accelerationButton.gameObject.SetActive(false);
         }
         joystick.gameObject.SetActive(true);
+        spawner.ObjectActive();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -105,6 +111,10 @@ public class PlayerMove : MonoBehaviour
         {
             isOnStartLine = true;
         }
+        if(other.CompareTag("CamZone"))
+        {
+            GameManager.instance.InCamZone();
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -112,6 +122,10 @@ public class PlayerMove : MonoBehaviour
         if (other.CompareTag("StartLine"))
         {
             isOnStartLine = false;
+        }
+        if (other.CompareTag("CamZone"))
+        {
+            GameManager.instance.OutCamZone();
         }
     }
 
@@ -123,7 +137,7 @@ public class PlayerMove : MonoBehaviour
 
     public void HitMeteor()
     {
-        moveSpeed = 0.5f;
+        moveSpeed *= 0.5f;
         Debug.Log($"Move Speed {moveSpeed}");
     }
 }

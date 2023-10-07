@@ -8,7 +8,6 @@ public class Meteor : MonoBehaviour
     {
         
     }
-
     // Update is called once per frame
     void Update()
     {

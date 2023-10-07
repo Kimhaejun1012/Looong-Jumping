@@ -24,13 +24,11 @@ public class GameManager : MonoBehaviour
     public float score;
     public float bestScore;
     public string bestScoreKey = "BestScore";
-    public GameObject meteorPrefab;
-    public Transform spawnPoint;
+    public SubCamera subCam;
     public float meteorSpawnInterval = 2f;
 
-    private float nextMeteorSpawnTime;
     public bool isLanding { get; set; }
-
+    public bool isCamZone { get; set; }
     private void Awake()
     {
         if (instance != this)
@@ -52,5 +50,16 @@ public class GameManager : MonoBehaviour
         isLanding = true;
         UIManager.instance.gameoverUI.SetActive(true);
         UIManager.instance.GameOver();
+    }
+
+    public void InCamZone()
+    {
+        Time.timeScale = 0.2f;
+        subCam.SubCamOn();
+    }
+    public void OutCamZone()
+    {
+        Time.timeScale = 1f;
+        subCam.SubCamNo();
     }
 }
