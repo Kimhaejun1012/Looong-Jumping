@@ -8,11 +8,7 @@ public class Area : MonoBehaviour
     public Transform playerPos;
     private float zDistance = 60f;
     private float yPosition = -20f;
-    // Start is called before the first frame update
-    void Start()
-    {
 
-    }
 
     void Update()
     {

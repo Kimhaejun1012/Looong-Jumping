@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     public string bestScoreKey = "BestScore";
     public SubCamera subCam;
     public float meteorSpawnInterval = 2f;
+    public PlayerInfo playerInfo;
 
     public bool isLanding { get; set; }
     public bool isCamZone { get; set; }
@@ -36,6 +37,10 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+    private void Start()
+    {
+        //playerInfo.jumpingPower = PlayerPrefs.GetFloat();
     }
 
     private void Update()
@@ -55,12 +60,10 @@ public class GameManager : MonoBehaviour
 
     public void InCamZone()
     {
-        Time.timeScale = 0.2f;
         subCam.SubCamOn();
     }
     public void OutCamZone()
     {
-        Time.timeScale = 1f;
         subCam.SubCamNo();
     }
 }

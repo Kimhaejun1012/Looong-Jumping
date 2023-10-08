@@ -83,6 +83,9 @@ public class UIManager : MonoBehaviour
     }
     public void Store()
     {
+        PlayerPrefs.SetFloat(playerInfo.jumpingPowerKey, playerInfo.jumpingPower);
+        PlayerPrefs.SetFloat(playerInfo.accelerationKey, playerInfo.acceleration);
+        PlayerPrefs.Save();
         SceneManager.LoadScene(1);
     }
 }

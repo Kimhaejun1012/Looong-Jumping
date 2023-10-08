@@ -5,8 +5,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-
-
 public class PlayerContoller : MonoBehaviour
 {
     //Playerinfo
@@ -37,8 +35,6 @@ public class PlayerContoller : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         joystick.gameObject.SetActive(false);
-
-
     }
 
     private void FixedUpdate()
@@ -80,20 +76,25 @@ public class PlayerContoller : MonoBehaviour
 
         if(isJumpButtonClick)
         {
-            JumpButtonDown();
+            SetGauge();
         }
     }
 
     public void JumpButtonDown()
     {
         isJumpButtonClick = true;
+        Time.timeScale = 0f;
         barContoller.gameObject.SetActive(true);
+    }
+
+    public void SetGauge()
+    {
         barContoller.angleValue += angleIncrement;
         if (barContoller.angleValue > 100f)
         {
             angleIncrement = -1f;
         }
-        else if(barContoller.angleValue < 0f)
+        else if (barContoller.angleValue < 0f)
         {
             angleIncrement = 1f;
         }
@@ -102,8 +103,8 @@ public class PlayerContoller : MonoBehaviour
     public void JumpButtonUp()
     {
         isJumpButtonClick = false;
+        Time.timeScale = 1f;
         barContoller.gameObject.SetActive(false);
-        GameManager.instance.isJumping = true;
     }
 
     public void PerformActionOnClick()
