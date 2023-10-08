@@ -12,7 +12,7 @@ public class PlayerInfo
     public int money;
 }
 
-public class PlayerMove : MonoBehaviour
+public class PlayerContoller : MonoBehaviour
 {
     public float acceleration = 0.3f;
     public float flingTime = 1000f;
@@ -20,12 +20,14 @@ public class PlayerMove : MonoBehaviour
 
     private float moveSpeed;
     private bool isOnStartLine;
-    
+
     public FloatingJoystick joystick;
     public LayerMask groundLayer;
     public Button jumpButton;
     public Button accelerationButton;
+
     public ObjectSpawner spawner;
+    public BarContoller barContoller;
 
     private Rigidbody rb;
 
@@ -78,6 +80,23 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
+    public void JumpButtonDown()
+    {
+        barContoller.enabled = true;
+        if(barContoller.angleValue <= 100f)
+        {
+            barContoller.angleValue += Time.deltaTime;
+        }
+        else
+        {
+            barContoller.angleValue -= Time.deltaTime;
+        }
+    }
+    public void JumpButtonUp()
+    {
+        barContoller.enabled = false;
+    }
+
     public void PerformActionOnClick()
     {
         moveSpeed += acceleration;
@@ -86,7 +105,7 @@ public class PlayerMove : MonoBehaviour
 
     public void PlayerJump()
     {
-        if(isOnStartLine)
+        if (isOnStartLine)
         {
             rb.AddForce(0f, flingTime + moveSpeed, 0f);
             //rb.rotation = Quaternion.Euler(-45f, 0f, 0f);
@@ -111,7 +130,7 @@ public class PlayerMove : MonoBehaviour
         {
             isOnStartLine = true;
         }
-        if(other.CompareTag("CamZone"))
+        if (other.CompareTag("CamZone"))
         {
             GameManager.instance.InCamZone();
         }
@@ -132,12 +151,10 @@ public class PlayerMove : MonoBehaviour
     public void SpeedItem()
     {
         moveSpeed *= 2f;
-        Debug.Log("Item È¹µæ");
     }
 
     public void HitMeteor()
     {
         moveSpeed *= 0.5f;
-        Debug.Log($"Move Speed {moveSpeed}");
     }
 }
