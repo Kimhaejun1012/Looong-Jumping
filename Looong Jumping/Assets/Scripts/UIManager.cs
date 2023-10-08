@@ -13,11 +13,13 @@ public class UIManager : MonoBehaviour
 
     public Transform startLine;
     public Transform playerPos;
+    public PlayerInfo playerInfo;
 
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI resultScoreText;
     public TextMeshProUGUI perfectText;
     public TextMeshProUGUI bestScoreText;
+    public TextMeshProUGUI playerMoney;
 
     public GameObject gameoverUI;
 
@@ -59,7 +61,8 @@ public class UIManager : MonoBehaviour
         {
             score = playerPos.position.z - startLine.position.z;
         }
-        scoreText.text = $"SCORE : {score}";
+        scoreText.text = $"SCORE : {(int)score}";
+        playerMoney.text = $"Money : {playerInfo.money}";
     }
 
     public void GameOver()
@@ -68,12 +71,17 @@ public class UIManager : MonoBehaviour
         {
             bestScore = score;
             PlayerPrefs.SetFloat(bestScroeKey, bestScore);
-            PlayerPrefs.Save();
         }
         resultScoreText.text = scoreText.text;
-        bestScoreText.text = $"BEST SCORE : {bestScore}";
+        bestScoreText.text = $"BEST SCORE : {(int)bestScore}";
+        PlayerPrefs.SetInt(playerInfo.moneyKey, playerInfo.money);
+        PlayerPrefs.Save();
     }
     public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    public void Store()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }

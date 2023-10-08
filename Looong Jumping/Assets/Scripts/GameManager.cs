@@ -5,11 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public int areaIndex = 3;
-
-    public float score;
-    public float bestScore;
-    public string bestScoreKey = "BestScore";
     public static GameManager instance
     {
         get
@@ -24,8 +19,17 @@ public class GameManager : MonoBehaviour
 
     private static GameManager m_instance;
 
-    public bool isLanding { get; set; }
+    public int areaIndex = 3;
 
+    public float score;
+    public float bestScore;
+    public string bestScoreKey = "BestScore";
+    public SubCamera subCam;
+    public float meteorSpawnInterval = 2f;
+
+    public bool isLanding { get; set; }
+    public bool isCamZone { get; set; }
+    public bool isJumping {  get; set; }
     private void Awake()
     {
         if (instance != this)
@@ -47,5 +51,16 @@ public class GameManager : MonoBehaviour
         isLanding = true;
         UIManager.instance.gameoverUI.SetActive(true);
         UIManager.instance.GameOver();
+    }
+
+    public void InCamZone()
+    {
+        Time.timeScale = 0.2f;
+        subCam.SubCamOn();
+    }
+    public void OutCamZone()
+    {
+        Time.timeScale = 1f;
+        subCam.SubCamNo();
     }
 }
