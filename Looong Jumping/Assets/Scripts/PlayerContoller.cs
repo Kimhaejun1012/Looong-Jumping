@@ -5,30 +5,26 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class PlayerInfo
-{
-    public float acceleration;
-    public float jumpingPower;
-    public int money;
-}
+
 
 public class PlayerContoller : MonoBehaviour
 {
-    public float acceleration = 0.1f;
-    public float jumpingPower = 100f;
+    //Playerinfo
+    public PlayerInfo playerInfo;
+
     public float groundCheckDistance = 0.5f;
     public float angleIncrement = 1f;
-
     private float moveSpeed;
+
     private bool isOnStartLine;
     private bool isJumpButtonClick;
+    private bool hasLanded = false;
 
     public FloatingJoystick joystick;
     public LayerMask groundLayer;
     public Button jumpButton;
     public Button accelerationButton;
     
-
     public ObjectSpawner spawner;
     public BarContoller barContoller;
 
@@ -41,6 +37,8 @@ public class PlayerContoller : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         joystick.gameObject.SetActive(false);
+
+
     }
 
     private void FixedUpdate()
@@ -68,22 +66,22 @@ public class PlayerContoller : MonoBehaviour
 
     private void Update()
     {
-        if (Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundLayer))
+        if (!hasLanded && Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundLayer))
         {
+            hasLanded = true;
             // ∂•ø° ¥Íæ“¿ª ∂ß¿« µø¿€
             //rb.velocity = Vector3.zero; // øÚ¡˜¿” ∏ÿ√„
             moveSpeed = 0;
-            GameManager.instance.Landing();
+            playerInfo.money += (int)UIManager.instance.score;
 
             joystick.gameObject.SetActive(false);
+            GameManager.instance.Landing();
         }
 
         if(isJumpButtonClick)
         {
             JumpButtonDown();
         }
-
-        Debug.Log(rb.position.y);
     }
 
     public void JumpButtonDown()
@@ -110,7 +108,7 @@ public class PlayerContoller : MonoBehaviour
 
     public void PerformActionOnClick()
     {
-        moveSpeed += acceleration;
+        moveSpeed += playerInfo.acceleration;
         //rb.velocity += new Vector3(0,0,moveSpeed);
         //jumpingPower += moveSpeed;
     }
@@ -119,14 +117,14 @@ public class PlayerContoller : MonoBehaviour
     {
         if (isOnStartLine)
         {
-            rb.AddForce(0f, (jumpingPower * 1.2f) * (barContoller.angleValue), (jumpingPower * 1.2f) * (100 - barContoller.angleValue));
+            rb.AddForce(0f, (playerInfo.jumpingPower * 1.2f) * (barContoller.angleValue), (playerInfo.jumpingPower * 1.2f) * (100 - barContoller.angleValue));
             jumpButton.gameObject.SetActive(false);
             accelerationButton.gameObject.SetActive(false);
             UIManager.instance.ShowPerfectText();
         }
         else
         {
-            rb.AddForce(0f, jumpingPower * (barContoller.angleValue), jumpingPower * (100 - barContoller.angleValue));
+            rb.AddForce(0f, playerInfo.jumpingPower * (barContoller.angleValue), playerInfo.jumpingPower * (100 - barContoller.angleValue));
             jumpButton.gameObject.SetActive(false);
             accelerationButton.gameObject.SetActive(false);
         }

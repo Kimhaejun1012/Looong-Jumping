@@ -12,11 +12,6 @@ public class SubCamera : MonoBehaviour
         subCamera.enabled = false;
     }
 
-    void Update()
-    {
-
-    }
-
     public void SubCamOn()
     {
         subCamera.enabled = true;
