@@ -22,11 +22,9 @@ public class SubCamera : MonoBehaviour
         subCamera.enabled = true;
         // 서브 뷰 위치와 크기 조절 (예: 우측 하단)
         subCamera.rect = new Rect(0.4f, 0.0f, 0.6f, 0.6f);
-        print("서브카메라 ON");
     }
     public void SubCamNo()
     {
         subCamera.enabled = false;
-        print("서브카메라 NO");
     }
 }

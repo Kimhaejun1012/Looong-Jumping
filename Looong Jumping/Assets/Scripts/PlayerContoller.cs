@@ -14,17 +14,20 @@ public class PlayerInfo
 
 public class PlayerContoller : MonoBehaviour
 {
-    public float acceleration = 0.3f;
-    public float flingTime = 1000f;
+    public float acceleration = 0.1f;
+    public float jumpingPower = 100f;
     public float groundCheckDistance = 0.5f;
+    public float angleIncrement = 1f;
 
     private float moveSpeed;
     private bool isOnStartLine;
+    private bool isJumpButtonClick;
 
     public FloatingJoystick joystick;
     public LayerMask groundLayer;
     public Button jumpButton;
     public Button accelerationButton;
+    
 
     public ObjectSpawner spawner;
     public BarContoller barContoller;
@@ -52,9 +55,6 @@ public class PlayerContoller : MonoBehaviour
 
             Vector3 moveDirection = rb.transform.forward;
 
-            //spawner.transform.position = transform.position + offset.magnitude * moveDirection;
-            //spawner.transform.LookAt(transform);
-
             var position = rb.position;
             position += moveDirection * moveSpeed;
             rb.MovePosition(position);
@@ -76,47 +76,57 @@ public class PlayerContoller : MonoBehaviour
             GameManager.instance.Landing();
 
             joystick.gameObject.SetActive(false);
-            Debug.Log("ÂøÁö ÂøÁö ÂøÁö");
         }
+
+        if(isJumpButtonClick)
+        {
+            JumpButtonDown();
+        }
+
+        Debug.Log(rb.position.y);
     }
 
     public void JumpButtonDown()
     {
-        barContoller.enabled = true;
-        if(barContoller.angleValue <= 100f)
+        isJumpButtonClick = true;
+        barContoller.gameObject.SetActive(true);
+        barContoller.angleValue += angleIncrement;
+        if (barContoller.angleValue > 100f)
         {
-            barContoller.angleValue += Time.deltaTime;
+            angleIncrement = -1f;
         }
-        else
+        else if(barContoller.angleValue < 0f)
         {
-            barContoller.angleValue -= Time.deltaTime;
+            angleIncrement = 1f;
         }
     }
+
     public void JumpButtonUp()
     {
-        barContoller.enabled = false;
+        isJumpButtonClick = false;
+        barContoller.gameObject.SetActive(false);
+        GameManager.instance.isJumping = true;
     }
 
     public void PerformActionOnClick()
     {
         moveSpeed += acceleration;
-        flingTime += moveSpeed;
+        //rb.velocity += new Vector3(0,0,moveSpeed);
+        //jumpingPower += moveSpeed;
     }
 
     public void PlayerJump()
     {
         if (isOnStartLine)
         {
-            rb.AddForce(0f, flingTime + moveSpeed, 0f);
-            //rb.rotation = Quaternion.Euler(-45f, 0f, 0f);
+            rb.AddForce(0f, (jumpingPower * 1.2f) * (barContoller.angleValue), (jumpingPower * 1.2f) * (100 - barContoller.angleValue));
             jumpButton.gameObject.SetActive(false);
             accelerationButton.gameObject.SetActive(false);
             UIManager.instance.ShowPerfectText();
         }
         else
         {
-            rb.AddForce(0f, flingTime, 0f);
-            //rb.rotation = Quaternion.Euler(-45f, 0f, 0f);
+            rb.AddForce(0f, jumpingPower * (barContoller.angleValue), jumpingPower * (100 - barContoller.angleValue));
             jumpButton.gameObject.SetActive(false);
             accelerationButton.gameObject.SetActive(false);
         }

@@ -70,7 +70,6 @@ public class ObjectSpawner : MonoBehaviour
                 meteorTimeBetSpawn = Random.Range(0, meteorSpawnMax);
             }
 
-            Debug.Log("五砺神 持失");
         }
     }
 
