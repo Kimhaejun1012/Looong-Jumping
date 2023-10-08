@@ -83,6 +83,6 @@ public class UIManager : MonoBehaviour
     }
     public void Store()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(1);
     }
 }
