@@ -19,3 +19,9 @@ public class PlayerInfo : MonoBehaviour
         money = PlayerPrefs.GetInt(moneyKey, 0);
     }
 }
+
+public class SaveShopData
+{
+    public int jumpPowerPurchased = 0;
+    public int accelerationPurchased = 0;
+}

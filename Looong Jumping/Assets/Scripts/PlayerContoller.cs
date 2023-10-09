@@ -155,6 +155,12 @@ public class PlayerContoller : MonoBehaviour
         {
             GameManager.instance.OutCamZone();
         }
+        if(other.CompareTag("Floor"))
+        {
+            jumpButton.gameObject.SetActive(false);
+            accelerationButton.gameObject.SetActive(false);
+        }
+
     }
 
     public void SpeedItem()
