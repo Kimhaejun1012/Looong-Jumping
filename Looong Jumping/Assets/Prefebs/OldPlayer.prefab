@@ -14,13 +14,14 @@ GameObject:
   - component: {fileID: 8395002714411392138}
   - component: {fileID: 5238000398651317314}
   - component: {fileID: 4240530491160753630}
+  - component: {fileID: 7140120832953698670}
   m_Layer: 0
-  m_Name: Player
+  m_Name: OldPlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1385635465719457528
 Transform:
   m_ObjectHideFlags: 0
@@ -121,14 +122,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f26557be1c43c554faa70dd9dc991f7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInfo: {fileID: 0}
-  groundCheckDistance: 0.5
+  playerInfo: {fileID: 7140120832953698670}
+  groundCheckDistance: 1
   angleIncrement: 1
   moveSpeed: 0
   joystick: {fileID: 0}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   jumpButton: {fileID: 0}
   accelerationButton: {fileID: 0}
   spawner: {fileID: 0}
@@ -142,7 +143,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1972282784839032089}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 7
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -161,3 +162,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &7140120832953698670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1972282784839032089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c4588fc8dbe6e24fb5e0c200c338215, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  acceleration: 0.1
+  jumpingPower: 0
+  money: 0
+  moneyKey: Money
+  jumpingPowerKey: Jumping
+  accelerationKey: Accel

@@ -57,7 +57,6 @@ public class GameManager : MonoBehaviour
         isLanding = true;
         playerContoller.moveSpeed = 0f;
         playerContoller.joystick.gameObject.SetActive(false);
-        playerContoller.rb.useGravity = false;
         playerInfo.money += (int)UIManager.instance.score;
         UIManager.instance.gameoverUI.SetActive(true);
         UIManager.instance.GameOver();

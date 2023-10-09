@@ -16,7 +16,6 @@ public class PlayerContoller : MonoBehaviour
 
     private bool isOnStartLine;
     private bool isJumpButtonClick;
-    private bool hasLanded = false;
 
     public FloatingJoystick joystick;
     public LayerMask groundLayer;
@@ -25,8 +24,9 @@ public class PlayerContoller : MonoBehaviour
     
     public ObjectSpawner spawner;
     public BarContoller barContoller;
-
     public Rigidbody rb;
+    private Animator playerAnimator;
+    private int accelCount = 0;
 
     private float rotateX = 0f;
     private float rotateY = 0f;
@@ -35,6 +35,7 @@ public class PlayerContoller : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         joystick.gameObject.SetActive(false);
+        playerAnimator = GetComponent<Animator>();
     }
 
     private void FixedUpdate()
@@ -72,9 +73,10 @@ public class PlayerContoller : MonoBehaviour
 
             //joystick.gameObject.SetActive(false);
             GameManager.instance.Landing();
+            playerAnimator.SetBool("Jumping", false);
         }
 
-        if(isJumpButtonClick)
+        if (isJumpButtonClick)
         {
             SetGauge();
         }
@@ -85,6 +87,7 @@ public class PlayerContoller : MonoBehaviour
         isJumpButtonClick = true;
         Time.timeScale = 0f;
         barContoller.gameObject.SetActive(true);
+
     }
 
     public void SetGauge()
@@ -105,13 +108,26 @@ public class PlayerContoller : MonoBehaviour
         isJumpButtonClick = false;
         Time.timeScale = 1f;
         barContoller.gameObject.SetActive(false);
+
     }
 
     public void PerformActionOnClick()
     {
         moveSpeed += playerInfo.acceleration * 5f;
+        accelCount++;
         //rb.velocity += new Vector3(0,0,moveSpeed);
         //jumpingPower += moveSpeed;
+        playerAnimator.SetInteger("AccelCount", accelCount);
+        playerAnimator.SetBool("Run", true);
+
+        //if (accelCount < 3)
+        //{
+        // playerAnimator.SetTrigger("Slow Run");
+        //}
+        //else
+        //{
+        //    playerAnimator.SetTrigger("Fast Run");
+        //}
     }
 
     public void PlayerJump()
@@ -131,6 +147,7 @@ public class PlayerContoller : MonoBehaviour
         }
         joystick.gameObject.SetActive(true);
         spawner.ObjectActive();
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -159,6 +176,8 @@ public class PlayerContoller : MonoBehaviour
         {
             jumpButton.gameObject.SetActive(false);
             accelerationButton.gameObject.SetActive(false);
+            playerAnimator.SetBool("Jumping", true);
+
         }
 
     }

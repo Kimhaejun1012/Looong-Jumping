@@ -7,7 +7,6 @@ public class BarContoller : MonoBehaviour
 {
     public Image bar;
     public RectTransform button;
-    public Transform playerAngle;
     public float angleValue = 0f;
 
     private void Awake()
