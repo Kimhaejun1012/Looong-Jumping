@@ -40,9 +40,6 @@ public class ObjectSpawner : MonoBehaviour
         transform.LookAt(target);
     }
 
-    void Update()
-    {
-    }
 
     public void ObjectActive()
     {
@@ -64,12 +61,10 @@ public class ObjectSpawner : MonoBehaviour
 
                 Vector3 spawnPosition = new Vector3(randomX, randomY, randomZ);
 
-                // 오브젝트 생성
                 Instantiate(meteor, spawnPosition, Quaternion.identity);
 
                 meteorTimeBetSpawn = Random.Range(0, meteorSpawnMax);
             }
-
         }
     }
 

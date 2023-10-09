@@ -4,7 +4,5 @@ using UnityEngine;
 
 public class SaveData : MonoBehaviour
 {
-    public PlayerInfo playerInfo;
-    public SaveShopData shopData;
 
 }

@@ -20,8 +20,14 @@ public class PlayerInfo : MonoBehaviour
     }
 }
 
-public class SaveShopData
+public class ShopData
 {
     public int jumpPowerPurchased = 0;
     public int accelerationPurchased = 0;
+}
+
+public class GameData
+{
+    public PlayerInfo playerInfo;
+    public ShopData shopData;
 }
