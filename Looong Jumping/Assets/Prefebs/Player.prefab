@@ -121,6 +121,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f26557be1c43c554faa70dd9dc991f7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInfo: {fileID: 0}
+  groundCheckDistance: 0.5
+  angleIncrement: 1
+  moveSpeed: 0
+  joystick: {fileID: 0}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  jumpButton: {fileID: 0}
+  accelerationButton: {fileID: 0}
+  spawner: {fileID: 0}
+  barContoller: {fileID: 0}
+  rb: {fileID: 0}
 --- !u!54 &4240530491160753630
 Rigidbody:
   m_ObjectHideFlags: 0

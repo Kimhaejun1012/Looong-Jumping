@@ -6853,7 +6853,9 @@ PrefabInstance:
       propertyPath: groundCheckDistance
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3923710659597814732, guid: 36fe41e348daed44a8e0c4208c3799f9, type: 3}
+    - {fileID: 2838096431339425880, guid: 36fe41e348daed44a8e0c4208c3799f9, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
