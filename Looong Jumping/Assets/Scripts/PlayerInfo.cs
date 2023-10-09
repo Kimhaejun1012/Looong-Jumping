@@ -14,10 +14,10 @@ public class PlayerInfo : MonoBehaviour
 
     private void Awake()
     {
-        acceleration = 0.01f;
-        jumpingPower = 100f;
-        //acceleration = PlayerPrefs.GetFloat(accelerationKey, 0.1f);
-        //jumpingPower = PlayerPrefs.GetFloat(jumpingPowerKey, 100f);
+        //acceleration = 0.01f;
+        //jumpingPower = 100f;
+        acceleration = PlayerPrefs.GetFloat(accelerationKey, 0.1f);
+        jumpingPower = PlayerPrefs.GetFloat(jumpingPowerKey, 100f);
         money = PlayerPrefs.GetInt(moneyKey, 0);
     }
 }

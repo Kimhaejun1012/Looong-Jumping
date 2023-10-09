@@ -8,8 +8,8 @@ using UnityEngine.UI;
 public class StoreManager : MonoBehaviour
 {
     public PlayerInfo playerInfo;
-    public int jumpPowerCost = 100;
-    public int accelerationCost = 100;
+    private int jumpPowerCost = 2500;
+    private int accelerationCost = 2500;
     public TextMeshProUGUI playerMoney;
 
     public static GameManager instance
@@ -39,10 +39,9 @@ public class StoreManager : MonoBehaviour
         if(playerInfo.money > jumpPowerCost)
         {
             playerInfo.money -= jumpPowerCost;
-            jumpPowerCost += 100;
-            playerInfo.jumpingPower += 10f;
+            //jumpPowerCost += 100;
+            playerInfo.jumpingPower += 1f;
             playerMoney.text = $"Money : {playerInfo.money}";
-
         }
     }
     public void UpgradeAcceleration()
@@ -50,8 +49,8 @@ public class StoreManager : MonoBehaviour
         if (playerInfo.money > accelerationCost)
         {
             playerInfo.money -= accelerationCost;
-            accelerationCost += 100;
-            playerInfo.acceleration += 0.1f;
+            //accelerationCost += 100;
+            playerInfo.acceleration += 0.001f;
             playerMoney.text = $"Money : {playerInfo.money}";
         }
     }

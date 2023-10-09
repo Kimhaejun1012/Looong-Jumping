@@ -80,6 +80,7 @@ public class PlayerContoller : MonoBehaviour
         {
             SetGauge();
         }
+        Debug.Log(playerInfo.jumpingPower);
     }
 
     public void JumpButtonDown()
