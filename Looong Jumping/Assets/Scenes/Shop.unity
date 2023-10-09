@@ -576,9 +576,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1282773088}
     m_Modifications:
+    - target: {fileID: 8971760073020543364, guid: f31d9753a1ef21c4b805367355df9e45, type: 3}
+      propertyPath: m_text
+      value: Skins
+      objectReference: {fileID: 0}
+    - target: {fileID: 8971760073020543366, guid: f31d9753a1ef21c4b805367355df9e45, type: 3}
+      propertyPath: m_Name
+      value: Text
+      objectReference: {fileID: 0}
     - target: {fileID: 8971760073037618312, guid: f31d9753a1ef21c4b805367355df9e45, type: 3}
       propertyPath: m_Name
-      value: TogglePage (1)
+      value: Skin Toggle
       objectReference: {fileID: 0}
     - target: {fileID: 8971760073037618313, guid: f31d9753a1ef21c4b805367355df9e45, type: 3}
       propertyPath: m_Pivot.x
@@ -951,13 +959,23 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1282773088}
     m_Modifications:
+    - target: {fileID: 8971760073020543364, guid: f31d9753a1ef21c4b805367355df9e45, type: 3}
+      propertyPath: m_text
+      value: 'Stats
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8971760073020543366, guid: f31d9753a1ef21c4b805367355df9e45, type: 3}
+      propertyPath: m_Name
+      value: Text
+      objectReference: {fileID: 0}
     - target: {fileID: 8971760073020543366, guid: f31d9753a1ef21c4b805367355df9e45, type: 3}
       propertyPath: m_Layer
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8971760073037618312, guid: f31d9753a1ef21c4b805367355df9e45, type: 3}
       propertyPath: m_Name
-      value: TogglePage (1)
+      value: StatToggle
       objectReference: {fileID: 0}
     - target: {fileID: 8971760073037618312, guid: f31d9753a1ef21c4b805367355df9e45, type: 3}
       propertyPath: m_Layer
@@ -1235,9 +1253,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2171572465065110781, guid: b0c7b246242e36e4989e1866e9455125, type: 3}
+      propertyPath: m_text
+      value: Reduce acceleration reduction when colliding with meteorites
+      objectReference: {fileID: 0}
     - target: {fileID: 2530294867127299164, guid: b0c7b246242e36e4989e1866e9455125, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 17.700012
+      objectReference: {fileID: 0}
+    - target: {fileID: 3785090650410307671, guid: b0c7b246242e36e4989e1866e9455125, type: 3}
+      propertyPath: m_text
+      value: Learn Soft Touch(Not implemented)
       objectReference: {fileID: 0}
     - target: {fileID: 5427850165119437896, guid: b0c7b246242e36e4989e1866e9455125, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1640,9 +1666,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2171572465065110781, guid: b0c7b246242e36e4989e1866e9455125, type: 3}
+      propertyPath: m_text
+      value: Increase jump power when jumping
+      objectReference: {fileID: 0}
     - target: {fileID: 2530294867127299164, guid: b0c7b246242e36e4989e1866e9455125, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 17.700012
+      objectReference: {fileID: 0}
+    - target: {fileID: 3785090650410307671, guid: b0c7b246242e36e4989e1866e9455125, type: 3}
+      propertyPath: m_text
+      value: Increase Jump Power
       objectReference: {fileID: 0}
     - target: {fileID: 5427850165119437896, guid: b0c7b246242e36e4989e1866e9455125, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1737,9 +1771,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1282773088}
     m_Modifications:
+    - target: {fileID: 8971760073020543364, guid: f31d9753a1ef21c4b805367355df9e45, type: 3}
+      propertyPath: m_text
+      value: Cash
+      objectReference: {fileID: 0}
+    - target: {fileID: 8971760073020543366, guid: f31d9753a1ef21c4b805367355df9e45, type: 3}
+      propertyPath: m_Name
+      value: text
+      objectReference: {fileID: 0}
     - target: {fileID: 8971760073037618312, guid: f31d9753a1ef21c4b805367355df9e45, type: 3}
       propertyPath: m_Name
-      value: TogglePage (2)
+      value: Cash Toggle
       objectReference: {fileID: 0}
     - target: {fileID: 8971760073037618313, guid: f31d9753a1ef21c4b805367355df9e45, type: 3}
       propertyPath: m_Pivot.x
@@ -1931,9 +1973,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2171572465065110781, guid: b0c7b246242e36e4989e1866e9455125, type: 3}
+      propertyPath: m_text
+      value: Reduce air resistance
+      objectReference: {fileID: 0}
     - target: {fileID: 2530294867127299164, guid: b0c7b246242e36e4989e1866e9455125, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 17.700012
+      objectReference: {fileID: 0}
+    - target: {fileID: 3785090650410307671, guid: b0c7b246242e36e4989e1866e9455125, type: 3}
+      propertyPath: m_text
+      value: Learn Aerodynamics(Not implemented)
       objectReference: {fileID: 0}
     - target: {fileID: 5427850165119437896, guid: b0c7b246242e36e4989e1866e9455125, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2084,6 +2134,10 @@ PrefabInstance:
     - target: {fileID: 1890092689251014916, guid: b0c7b246242e36e4989e1866e9455125, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2171572465065110781, guid: b0c7b246242e36e4989e1866e9455125, type: 3}
+      propertyPath: m_text
+      value: Increase acceleration when close help
       objectReference: {fileID: 0}
     - target: {fileID: 2530294867127299164, guid: b0c7b246242e36e4989e1866e9455125, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -2737,9 +2791,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2171572465065110781, guid: b0c7b246242e36e4989e1866e9455125, type: 3}
+      propertyPath: m_text
+      value: Increase jump power at perfect jump
+      objectReference: {fileID: 0}
     - target: {fileID: 2530294867127299164, guid: b0c7b246242e36e4989e1866e9455125, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 17.700012
+      objectReference: {fileID: 0}
+    - target: {fileID: 3785090650410307671, guid: b0c7b246242e36e4989e1866e9455125, type: 3}
+      propertyPath: m_text
+      value: More Jump Power in Perfect Jump(Not implemented)
       objectReference: {fileID: 0}
     - target: {fileID: 5427850165119437896, guid: b0c7b246242e36e4989e1866e9455125, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2806,9 +2868,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1282773088}
     m_Modifications:
+    - target: {fileID: 8971760073020543364, guid: f31d9753a1ef21c4b805367355df9e45, type: 3}
+      propertyPath: m_text
+      value: Special
+      objectReference: {fileID: 0}
+    - target: {fileID: 8971760073020543366, guid: f31d9753a1ef21c4b805367355df9e45, type: 3}
+      propertyPath: m_Name
+      value: Text
+      objectReference: {fileID: 0}
     - target: {fileID: 8971760073037618312, guid: f31d9753a1ef21c4b805367355df9e45, type: 3}
       propertyPath: m_Name
-      value: TogglePage
+      value: Special Toggle
       objectReference: {fileID: 0}
     - target: {fileID: 8971760073037618313, guid: f31d9753a1ef21c4b805367355df9e45, type: 3}
       propertyPath: m_Pivot.x
@@ -2969,7 +3039,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Game
+  m_text: JUMP!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
