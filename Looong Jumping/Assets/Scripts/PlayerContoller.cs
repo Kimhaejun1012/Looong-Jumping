@@ -12,7 +12,7 @@ public class PlayerContoller : MonoBehaviour
 
     public float groundCheckDistance = 0.5f;
     public float angleIncrement = 1f;
-    private float moveSpeed;
+    public float moveSpeed;
 
     private bool isOnStartLine;
     private bool isJumpButtonClick;
@@ -26,7 +26,7 @@ public class PlayerContoller : MonoBehaviour
     public ObjectSpawner spawner;
     public BarContoller barContoller;
 
-    private Rigidbody rb;
+    public Rigidbody rb;
 
     private float rotateX = 0f;
     private float rotateY = 0f;
@@ -62,15 +62,15 @@ public class PlayerContoller : MonoBehaviour
 
     private void Update()
     {
-        if (!hasLanded && Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundLayer))
+        if (!GameManager.instance.isLanding && Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundLayer))
         {
-            hasLanded = true;
+            //hasLanded = true;
             // ∂•ø° ¥Íæ“¿ª ∂ß¿« µø¿€
             //rb.velocity = Vector3.zero; // øÚ¡˜¿” ∏ÿ√„
-            moveSpeed = 0;
-            playerInfo.money += (int)UIManager.instance.score;
+            //moveSpeed = 0;
+            //playerInfo.money += (int)UIManager.instance.score;
 
-            joystick.gameObject.SetActive(false);
+            //joystick.gameObject.SetActive(false);
             GameManager.instance.Landing();
         }
 
@@ -109,7 +109,7 @@ public class PlayerContoller : MonoBehaviour
 
     public void PerformActionOnClick()
     {
-        moveSpeed += playerInfo.acceleration;
+        moveSpeed += playerInfo.acceleration * 5f;
         //rb.velocity += new Vector3(0,0,moveSpeed);
         //jumpingPower += moveSpeed;
     }

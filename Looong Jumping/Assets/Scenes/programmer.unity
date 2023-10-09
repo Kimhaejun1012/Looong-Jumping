@@ -135,6 +135,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BackGround1
       objectReference: {fileID: 0}
+    - target: {fileID: 7106239084903887768, guid: c6c87448412284740b134286a012c135, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8120119649705875138, guid: c6c87448412284740b134286a012c135, type: 3}
       propertyPath: m_LocalScale.x
       value: 100
@@ -725,6 +729,8 @@ MonoBehaviour:
   jumpingPower: 0
   money: 0
   moneyKey: Money
+  jumpingPowerKey: Jumping
+  accelerationKey: Accel
 --- !u!1 &526896917
 GameObject:
   m_ObjectHideFlags: 0
@@ -736,7 +742,6 @@ GameObject:
   - component: {fileID: 526896918}
   - component: {fileID: 526896921}
   - component: {fileID: 526896920}
-  - component: {fileID: 526896919}
   m_Layer: 5
   m_Name: Score
   m_TagString: Untagged
@@ -763,18 +768,6 @@ RectTransform:
   m_AnchoredPosition: {x: 50, y: 415}
   m_SizeDelta: {x: 1000, y: 50}
   m_Pivot: {x: 0, y: 0.5}
---- !u!114 &526896919
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 526896917}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8fb435c5c49352142b1b3d494210296a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &526896920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -944,6 +937,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BackGround2
       objectReference: {fileID: 0}
+    - target: {fileID: 8794610890776664083, guid: 3da26817088777446bc9ca1ea03952e1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -960,6 +957,10 @@ PrefabInstance:
     - target: {fileID: 437784094272266245, guid: b073f40aa46567b4ca745aee25d1fb13, type: 3}
       propertyPath: m_Name
       value: BackGround3
+      objectReference: {fileID: 0}
+    - target: {fileID: 437784094272266245, guid: b073f40aa46567b4ca745aee25d1fb13, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4963366306736647499, guid: b073f40aa46567b4ca745aee25d1fb13, type: 3}
       propertyPath: m_LocalScale.x
@@ -1306,6 +1307,7 @@ MonoBehaviour:
   bestScoreKey: BestScore
   subCam: {fileID: 185220334}
   meteorSpawnInterval: 2
+  playerInfo: {fileID: 0}
 --- !u!114 &744538825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3628,6 +3630,10 @@ PrefabInstance:
     - target: {fileID: 1972282784839032089, guid: 36fe41e348daed44a8e0c4208c3799f9, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 1972282784839032089, guid: 36fe41e348daed44a8e0c4208c3799f9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4240530491160753630, guid: 36fe41e348daed44a8e0c4208c3799f9, type: 3}
       propertyPath: m_Mass

@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     public SubCamera subCam;
     public float meteorSpawnInterval = 2f;
     public PlayerInfo playerInfo;
+    public PlayerContoller playerContoller;
 
     public bool isLanding { get; set; }
     public bool isCamZone { get; set; }
@@ -54,6 +55,10 @@ public class GameManager : MonoBehaviour
     public void Landing()
     {
         isLanding = true;
+        playerContoller.moveSpeed = 0f;
+        playerContoller.joystick.gameObject.SetActive(false);
+        playerContoller.rb.useGravity = false;
+        playerInfo.money += (int)UIManager.instance.score;
         UIManager.instance.gameoverUI.SetActive(true);
         UIManager.instance.GameOver();
     }
