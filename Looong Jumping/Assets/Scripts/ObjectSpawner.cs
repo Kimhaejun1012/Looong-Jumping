@@ -28,7 +28,6 @@ public class ObjectSpawner : MonoBehaviour
         meteorTimeBetSpawn = Random.Range(0, meteorSpawnMax);
         itemTimeBetSpawn = Random.Range(itemSpawnMin, itemSpawnMax);
 
-
         cam = Camera.main;
         offset = transform.position - target.transform.position;
 

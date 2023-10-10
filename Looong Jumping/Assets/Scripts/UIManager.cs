@@ -13,7 +13,6 @@ public class UIManager : MonoBehaviour
 
     public Transform startLine;
     public Transform playerPos;
-    public PlayerInfo playerInfo;
 
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI resultScoreText;
@@ -62,20 +61,23 @@ public class UIManager : MonoBehaviour
             score = playerPos.position.z - startLine.position.z;
         }
         scoreText.text = $"SCORE : {(int)score}";
-        playerMoney.text = $"Money : {playerInfo.money}";
+        playerMoney.text = $"Gold : {GameManager.instance.saveData.playerData.gold}";
     }
 
     public void GameOver()
     {
-        if (score > bestScore)
+        if (score > GameManager.instance.saveData.gameData.bestScore)
         {
-            bestScore = score;
-            PlayerPrefs.SetFloat(bestScroeKey, bestScore);
+            //bestScore = score;
+            //PlayerPrefs.SetFloat(bestScroeKey, bestScore);
+            GameManager.instance.saveData.gameData.bestScore = score;
         }
         resultScoreText.text = scoreText.text;
-        bestScoreText.text = $"BEST SCORE : {(int)bestScore}";
-        PlayerPrefs.SetInt(playerInfo.moneyKey, playerInfo.money);
-        PlayerPrefs.Save();
+        bestScoreText.text = $"BEST SCORE : {(int)GameManager.instance.saveData.gameData.bestScore}";
+        GameManager.instance.saveData.playerData.gold += (int)(score * 100f);
+        SaveLoadSystem.AutoSave(GameManager.instance.saveData);
+        //PlayerPrefs.SetInt(playerInfo.moneyKey, playerInfo.money);
+        //PlayerPrefs.Save();
     }
     public void Restart()
     {
@@ -83,9 +85,9 @@ public class UIManager : MonoBehaviour
     }
     public void Store()
     {
-        PlayerPrefs.SetFloat(playerInfo.jumpingPowerKey, playerInfo.jumpingPower);
-        PlayerPrefs.SetFloat(playerInfo.accelerationKey, playerInfo.acceleration);
-        PlayerPrefs.Save();
+        //PlayerPrefs.SetFloat(playerInfo.jumpingPowerKey, playerInfo.jumpingPower);
+        //PlayerPrefs.SetFloat(playerInfo.accelerationKey, playerInfo.acceleration);
+        //PlayerPrefs.Save();
         SceneManager.LoadScene(1);
     }
 }

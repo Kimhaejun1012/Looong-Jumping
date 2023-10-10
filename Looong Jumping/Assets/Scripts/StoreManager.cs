@@ -7,66 +7,74 @@ using UnityEngine.UI;
 
 public class StoreManager : MonoBehaviour
 {
-    public PlayerInfo playerInfo;
     private int jumpPowerCost = 2500;
     private int accelerationCost = 2500;
     public TextMeshProUGUI playerMoney;
 
-    public static GameManager instance
+    public static StoreManager instance
     {
         get
         {
             if (m_instance == null)
             {
-                m_instance = FindObjectOfType<GameManager>();
+                m_instance = FindObjectOfType<StoreManager>();
             }
             return m_instance;
         }
     }
-    private static GameManager m_instance;
-
-    private void Start()
+    private static StoreManager m_instance;
+    private void Update()
     {
-        playerInfo.acceleration = PlayerPrefs.GetFloat(playerInfo.accelerationKey);
-        playerInfo.jumpingPower = PlayerPrefs.GetFloat(playerInfo.jumpingPowerKey);
-        playerInfo.money = PlayerPrefs.GetInt(playerInfo.moneyKey);
+        var x = DataTableManager.GetTable<ShopTable>().GetValue(100001).ID;
+        playerMoney.text = x.ToString();
 
-        playerMoney.text = $"Money : {playerInfo.money}";
+        //playerMoney.text = $"Gold : {GameManager.instance.saveData.playerData.gold}";
+    }
+
+    private void OnEnable()
+    {
+        Debug.Log("»óÁ¡ ¾À ÀüÈ¯");
     }
 
     public void UpgradeJumpPower()
     {
-        if(playerInfo.money > jumpPowerCost)
+        if(GameManager.instance.saveData.playerData.gold > jumpPowerCost)
         {
-            playerInfo.money -= jumpPowerCost;
+            GameManager.instance.saveData.playerData.gold -= jumpPowerCost;
             //jumpPowerCost += 100;
-            playerInfo.jumpingPower += 1f;
-            playerMoney.text = $"Money : {playerInfo.money}";
+            GameManager.instance.saveData.playerData.jumpingPower += 1f;
+            playerMoney.text = $"Gold : {GameManager.instance.saveData.playerData.gold}";
+            SaveLoadSystem.AutoSave(GameManager.instance.saveData);
         }
     }
     public void UpgradeAcceleration()
     {
-        if (playerInfo.money > accelerationCost)
+        if (GameManager.instance.saveData.playerData.gold > accelerationCost)
         {
-            playerInfo.money -= accelerationCost;
-            //accelerationCost += 100;
-            playerInfo.acceleration += 0.001f;
-            playerMoney.text = $"Money : {playerInfo.money}";
+            GameManager.instance.saveData.playerData.gold -= accelerationCost;
+            GameManager.instance.saveData.playerData.acceleration += 0.001f;
+            playerMoney.text = $"Gold : {GameManager.instance.saveData.playerData.gold}";
+            SaveLoadSystem.AutoSave(GameManager.instance.saveData);
         }
     }
 
     public void TestDeductMoney()
     {
-        playerInfo.money -= accelerationCost;
-        playerMoney.text = $"Money : {playerInfo.money}";
+        GameManager.instance.saveData.playerData.gold -= accelerationCost;
+        playerMoney.text = $"Gold : {GameManager.instance.saveData.playerData.gold}";
+    }
+
+    public void ChangeScene()
+    {
+        playerMoney.text = $"Gold : {GameManager.instance.saveData.playerData.gold}";
     }
 
     public void LoadGameScene()
     {
-        PlayerPrefs.SetFloat(playerInfo.jumpingPowerKey, playerInfo.jumpingPower);
-        PlayerPrefs.SetFloat(playerInfo.accelerationKey, playerInfo.acceleration);
-        PlayerPrefs.SetInt(playerInfo.moneyKey, playerInfo.money);
-        PlayerPrefs.Save();
+        //PlayerPrefs.SetFloat(playerInfo.jumpingPowerKey, playerInfo.jumpingPower);
+        //PlayerPrefs.SetFloat(playerInfo.accelerationKey, playerInfo.acceleration);
+        //PlayerPrefs.SetInt(playerInfo.moneyKey, playerInfo.money);
+        //PlayerPrefs.Save();
         SceneManager.LoadScene(0);
     }
 }

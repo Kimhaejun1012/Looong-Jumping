@@ -6,22 +6,19 @@ using System.Globalization;
 using CsvHelper;
 using CsvHelper.Configuration;
 
-public class ShopTable : DataTable
+public class StringTable : DataTable
 {
     public class Data
     {
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public int Require { get; set; }
-        public int UpGrade { get; set; }
+        public string ID { get; set; }
+        public string STRING { get; set; }
     }
 
-    protected Dictionary<int, Data> dic = new Dictionary<int, Data>();
+    protected Dictionary<string, string> dic = new Dictionary<string, string>();
 
-    public ShopTable()
+    public StringTable()
     {
-        path = "Tables/TestTable";
+        path = "Tables/StringTable";
         //Load();
     }
 
@@ -36,15 +33,15 @@ public class ShopTable : DataTable
 
         foreach (var record in records)
         {
-            dic.Add(record.ID, record);
+            dic.Add(record.ID, record.STRING);
         }
     }
 
-    public Data GetValue(int id)
+    public string GetValue(string id)
     {
-        if (!dic.ContainsKey(id))
+        if(!dic.ContainsKey(id))
         {
-            return null;
+            return string.Empty;
         }
         return dic[id];
     }

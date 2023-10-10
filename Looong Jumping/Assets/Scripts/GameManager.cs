@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using SaveDataVC = SaveDataV1;
 
 public class GameManager : MonoBehaviour
 {
@@ -26,8 +27,9 @@ public class GameManager : MonoBehaviour
     public string bestScoreKey = "BestScore";
     public SubCamera subCam;
     public float meteorSpawnInterval = 2f;
-    public PlayerInfo playerInfo;
     public PlayerContoller playerContoller;
+
+    public SaveDataVC saveData = new SaveDataVC();
 
     public bool isLanding { get; set; }
     public bool isCamZone { get; set; }
@@ -38,10 +40,21 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        else
+        {
+            //Debug.Log("게임 매니저 어웨이크");
+        }
     }
     private void Start()
     {
-        //playerInfo.jumpingPower = PlayerPrefs.GetFloat();
+        //if()SaveLoadSystem.AutoSave(saveData);
+        saveData = SaveLoadSystem.AutoLoad() as SaveDataVC;
+
+        //Debug.Log("게임 매니저 스타트");
+        //Debug.Log("버전 : " + saveData.Version);
+        //Debug.Log("게임 데이터 : " + saveData.gameData);
+        //Debug.Log("상점 데이터 : " + saveData.shopData);
+        //Debug.Log("플레이어 데이터 : " + saveData.playerData);
     }
 
     private void Update()
@@ -57,7 +70,6 @@ public class GameManager : MonoBehaviour
         isLanding = true;
         playerContoller.moveSpeed = 0f;
         playerContoller.joystick.gameObject.SetActive(false);
-        playerInfo.money += (int)UIManager.instance.score;
         UIManager.instance.gameoverUI.SetActive(true);
         UIManager.instance.GameOver();
     }
