@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -21,6 +22,7 @@ public class PlayerContoller : MonoBehaviour
     public LayerMask groundLayer;
     public Button jumpButton;
     public Button accelerationButton;
+    public Image tap;
     
     public ObjectSpawner spawner;
     public BarContoller barContoller;
@@ -36,10 +38,6 @@ public class PlayerContoller : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         joystick.gameObject.SetActive(false);
         playerAnimator = GetComponent<Animator>();
-    }
-
-    private void PlayerDataLoad()
-    {
     }
 
     private void FixedUpdate()
@@ -92,8 +90,8 @@ public class PlayerContoller : MonoBehaviour
     public void JumpButtonDown()
     {
         isJumpButtonClick = true;
-        Time.timeScale = 0f;
         barContoller.gameObject.SetActive(true);
+        Time.timeScale = 0f;
     }
 
     public void SetGauge()
@@ -112,10 +110,10 @@ public class PlayerContoller : MonoBehaviour
     public void JumpButtonUp()
     {
         isJumpButtonClick = false;
-        Time.timeScale = 1f;
         barContoller.gameObject.SetActive(false);
-    }
 
+        Time.timeScale = 1f;
+    }
     public void PerformActionOnClick()
     {
         moveSpeed += GameManager.instance.saveData.playerData.acceleration * 5f;
@@ -124,7 +122,7 @@ public class PlayerContoller : MonoBehaviour
         //jumpingPower += moveSpeed;
         playerAnimator.SetInteger("AccelCount", accelCount);
         playerAnimator.SetBool("Run", true);
-
+        tap.gameObject.SetActive(false);
         //if (accelCount < 3)
         //{
         // playerAnimator.SetTrigger("Slow Run");
@@ -152,6 +150,7 @@ public class PlayerContoller : MonoBehaviour
         }
         joystick.gameObject.SetActive(true);
         spawner.ObjectActive();
+
 
     }
 

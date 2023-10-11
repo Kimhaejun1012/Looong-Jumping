@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        //if()SaveLoadSystem.AutoSave(saveData);
+           SaveLoadSystem.Save(saveData);
         saveData = SaveLoadSystem.AutoLoad() as SaveDataVC;
 
         //Debug.Log("게임 매니저 스타트");

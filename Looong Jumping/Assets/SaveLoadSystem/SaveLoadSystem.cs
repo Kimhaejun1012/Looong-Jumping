@@ -69,6 +69,26 @@ public static class SaveLoadSystem
         }
     }
 
+    public static void Save(SaveData data)
+    {
+        if (!Directory.Exists(SaveDirectory))
+        {
+            Directory.CreateDirectory(SaveDirectory);
+        }
+
+        var path = Path.Combine(SaveDirectory, AutoSaveFileName);
+        if (!File.Exists(path))
+        {
+            using (var writer = new JsonTextWriter(new StreamWriter(path)))
+            {
+                var serialize = new JsonSerializer();
+                //serialize.Converters.Add(new Vector3Converter());
+                //serialize.Converters.Add(new QuaternionConverter());
+                serialize.Serialize(writer, data);
+            }
+        }
+    }
+
     public static SaveData Load(string filename)
     {
         var path = Path.Combine(SaveDirectory, filename);

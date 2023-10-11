@@ -7,7 +7,7 @@ public class ObjectSpawner : MonoBehaviour
 {
     public Transform target;
     public GameObject item;
-    public GameObject meteor;
+    public GameObject[] meteors;
 
     public Transform spawnZone;
 
@@ -19,7 +19,7 @@ public class ObjectSpawner : MonoBehaviour
     public float itemSpawnMin = 0.1f;
     private float itemTimeBetSpawn;
 
-    private int spawnCount = 30;
+    private int spawnCount = 10;
 
     public Vector3 offset;
 
@@ -60,7 +60,7 @@ public class ObjectSpawner : MonoBehaviour
 
                 Vector3 spawnPosition = new Vector3(randomX, randomY, randomZ);
 
-                Instantiate(meteor, spawnPosition, Quaternion.identity);
+                Instantiate(meteors[Random.Range(0,4)], spawnPosition, Quaternion.identity);
 
                 meteorTimeBetSpawn = Random.Range(0, meteorSpawnMax);
             }

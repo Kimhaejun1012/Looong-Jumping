@@ -10,7 +10,7 @@ public class StoreManager : MonoBehaviour
     private int jumpPowerCost = 2500;
     private int accelerationCost = 2500;
     public TextMeshProUGUI playerMoney;
-
+    ShopTable shopTable;
     public static StoreManager instance
     {
         get
@@ -23,10 +23,14 @@ public class StoreManager : MonoBehaviour
         }
     }
     private static StoreManager m_instance;
+    private void Start()
+    {
+        shopTable = DataTableManager.GetTable<ShopTable>();
+        shopTable.GetValue(1001);
+    }
     private void Update()
     {
-        var x = DataTableManager.GetTable<ShopTable>().GetValue(100001).ID;
-        playerMoney.text = x.ToString();
+        playerMoney.text = DataTableManager.GetTable<ShopTable>().GetValue(100001).Name;
 
         //playerMoney.text = $"Gold : {GameManager.instance.saveData.playerData.gold}";
     }
