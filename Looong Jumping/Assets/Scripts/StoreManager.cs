@@ -30,7 +30,7 @@ public class StoreManager : MonoBehaviour
     }
     private void Update()
     {
-        playerMoney.text = DataTableManager.GetTable<ShopTable>().GetValue(100001).Name;
+        playerMoney.text = $"Gold : {GameManager.instance.saveData.playerData.gold}";
 
         //playerMoney.text = $"Gold : {GameManager.instance.saveData.playerData.gold}";
     }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item : MonoBehaviour
+public class Item : FlyingObject
 {
     void Start()
     {
@@ -20,7 +20,7 @@ public class Item : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             other.SendMessage("SpeedItem");
-            Destroy(gameObject);
+            //ReturnPool(this);
         }
     }
 }

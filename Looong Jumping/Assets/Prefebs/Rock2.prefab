@@ -97,6 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b49077be4cf191c48aa4c753a98127c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  idName: Rock2
 --- !u!136 &-5984621738120595592
 CapsuleCollider:
   m_ObjectHideFlags: 0
