@@ -7605,6 +7605,11 @@ MonoBehaviour:
     _count: 0
     _container: {fileID: 8466525825632397155, guid: 0d1ad22ae62e39c419c9841eacb9d548, type: 3}
     _nonLazy: 0
+  - _name: Item
+    _component: {fileID: 4071993127286262448, guid: fa6df05bad3790c4e9dac2b58adc3c9e, type: 3}
+    _count: 0
+    _container: {fileID: 2809056252969299241, guid: fa6df05bad3790c4e9dac2b58adc3c9e, type: 3}
+    _nonLazy: 0
 --- !u!1 &1328898107
 GameObject:
   m_ObjectHideFlags: 0

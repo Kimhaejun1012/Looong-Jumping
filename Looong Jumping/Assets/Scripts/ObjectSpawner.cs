@@ -68,7 +68,7 @@ public class ObjectSpawner : MonoBehaviour
     public void ObjectActive()
     {
         StartCoroutine(SpawnMeteor());
-        //StartCoroutine(SpawnItem());
+        StartCoroutine(SpawnItem());
     }
 
     IEnumerator SpawnMeteor()
@@ -80,7 +80,7 @@ public class ObjectSpawner : MonoBehaviour
             for(int i = 0; i < spawnCount; i++)
             {
                 //Instantiate(meteors[Random.Range(0,4)], spawnPosition, Quaternion.identity);
-                int ran = Random.Range(1, 4);
+                int ran = Random.Range(1, 3);
 
                 Meteor newMeteor = poolManager.GetFromPool<Meteor>(ran);
                 newMeteor.transform.position = SpawnPosition();
@@ -89,6 +89,27 @@ public class ObjectSpawner : MonoBehaviour
         }
     }
 
+    IEnumerator SpawnItem()
+    {
+        while(!GameManager.instance.isLanding)
+        {
+            yield return new WaitForSeconds(itemTimeBetSpawn);
+            for (int i = 0; i < 10; i++)
+            {
+                Item newItem = poolManager.GetFromPool<Item>(4);
+                newItem.transform.position = SpawnPosition();
+            }
+        }
+    }
+    public void ReturnPool(Meteor clone)
+    {
+        poolManager.TakeToPool<Meteor>(clone.idName, clone);
+    }
+
+    public void ReturnPool(Item clone)
+    {
+        poolManager.TakeToPool<Item>(clone.idName, clone);
+    }
     public Vector3 SpawnPosition()
     {
         float randomX = Random.Range(spawnZone.position.x - spawnZone.localScale.x / 2f, spawnZone.position.x + spawnZone.localScale.x / 2f);
@@ -100,28 +121,4 @@ public class ObjectSpawner : MonoBehaviour
         return spawnPosition;
     }
 
-    IEnumerator SpawnItem()
-    {
-        while(!GameManager.instance.isLanding)
-        {
-            yield return new WaitForSeconds(itemTimeBetSpawn);
-            for (int i = 0; i < 10; i++)
-            {
-                float randomX = Random.Range(spawnZone.position.x - spawnZone.localScale.x / 2f, spawnZone.position.x + spawnZone.localScale.x / 2f);
-                float randomY = Random.Range(spawnZone.position.y - spawnZone.localScale.y / 2f, spawnZone.position.y + spawnZone.localScale.y / 2f);
-                float randomZ = Random.Range(spawnZone.position.z - spawnZone.localScale.z / 2f, spawnZone.position.z + spawnZone.localScale.z / 2f);
-
-                Vector3 spawnPosition = new Vector3(randomX, randomY, randomZ);
-
-                // 오브젝트 생성
-                Instantiate(item, spawnPosition, Quaternion.identity);
-
-                itemTimeBetSpawn = Random.Range(itemSpawnMin, itemSpawnMax);
-            }
-        }
-    }
-    public void ReturnPool(Meteor clone)
-    {
-        poolManager.TakeToPool<Meteor>(clone.idName, clone);
-    }
 }

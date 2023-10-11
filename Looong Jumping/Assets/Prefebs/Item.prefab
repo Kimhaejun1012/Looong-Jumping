@@ -118,4 +118,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e9c6ee98e89674e8bbfc7b5743b4d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playermove: {fileID: 0}
+  idName: Item
