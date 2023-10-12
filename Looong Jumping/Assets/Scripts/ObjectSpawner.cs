@@ -55,7 +55,6 @@ public class ObjectSpawner : MonoBehaviour
         poolManager = GetComponent<PoolManager>();
         cam = Camera.main;
         offset = transform.position - target.transform.position;
-
     }
 
     private void FixedUpdate()
