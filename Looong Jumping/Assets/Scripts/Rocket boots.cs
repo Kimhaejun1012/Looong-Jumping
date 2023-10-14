@@ -7,13 +7,13 @@ public class Rocketboots : ActiveItem
     private int count = 3;
     private float originalSpeed;
     private float boostedSpeed;
-    private bool isBoosting;
+    private bool isBoosting = false;
     public GameObject[] particleSystem; 
     public PlayerContoller player;
 
     public override void ApplyEffectToPlayer(PlayerContoller player)
     {
-        if(count != 0)
+        if(count != 0 && !isBoosting)
         {
             boostedSpeed = player.moveSpeed + 5f;
             originalSpeed = player.moveSpeed;
