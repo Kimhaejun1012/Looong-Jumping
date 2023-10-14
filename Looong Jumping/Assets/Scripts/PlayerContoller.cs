@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -11,18 +12,27 @@ public class PlayerContoller : MonoBehaviour
 {
     //Playerinfo
 
-    private float groundCheckDistance = 1f;
     public float angleIncrement = 1f;
     public float moveSpeed;
+
+    private float groundCheckDistance = 2.2f;
+    private float raycastOffset = 2f;
+
     private bool isOnStartLine;
     private bool isJumpButtonClick;
+
+    private LineRenderer line; // 총알 궤적을 그리기 위한 렌더러
 
     public FloatingJoystick joystick;
     public LayerMask groundLayer;
     public Button jumpButton;
     public Button accelerationButton;
     public Image tap;
-    
+
+    private Vector3 previousPosition;
+
+    public ParticleSystem hitEffect;
+
     public ObjectSpawner spawner;
     public BarContoller barContoller;
     public Rigidbody rb;
@@ -35,8 +45,13 @@ public class PlayerContoller : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        line = GetComponent<LineRenderer>();
         joystick.gameObject.SetActive(false);
         playerAnimator = GetComponent<Animator>();
+    }
+    private void Start()
+    {
+        //previousPosition = rb.transform.position;
     }
 
     private void FixedUpdate()
@@ -51,34 +66,51 @@ public class PlayerContoller : MonoBehaviour
 
             Vector3 moveDirection = rb.transform.forward;
 
-            var position = rb.position;
-            position += moveDirection * moveSpeed;
-            rb.MovePosition(position);
+            Vector3 currentPosition = rb.transform.position;
+            Vector3 newPosition = currentPosition + moveDirection * moveSpeed * Time.deltaTime;
+            Vector3 moveVector = moveDirection * moveSpeed * Time.deltaTime;
+
+            RaycastHit hit;
+
+            if (Physics.Raycast(currentPosition, moveVector, out hit, moveVector.magnitude, groundLayer))
+            {
+                // 충돌이 감지된 경우, 이전 위치로 돌아가기
+                rb.MovePosition(hit.point);/* = previousPosition*/
+
+                rb.isKinematic = true;
+                playerAnimator.SetBool("Jumping", false);
+                GameManager.instance.Landing();
+            }
+            else
+            {
+                // 충돌하지 않았을 경우, 이동 위치로 이동하고 이전 위치 업데이트
+                rb.MovePosition(newPosition);
+                //transform.position = newPosition;
+                //previousPosition = currentPosition;
+            }
+
             rb.MoveRotation(Quaternion.Euler(-rotateY, rotateX, 0));
         }
         else
         {
             rb.rotation = Quaternion.identity;
         }
-
-
     }
 
     private void Update()
     {
-        if (!GameManager.instance.isLanding && Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundLayer))
-        {
-            //hasLanded = true;
-            // 땅에 닿았을 때의 동작
-            //rb.velocity = Vector3.zero; // 움직임 멈춤
-            //moveSpeed = 0;
-            //playerInfo.money += (int)UIManager.instance.score;
+        CheckLanding();
 
-            //joystick.gameObject.SetActive(false);
-            playerAnimator.SetBool("Jumping", false);
-            GameManager.instance.Landing();
-            //SaveLoadSystem.AutoSave();
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            moveSpeed += moveSpeed * 2;
         }
+
+        //Vector3 v3 = transform.position + Vector3.up * raycastOffset;
+        //line.SetPosition(0, v3);
+        //v3.y -= groundCheckDistance;
+        //line.SetPosition(1, v3);
+        //Debug.DrawLine(transform.position + Vector3.up * raycastOffset, transform.position + Vector3.down * groundCheckDistance, Color.red, groundCheckDistance);
 
         if (isJumpButtonClick)
         {
@@ -112,10 +144,13 @@ public class PlayerContoller : MonoBehaviour
         barContoller.gameObject.SetActive(false);
 
         Time.timeScale = 1f;
+
     }
     public void PerformActionOnClick()
     {
-        moveSpeed += GameManager.instance.saveData.playerData.acceleration * 5f;
+        moveSpeed += GameManager.instance.saveData.playerData.acceleration;
+        //rb.velocity = rb.transform.forward * moveSpeed * Time.deltaTime;
+        //rb.AddForce(0,0,moveSpeed * 500);
         accelCount++;
         //rb.velocity += new Vector3(0,0,moveSpeed);
         //jumpingPower += moveSpeed;
@@ -130,6 +165,23 @@ public class PlayerContoller : MonoBehaviour
         //{
         //    playerAnimator.SetTrigger("Fast Run");
         //}
+    }
+    public void CheckLanding()
+    {
+        if (!GameManager.instance.isLanding && Physics.Raycast(transform.position + Vector3.up * raycastOffset, Vector3.down, groundCheckDistance, groundLayer))
+        {
+            rb.isKinematic = true;
+            //hasLanded = true;
+            // 땅에 닿았을 때의 동작
+            //rb.velocity = Vector3.zero; // 움직임 멈춤
+            //moveSpeed = 0;
+            //playerInfo.money += (int)UIManager.instance.score;
+
+            //joystick.gameObject.SetActive(false);
+            playerAnimator.SetBool("Jumping", false);
+            GameManager.instance.Landing();
+            //SaveLoadSystem.AutoSave();
+        }
     }
 
     public void PlayerJump()
@@ -199,6 +251,10 @@ public class PlayerContoller : MonoBehaviour
 
     public void HitMeteor()
     {
-        moveSpeed *= 0.5f;
+        hitEffect.Play();
+        if(!playerAnimator.GetBool("Rocket"))
+        {
+            moveSpeed *= 0.5f;
+        }
     }
 }

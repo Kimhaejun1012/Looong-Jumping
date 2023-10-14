@@ -12,7 +12,7 @@ public class PlayerData
         Portal,
         Reloading
     }
-    public float acceleration = 0.01f;
+    public float acceleration = 1f;
     public float jumpingPower = 100f;
     public int gold = 0;
     public Active active = Active.RocketBoots;

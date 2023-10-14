@@ -10,6 +10,8 @@ TagManager:
   - Floor
   - Rocket Boots
   - Portal
+  - Bullet
+  - Rocket Count
   layers:
   - Default
   - TransparentFX
