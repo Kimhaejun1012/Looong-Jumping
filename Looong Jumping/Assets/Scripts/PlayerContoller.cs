@@ -167,6 +167,7 @@ public class PlayerContoller : MonoBehaviour
         {
             Vector3 newPosition = transform.position;
             newPosition.z += 100f;
+            newPosition.y += 100f;
             transform.position = newPosition;
         }
     }

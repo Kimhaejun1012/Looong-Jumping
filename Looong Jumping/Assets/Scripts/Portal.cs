@@ -12,9 +12,14 @@ public class Portal : ActiveItem
         //Debug.Log("Æ÷Å» ¹öÆ°");
         var x = Instantiate(portal);
         Vector3 playerForward = player.transform.forward;
-        Vector3 portalPosition = player.transform.position + playerForward * 10f;
+        //Vector3 portalPosition = player.transform.position + playerForward * 10f;
+        //portalPosition.y -= 3f;
+        Vector3 portalPosition = player.transform.position;
+        portalPosition.z += 2f;
         x.transform.position = portalPosition;
-        x.transform.LookAt(player.transform);
+        //x.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z + 30);
+
+        //x.transform.LookAt(player.transform);
         Debug.Log("Æ÷Å» ¹öÆ°");
     }
 
