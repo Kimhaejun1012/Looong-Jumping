@@ -14,7 +14,6 @@ public class PlayerContoller : MonoBehaviour
     private float groundCheckDistance = 1f;
     public float angleIncrement = 1f;
     public float moveSpeed;
-
     private bool isOnStartLine;
     private bool isJumpButtonClick;
 
@@ -27,7 +26,7 @@ public class PlayerContoller : MonoBehaviour
     public ObjectSpawner spawner;
     public BarContoller barContoller;
     public Rigidbody rb;
-    private Animator playerAnimator;
+    public Animator playerAnimator;
     private int accelCount = 0;
 
     private float rotateX = 0f;
@@ -151,7 +150,7 @@ public class PlayerContoller : MonoBehaviour
         joystick.gameObject.SetActive(true);
         spawner.ObjectActive();
 
-
+        ActiveManager.instance.ActivateCurrentItemButton();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -160,9 +159,15 @@ public class PlayerContoller : MonoBehaviour
         {
             isOnStartLine = true;
         }
-        if (other.CompareTag("CamZone"))
+        else if (other.CompareTag("CamZone"))
         {
             GameManager.instance.InCamZone();
+        }
+        else if (other.CompareTag("Portal"))
+        {
+            Vector3 newPosition = transform.position;
+            newPosition.z += 100f;
+            transform.position = newPosition;
         }
     }
 
@@ -172,11 +177,11 @@ public class PlayerContoller : MonoBehaviour
         {
             isOnStartLine = false;
         }
-        if (other.CompareTag("CamZone"))
+        else if (other.CompareTag("CamZone"))
         {
             GameManager.instance.OutCamZone();
         }
-        if(other.CompareTag("Floor"))
+        else if(other.CompareTag("Floor"))
         {
             jumpButton.gameObject.SetActive(false);
             accelerationButton.gameObject.SetActive(false);

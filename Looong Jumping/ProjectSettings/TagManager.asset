@@ -8,6 +8,8 @@ TagManager:
   - CamZone
   - GameOver
   - Floor
+  - Rocket Boots
+  - Portal
   layers:
   - Default
   - TransparentFX
