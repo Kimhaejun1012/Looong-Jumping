@@ -221,6 +221,7 @@ public class PlayerContoller : MonoBehaviour
             newPosition.z += 100f;
             newPosition.y += 100f;
             transform.position = newPosition;
+            Debug.Log("Æ÷Å»");
         }
     }
 
