@@ -7286,7 +7286,7 @@ GameObject:
   - component: {fileID: 1111824474}
   m_Layer: 5
   m_Name: Portal Button
-  m_TagString: Untagged
+  m_TagString: Portal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7322,7 +7322,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99ccbe5f2d1ba3f49a992608a2cf1999, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  portal: {fileID: 1915930313476278527, guid: 477769b7ea7ccaf4b8eee6a52b958834, type: 3}
+  portal:
+  - {fileID: 8620614195577523320, guid: 6d1674e4f24d83743a69dab003e272af, type: 3}
+  - {fileID: 455378039958612850, guid: f2af2eb5582add54da7af7e7ffcd8da6, type: 3}
+  - {fileID: 4008541608224227815, guid: 5c407c2718490ad49822e606e8239be5, type: 3}
+  - {fileID: 6888210593782727876, guid: b417e0a0a2c2b3b4396552642734fddc, type: 3}
 --- !u!114 &1111824475
 MonoBehaviour:
   m_ObjectHideFlags: 0
