@@ -15,9 +15,12 @@ public class Rocketboots : ActiveItem
     {
         if(count != 0 && !isBoosting)
         {
-            boostedSpeed = player.moveSpeed + 5f;
+            boostedSpeed = player.moveSpeed * 5f;
             originalSpeed = player.moveSpeed;
+            GameObject childObject = transform.Find("Count" + count.ToString()).gameObject;
+            childObject.SetActive(false);
             count--;
+
             StartCoroutine(BoostPlayerSpeed(1.0f));
         }
     }
