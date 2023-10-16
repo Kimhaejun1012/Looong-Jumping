@@ -12,6 +12,9 @@ TagManager:
   - Portal
   - Bullet
   - Rocket Count
+  - Copper
+  - Gold
+  - Silver
   layers:
   - Default
   - TransparentFX

@@ -14,9 +14,11 @@ public class PlayerContoller : MonoBehaviour
 
     public float angleIncrement = 1f;
     public float moveSpeed;
+    public float moveSpeedOffset;
+    public bool isPortal;
 
-    private float groundCheckDistance = 2.2f;
-    private float raycastOffset = 2f;
+    private float groundCheckDistance = 2.4f;
+    private float raycastOffset = 0.4f;
 
     private bool isOnStartLine;
     private bool isJumpButtonClick;
@@ -67,29 +69,36 @@ public class PlayerContoller : MonoBehaviour
             Vector3 moveDirection = rb.transform.forward;
 
             Vector3 currentPosition = rb.transform.position;
-            Vector3 newPosition = currentPosition + moveDirection * moveSpeed * Time.deltaTime;
-            Vector3 moveVector = moveDirection * moveSpeed * Time.deltaTime;
 
-            RaycastHit hit;
-
-            if (Physics.Raycast(currentPosition, moveVector, out hit, moveVector.magnitude, groundLayer))
+            if (isPortal == true)
             {
-                // 충돌이 감지된 경우, 이전 위치로 돌아가기
-                rb.MovePosition(hit.point);/* = previousPosition*/
-
                 rb.isKinematic = true;
-                playerAnimator.SetBool("Jumping", false);
-                GameManager.instance.Landing();
+                rb.MovePosition(rb.transform.position + Vector3.down * 0.05f);
             }
             else
             {
-                // 충돌하지 않았을 경우, 이동 위치로 이동하고 이전 위치 업데이트
-                rb.MovePosition(newPosition);
-                //transform.position = newPosition;
-                //previousPosition = currentPosition;
-            }
+                RaycastHit hit;
+                Vector3 newPosition = currentPosition + moveDirection * moveSpeed * Time.deltaTime;
+                Vector3 moveVector = moveDirection * moveSpeed * Time.deltaTime;
+                if (Physics.Raycast(currentPosition, moveVector, out hit, moveVector.magnitude, groundLayer))
+                {
+                    // 충돌이 감지된 경우, 이전 위치로 돌아가기
+                    rb.MovePosition(hit.point);/* = previousPosition*/
+                    rb.isKinematic = true;
+                    playerAnimator.SetBool("Jumping", false);
+                    GameManager.instance.Landing();
+                }
+                else
+                {
+                    // 충돌하지 않았을 경우, 이동 위치로 이동하고 이전 위치 업데이트
+                    rb.MovePosition(newPosition);
 
+                    //transform.position = newPosition;
+                    //previousPosition = currentPosition;
+                }
+            }
             rb.MoveRotation(Quaternion.Euler(-rotateY, rotateX, 0));
+
         }
         else
         {
@@ -106,9 +115,9 @@ public class PlayerContoller : MonoBehaviour
             moveSpeed += moveSpeed * 2;
         }
 
-        //Vector3 v3 = transform.position + Vector3.up * raycastOffset;
+        //Vector3 v3 = transform.position + transform.up * -raycastOffset;
         //line.SetPosition(0, v3);
-        //v3.y -= groundCheckDistance;
+        //v3.y += groundCheckDistance;
         //line.SetPosition(1, v3);
         //Debug.DrawLine(transform.position + Vector3.up * raycastOffset, transform.position + Vector3.down * groundCheckDistance, Color.red, groundCheckDistance);
 
@@ -168,7 +177,7 @@ public class PlayerContoller : MonoBehaviour
     }
     public void CheckLanding()
     {
-        if (!GameManager.instance.isLanding && Physics.Raycast(transform.position + Vector3.up * raycastOffset, Vector3.down, groundCheckDistance, groundLayer))
+        if (!GameManager.instance.isLanding && Physics.Raycast(transform.position + transform.up * -raycastOffset, transform.up, out RaycastHit hit, groundCheckDistance, groundLayer))
         {
             rb.isKinematic = true;
             //hasLanded = true;
@@ -176,7 +185,7 @@ public class PlayerContoller : MonoBehaviour
             //rb.velocity = Vector3.zero; // 움직임 멈춤
             //moveSpeed = 0;
             //playerInfo.money += (int)UIManager.instance.score;
-
+            transform.position = hit.point;
             //joystick.gameObject.SetActive(false);
             playerAnimator.SetBool("Jumping", false);
             GameManager.instance.Landing();
@@ -218,10 +227,31 @@ public class PlayerContoller : MonoBehaviour
         else if (other.CompareTag("Portal"))
         {
             Vector3 newPosition = transform.position;
-            newPosition.z += 100f;
-            newPosition.y += 100f;
+            newPosition.z += 30f;
+            newPosition.y += 10f;
             transform.position = newPosition;
+            isPortal = false;
+            rb.isKinematic = false;
             Debug.Log("포탈");
+        }
+        else if(other.CompareTag("Silver"))
+        {
+
+            GameManager.instance.saveData.playerData.gold += 500;
+            UIManager.instance.playerMoney.text = $"Gold : {GameManager.instance.saveData.playerData.gold}";
+            Destroy(other.gameObject);
+        }
+        else if (other.CompareTag("Copper"))
+        {
+            GameManager.instance.saveData.playerData.gold += 100;
+            UIManager.instance.playerMoney.text = $"Gold : {GameManager.instance.saveData.playerData.gold}";
+            Destroy(other.gameObject);
+        }
+        else if (other.CompareTag("Gold"))
+        {
+            GameManager.instance.saveData.playerData.gold += 1000;
+            UIManager.instance.playerMoney.text = $"Gold : {GameManager.instance.saveData.playerData.gold}";
+            Destroy(other.gameObject);
         }
     }
 

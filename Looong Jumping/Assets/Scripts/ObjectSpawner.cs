@@ -31,6 +31,7 @@ public class ObjectSpawner : MonoBehaviour
     public Transform target;
     public GameObject item;
     public GameObject[] meteors;
+    public GameObject[] coins;
 
     PoolManager poolManager;
 
@@ -43,6 +44,10 @@ public class ObjectSpawner : MonoBehaviour
     public float itemSpawnMax = 0.2f;
     public float itemSpawnMin = 0.1f;
     private float itemTimeBetSpawn;
+
+    public float coinSpawnMax = 1f;
+    public float coinSpawnMin = 0.5f;
+    private float coinTimeBetSpawn;
 
     private int spawnCount = 10;
 
@@ -68,6 +73,7 @@ public class ObjectSpawner : MonoBehaviour
     {
         StartCoroutine(SpawnMeteor());
         StartCoroutine(SpawnItem());
+        StartCoroutine(SpawnCoin());
     }
 
     IEnumerator SpawnMeteor()
@@ -87,7 +93,17 @@ public class ObjectSpawner : MonoBehaviour
             }
         }
     }
+    IEnumerator SpawnCoin()
+    {
+        while (!GameManager.instance.isLanding)
+        {
+            yield return new WaitForSeconds(coinTimeBetSpawn);
 
+            var coin = Instantiate(coins[Random.Range(0,2)]);
+            coin.transform.position = SpawnPosition();
+            coinTimeBetSpawn = Random.Range(coinSpawnMin, coinSpawnMax);
+        }
+    }
     IEnumerator SpawnItem()
     {
         while(!GameManager.instance.isLanding)

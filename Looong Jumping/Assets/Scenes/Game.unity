@@ -1809,7 +1809,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6685562732787812659, guid: 9561f8d33423a4977992b0a71350e4b5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 14.23
+      value: 10.55
       objectReference: {fileID: 0}
     - target: {fileID: 6685562732787812659, guid: 9561f8d33423a4977992b0a71350e4b5, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1849,6 +1849,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6685562732787812659, guid: 9561f8d33423a4977992b0a71350e4b5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1053904726}
+    - targetCorrespondingSourceObject: {fileID: 6685562732787812659, guid: 9561f8d33423a4977992b0a71350e4b5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2104513028}
     - targetCorrespondingSourceObject: {fileID: 2600663075448697290, guid: 9561f8d33423a4977992b0a71350e4b5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1514708571}
@@ -7322,11 +7325,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99ccbe5f2d1ba3f49a992608a2cf1999, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  portal:
+  portalEnter:
   - {fileID: 8620614195577523320, guid: 6d1674e4f24d83743a69dab003e272af, type: 3}
   - {fileID: 455378039958612850, guid: f2af2eb5582add54da7af7e7ffcd8da6, type: 3}
   - {fileID: 4008541608224227815, guid: 5c407c2718490ad49822e606e8239be5, type: 3}
   - {fileID: 6888210593782727876, guid: b417e0a0a2c2b3b4396552642734fddc, type: 3}
+  portalExit:
+  - {fileID: 8620614195577523320, guid: 80c317013b612d847bd8277b819cecc4, type: 3}
+  - {fileID: 455378039958612850, guid: 71d150e1f96984a4ab45d8c9e725d04d, type: 3}
+  - {fileID: 4008541608224227815, guid: 1769d9ffc5b81294085f4c67ebc39736, type: 3}
+  - {fileID: 6888210593782727876, guid: 49a5f9d8f40b202409b848cf71ef3eda, type: 3}
 --- !u!114 &1111824475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7938,7 +7946,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 500, y: -82}
+  m_AnchoredPosition: {x: 0, y: -50}
   m_SizeDelta: {x: 531.893, y: 664.106}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &1226843093
@@ -7965,7 +7973,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1226843093}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
   m_Name: 
@@ -8005,8 +8013,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1226843093}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.23439938, y: 0, z: 0, w: 0.9721404}
-  m_LocalPosition: {x: 0, y: 16.789999, z: -40}
+  m_LocalRotation: {x: 0.23439945, y: 0, z: 0, w: 0.9721404}
+  m_LocalPosition: {x: 0, y: 13.110001, z: -40}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8046,10 +8054,16 @@ MonoBehaviour:
   target: {fileID: 1186557151}
   item: {fileID: 6492905784504668534, guid: fa6df05bad3790c4e9dac2b58adc3c9e, type: 3}
   meteors: []
+  coins:
+  - {fileID: 4125811319119800544, guid: 4aad4020ccdb1a244bee6323f33eda05, type: 3}
+  - {fileID: 6641443189505393959, guid: 6a823f603c81f2c4d992a0014808507e, type: 3}
+  - {fileID: 6029153845906111867, guid: 91f3f3bd118e5cc4794191af47046362, type: 3}
   spawnZone: {fileID: 737822970}
   meteorSpawnMax: 0.5
   itemSpawnMax: 3
   itemSpawnMin: 1
+  coinSpawnMax: 1
+  coinSpawnMin: 0.5
   offset: {x: 0, y: 0, z: 0}
 --- !u!4 &1265134130
 Transform:
@@ -9981,7 +9995,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2104513023}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
   m_Name: 
@@ -10015,7 +10029,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2104513023}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 21a2ef70023d35048a6181aff8a1ed4d, type: 3}
   m_Name: 
@@ -10089,18 +10103,17 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2104513023}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.23439938, y: 0, z: 0, w: 0.9721404}
-  m_LocalPosition: {x: 0, y: 16.789999, z: -40}
+  m_LocalRotation: {x: 0.23439945, y: -0, z: -0, w: 0.9721404}
+  m_LocalPosition: {x: 0, y: 2.5600004, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1186557151}
   m_LocalEulerAnglesHint: {x: 9.5, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 2104513028}
   - {fileID: 1907041989}
   - {fileID: 231589105}
   - {fileID: 449324137}

@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class Portal : ActiveItem
 {
-    public GameObject[] portal;
+    public GameObject[] portalEnter;
+    public GameObject[] portalExit;
 
     public override void ApplyEffectToPlayer(PlayerContoller player)
     {
@@ -10,13 +11,20 @@ public class Portal : ActiveItem
         ////x.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.forward /*player.transform.position.z + 50f*/);
         //x.transform.position = player.transform.position;
         //Debug.Log("Æ÷Å» ¹öÆ°");
-        var x = Instantiate(portal[Random.Range(0,4)]);
-        Vector3 playerForward = player.transform.forward;
+        int ran = Random.Range(0, 3);
+        player.moveSpeedOffset = player.moveSpeed;
+        var ent = Instantiate(portalEnter[ran]);
+        var exi = Instantiate(portalExit[ran]);
+        Vector3 portalPosition = player.transform.position + Vector3.down * 3;
         //Vector3 portalPosition = player.transform.position + playerForward * 10f;
         //portalPosition.y -= 3f;
-        Vector3 portalPosition = player.transform.position;
-        portalPosition.z += 2f;
-        x.transform.position = portalPosition;
+
+        ent.transform.position = portalPosition;
+        portalPosition.z += 30f;
+        portalPosition.y += 10f;
+        exi.transform.position = portalPosition;
+        player.isPortal = true;
+        //player.playerAnimator.SetBool("Jumping",false);
         //x.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z + 30);
 
         //x.transform.LookAt(player.transform);

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2019135460666288006}
   m_Layer: 0
   m_Name: SilverCoins
-  m_TagString: Untagged
+  m_TagString: Silver
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -100,7 +100,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -136,7 +136,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4268143984701288, guid: c7215f01068703b4a9dd5eb3305fd261, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.15
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4268143984701288, guid: c7215f01068703b4a9dd5eb3305fd261, type: 3}
       propertyPath: m_LocalPosition.z

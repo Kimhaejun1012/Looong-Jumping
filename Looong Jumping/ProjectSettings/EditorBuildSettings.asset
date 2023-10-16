@@ -10,6 +10,9 @@ EditorBuildSettings:
     guid: c747d45f7b396e9429be04b684adc28b
   - enabled: 1
     path: Assets/Scenes/Shop.unity
+    guid: 5d09095aae534fd48a6a9319ee07fa24
+  - enabled: 0
+    path: Assets/Scenes/Shop2.unity
     guid: 471c40b72d6647c4c81de76aad118d0b
   - enabled: 0
     path: Assets/Scenes/programmer.unity
