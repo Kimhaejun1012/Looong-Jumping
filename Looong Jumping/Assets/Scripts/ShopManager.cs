@@ -35,12 +35,12 @@ public class ShopManager : MonoBehaviour
     {
         shopTable = DataTableManager.GetTable<ShopTable>();
         shopTable.GetValue(1001);
-        if(GameManager.instance.saveData.shopData.portalParchase)
+        if(GameManager.instance.saveData.shopData.rocketParchase)
         {
             rocketbootsPurChaseButton.gameObject.SetActive(false);
             rocketbootsEquipButton.gameObject.SetActive(true);
         }
-        if (GameManager.instance.saveData.shopData.rocketParchase)
+        if (GameManager.instance.saveData.shopData.portalParchase)
         {
             portalPurChaseButton.gameObject.SetActive(false);
             portalEquipButton.gameObject.SetActive(true);
@@ -81,23 +81,25 @@ public class ShopManager : MonoBehaviour
     }
     public void PurchaseRocketBoots()
     {
-        if (GameManager.instance.saveData.playerData.gold > accelerationCost)
+        if (GameManager.instance.saveData.playerData.gold >= accelerationCost)
         {
             GameManager.instance.saveData.playerData.gold -= accelerationCost;
             playerMoney.text = $"Gold : {GameManager.instance.saveData.playerData.gold}";
             rocketbootsPurChaseButton.gameObject.SetActive(false);
             rocketbootsEquipButton.gameObject.SetActive(true);
+            GameManager.instance.saveData.shopData.rocketParchase = true;
             SaveLoadSystem.AutoSave(GameManager.instance.saveData);
         }
     }
     public void PurchasePortal()
     {
-        if (GameManager.instance.saveData.playerData.gold > accelerationCost)
+        if (GameManager.instance.saveData.playerData.gold >= accelerationCost)
         {
             GameManager.instance.saveData.playerData.gold -= accelerationCost;
             playerMoney.text = $"Gold : {GameManager.instance.saveData.playerData.gold}";
             portalPurChaseButton.gameObject.SetActive(false);
             portalEquipButton.gameObject.SetActive(true);
+            GameManager.instance.saveData.shopData.portalParchase = true;
             SaveLoadSystem.AutoSave(GameManager.instance.saveData);
         }
     }
