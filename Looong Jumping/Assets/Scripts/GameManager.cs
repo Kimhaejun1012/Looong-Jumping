@@ -40,11 +40,12 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        SaveLoadSystem.Save(saveData);
+        saveData = SaveLoadSystem.AutoLoad() as SaveDataVC;
     }
     private void Start()
     {
-        SaveLoadSystem.Save(saveData);
-        saveData = SaveLoadSystem.AutoLoad() as SaveDataVC;
+
 
         //Debug.Log("게임 매니저 스타트");
         //Debug.Log("버전 : " + saveData.Version);

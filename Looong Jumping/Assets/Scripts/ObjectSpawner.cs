@@ -1,9 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 using Redcode.Pools;
-using UnityEditor.EditorTools;
 
 public class ObjectSpawner : MonoBehaviour
 {
@@ -24,7 +21,6 @@ public class ObjectSpawner : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
     }
     private static ObjectSpawner m_instance;
 
@@ -32,6 +28,7 @@ public class ObjectSpawner : MonoBehaviour
     public GameObject item;
     public GameObject[] meteors;
     public GameObject[] coins;
+    public GameObject[] parts;
 
     PoolManager poolManager;
 
@@ -49,6 +46,10 @@ public class ObjectSpawner : MonoBehaviour
     public float coinSpawnMin = 0.5f;
     private float coinTimeBetSpawn;
 
+    private float partsSpawnMax = 5f;
+    private float partsSpawnMin = 0.2f;
+    private float partsTimeBetSpawn;
+
     private int spawnCount = 10;
 
     public Vector3 offset;
@@ -57,6 +58,7 @@ public class ObjectSpawner : MonoBehaviour
     {
         meteorTimeBetSpawn = Random.Range(0, meteorSpawnMax);
         itemTimeBetSpawn = Random.Range(itemSpawnMin, itemSpawnMax);
+        partsTimeBetSpawn = Random.Range(partsSpawnMin, partsSpawnMax);
         poolManager = GetComponent<PoolManager>();
         cam = Camera.main;
         offset = transform.position - target.transform.position;
@@ -64,18 +66,35 @@ public class ObjectSpawner : MonoBehaviour
 
     private void FixedUpdate()
     {
-        transform.position = target.transform.position + offset.magnitude * cam.transform.forward;
+        //transform.position = target.transform.position + offset.magnitude * cam.transform.forward;
+        //transform.position = target.transform.position + offset.magnitude * target.transform.forward;
+        transform.position = offset + target.transform.position;
         transform.LookAt(target);
     }
-
 
     public void ObjectActive()
     {
         StartCoroutine(SpawnMeteor());
         StartCoroutine(SpawnItem());
         StartCoroutine(SpawnCoin());
+        StartCoroutine(SpawnParts());
     }
+    IEnumerator SpawnParts()
+    {
+        while (!GameManager.instance.isLanding)
+        {
+            yield return new WaitForSeconds(partsTimeBetSpawn);
 
+            for (int i = 0; i < 10; i++)
+            {
+                //Instantiate(meteors[Random.Range(0,4)], spawnPosition, Quaternion.identity);
+
+                Parts newMeteor = poolManager.GetFromPool<Parts>(5);
+                newMeteor.transform.position = SpawnPosition();
+                partsTimeBetSpawn = Random.Range(partsSpawnMin, partsSpawnMax);
+            }
+        }
+    }
     IEnumerator SpawnMeteor()
     {
         while(!GameManager.instance.isLanding)
@@ -120,7 +139,10 @@ public class ObjectSpawner : MonoBehaviour
     {
         poolManager.TakeToPool<Meteor>(clone.idName, clone);
     }
-
+    public void ReturnPool(Parts clone)
+    {
+        poolManager.TakeToPool<Parts>(clone.idName, clone);
+    }
     public void ReturnPool(Item clone)
     {
         poolManager.TakeToPool<Item>(clone.idName, clone);

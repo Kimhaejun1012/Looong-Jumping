@@ -15,6 +15,10 @@ TagManager:
   - Copper
   - Gold
   - Silver
+  - RocketParts
+  - PortalParts
+  - CyborgParts
+  - Ground
   layers:
   - Default
   - TransparentFX

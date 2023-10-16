@@ -8,7 +8,7 @@ public class GameOverTrigger : MonoBehaviour
 
     private void Update()
     {
-        transform.position = new Vector3(player.transform.position.x, -10, player.transform.position.z);
+        transform.position = new Vector3(player.transform.position.x, -15, player.transform.position.z);
     }
 
     public void OnTriggerEnter(Collider other)

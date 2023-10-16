@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -17,11 +18,16 @@ public class PlayerContoller : MonoBehaviour
     public float moveSpeedOffset;
     public bool isPortal;
 
-    private float groundCheckDistance = 2.4f;
-    private float raycastOffset = 0.4f;
+    private float groundCheckDistance = 0.2f;
+    private float raycastOffset = 0.1f;
 
     private bool isOnStartLine;
     private bool isJumpButtonClick;
+    private bool isJump;
+
+    private float currentGravity;
+    private float maxGravity = 0.5f;
+    private float addGravity = 0.005f;
 
     private LineRenderer line; // 총알 궤적을 그리기 위한 렌더러
 
@@ -32,6 +38,9 @@ public class PlayerContoller : MonoBehaviour
     public Image tap;
 
     private Vector3 previousPosition;
+    Vector3 newPosition;
+    Vector3 moveVector;
+    Vector3 currentPosition;
 
     public ParticleSystem hitEffect;
 
@@ -54,6 +63,7 @@ public class PlayerContoller : MonoBehaviour
     private void Start()
     {
         //previousPosition = rb.transform.position;
+        jumpButton.gameObject.SetActive(false);
     }
 
     private void FixedUpdate()
@@ -68,7 +78,19 @@ public class PlayerContoller : MonoBehaviour
 
             Vector3 moveDirection = rb.transform.forward;
 
-            Vector3 currentPosition = rb.transform.position;
+            currentPosition = rb.transform.position;
+
+            //if (isJump)
+            //{
+            //    currentGravity += addGravity;
+            //    if (maxGravity <= currentGravity)
+            //    {
+            //        currentGravity = maxGravity;
+            //    }
+            //    Vector3 offset = rb.transform.position;
+            //    offset.y -= currentGravity;
+            //    rb.transform.position = offset;
+            //}
 
             if (isPortal == true)
             {
@@ -78,8 +100,8 @@ public class PlayerContoller : MonoBehaviour
             else
             {
                 RaycastHit hit;
-                Vector3 newPosition = currentPosition + moveDirection * moveSpeed * Time.deltaTime;
-                Vector3 moveVector = moveDirection * moveSpeed * Time.deltaTime;
+                newPosition = currentPosition + moveDirection * moveSpeed * Time.deltaTime;
+                moveVector = moveDirection * moveSpeed * Time.deltaTime;
                 if (Physics.Raycast(currentPosition, moveVector, out hit, moveVector.magnitude, groundLayer))
                 {
                     // 충돌이 감지된 경우, 이전 위치로 돌아가기
@@ -87,6 +109,7 @@ public class PlayerContoller : MonoBehaviour
                     rb.isKinematic = true;
                     playerAnimator.SetBool("Jumping", false);
                     GameManager.instance.Landing();
+                    Debug.Log("벽 뚫음");
                 }
                 else
                 {
@@ -112,7 +135,17 @@ public class PlayerContoller : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            moveSpeed += moveSpeed * 2;
+            moveSpeed += moveSpeed * 2f;
+        }
+        else if(Input.GetKeyDown(KeyCode.T))
+        {
+            moveSpeed -= moveSpeed * 0.7f;
+        }
+        else if(Input.GetKeyDown(KeyCode.Q))
+        {
+            GameManager.instance.saveData.shopData.rocketParts[GameManager.instance.saveData.shopData.rocketPartsCount] = true;
+            GameManager.instance.saveData.shopData.rocketPartsCount++;
+            SaveLoadSystem.AutoSave(GameManager.instance.saveData);
         }
 
         //Vector3 v3 = transform.position + transform.up * -raycastOffset;
@@ -158,6 +191,7 @@ public class PlayerContoller : MonoBehaviour
     public void PerformActionOnClick()
     {
         moveSpeed += GameManager.instance.saveData.playerData.acceleration;
+        jumpButton.gameObject.SetActive(true);
         //rb.velocity = rb.transform.forward * moveSpeed * Time.deltaTime;
         //rb.AddForce(0,0,moveSpeed * 500);
         accelCount++;
@@ -175,22 +209,66 @@ public class PlayerContoller : MonoBehaviour
         //    playerAnimator.SetTrigger("Fast Run");
         //}
     }
-    public void CheckLanding()
+
+    public void OnCollisionEnter(Collision collision)
     {
-        if (!GameManager.instance.isLanding && Physics.Raycast(transform.position + transform.up * -raycastOffset, transform.up, out RaycastHit hit, groundCheckDistance, groundLayer))
+        if (collision.gameObject.CompareTag("Ground"))
         {
+            Debug.Log("땅닿았담너ㅔㅐㅇ레ㅐ먼러ㅔㅐ");
             rb.isKinematic = true;
             //hasLanded = true;
-            // 땅에 닿았을 때의 동작
+            //땅에 닿았을 때의 동작
             //rb.velocity = Vector3.zero; // 움직임 멈춤
-            //moveSpeed = 0;
+            moveSpeed = 0;
             //playerInfo.money += (int)UIManager.instance.score;
-            transform.position = hit.point;
-            //joystick.gameObject.SetActive(false);
+            //transform.position = hit.point;
+            joystick.gameObject.SetActive(false);
             playerAnimator.SetBool("Jumping", false);
             GameManager.instance.Landing();
-            //SaveLoadSystem.AutoSave();
         }
+    }
+
+    public void CheckLanding()
+    {
+        //if (!GameManager.instance.isLanding && Physics.Raycast(transform.position + transform.up * -raycastOffset, transform.up, out RaycastHit hit, groundCheckDistance, groundLayer))
+        //{
+        //    Debug.Log("땅닿았담너ㅔㅐㅇ레ㅐ먼러ㅔㅐ");
+        //    rb.isKinematic = true;
+        //    hasLanded = true;
+        //    땅에 닿았을 때의 동작
+        //    rb.velocity = Vector3.zero; // 움직임 멈춤
+        //    moveSpeed = 0;
+        //    playerInfo.money += (int)UIManager.instance.score;
+        //    transform.position = hit.point;
+        //    joystick.gameObject.SetActive(false);
+        //    playerAnimator.SetBool("Jumping", false);
+        //    GameManager.instance.Landing();
+        //    SaveLoadSystem.AutoSave();
+        //}
+        //if (!GameManager.instance.isLanding && Physics.Raycast(transform.position + Vector3.down * raycastOffset, Vector3.down, out RaycastHit hit, groundCheckDistance, groundLayer))
+        //{
+        //    Debug.Log("땅닿았담너ㅔㅐㅇ레ㅐ먼러ㅔㅐ");
+        //    rb.isKinematic = true;
+        //    //hasLanded = true;
+        //    //땅에 닿았을 때의 동작
+        //    //rb.velocity = Vector3.zero; // 움직임 멈춤
+        //    moveSpeed = 0;
+        //    //playerInfo.money += (int)UIManager.instance.score;
+        //    transform.position = hit.point;
+        //    joystick.gameObject.SetActive(false);
+        //    playerAnimator.SetBool("Jumping", false);
+        //    GameManager.instance.Landing();
+        //    //SaveLoadSystem.AutoSave();
+        //}
+        //if (!GameManager.instance.isLanding && Physics.Raycast(currentPosition, moveVector, out RaycastHit hit, moveVector.magnitude, groundLayer))
+        //{
+        //    // 충돌이 감지된 경우, 이전 위치로 돌아가기
+        //    rb.MovePosition(hit.point);/* = previousPosition*/
+        //    rb.isKinematic = true;
+        //    playerAnimator.SetBool("Jumping", false);
+        //    GameManager.instance.Landing();
+        //    Debug.Log("충돌체크요");
+        //}
     }
 
     public void PlayerJump()
@@ -210,6 +288,8 @@ public class PlayerContoller : MonoBehaviour
         }
         joystick.gameObject.SetActive(true);
         spawner.ObjectActive();
+
+        isJump = true;
 
         ActiveManager.instance.ActivateCurrentItemButton();
     }
@@ -232,6 +312,7 @@ public class PlayerContoller : MonoBehaviour
             transform.position = newPosition;
             isPortal = false;
             rb.isKinematic = false;
+            moveSpeed *= GameManager.instance.saveData.shopData.portalIncreaseSpeed;
             Debug.Log("포탈");
         }
         else if(other.CompareTag("Silver"))
@@ -252,6 +333,21 @@ public class PlayerContoller : MonoBehaviour
             GameManager.instance.saveData.playerData.gold += 1000;
             UIManager.instance.playerMoney.text = $"Gold : {GameManager.instance.saveData.playerData.gold}";
             Destroy(other.gameObject);
+        }
+        else if(other.CompareTag("RocketParts"))
+        {
+            GameManager.instance.saveData.shopData.rocketPartsCount++;
+            GameManager.instance.saveData.shopData.rocketParts[GameManager.instance.saveData.shopData.rocketPartsCount] = true;
+            SaveLoadSystem.AutoSave(GameManager.instance.saveData);
+
+        }
+        else if (other.CompareTag("PortalParts"))
+        {
+
+        }
+        else if (other.CompareTag("CybogParts"))
+        {
+
         }
     }
 
@@ -277,7 +373,7 @@ public class PlayerContoller : MonoBehaviour
 
     public void SpeedItem()
     {
-        moveSpeed *= 2f;
+        moveSpeed += GameManager.instance.saveData.playerData.speedIncrease;
     }
 
     public void HitMeteor()
@@ -285,7 +381,8 @@ public class PlayerContoller : MonoBehaviour
         hitEffect.Play();
         if(!playerAnimator.GetBool("Rocket"))
         {
-            moveSpeed *= 0.5f;
+            //moveSpeed += GameManager.instance.saveData.playerData.speedReduction;
+            moveSpeed = Math.Clamp(moveSpeed + GameManager.instance.saveData.playerData.speedReduction, 0, moveSpeed);
         }
     }
 }

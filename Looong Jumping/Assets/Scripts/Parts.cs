@@ -1,15 +1,18 @@
-using Redcode.Pools;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using Redcode.Pools;
 
-public class Meteor : MonoBehaviour, IPoolObject
+public class Parts : MonoBehaviour, IPoolObject
 {
     public string idName;
     private Transform playerPos;
+
+    // Start is called before the first frame update
     void Start()
     {
         playerPos = GameObject.FindWithTag("Player").transform;
     }
-    // Update is called once per frame
     void Update()
     {
         if (transform.position.z - playerPos.position.z < -10)
@@ -17,14 +20,12 @@ public class Meteor : MonoBehaviour, IPoolObject
             ObjectSpawner.instance.ReturnPool(this);
         }
     }
+
+
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player"))
-        {
-            other.SendMessage("HitMeteor");
-            ObjectSpawner.instance.ReturnPool(this);
-        }
     }
+
     public void OnCreatedInPool()
     {
         //오브젝트 처음 실행됐을 떄
@@ -34,5 +35,4 @@ public class Meteor : MonoBehaviour, IPoolObject
     {
         transform.position = ObjectSpawner.instance.SpawnPosition();
     }
-
 }

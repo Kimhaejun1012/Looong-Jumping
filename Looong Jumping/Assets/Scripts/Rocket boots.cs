@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Rocketboots : ActiveItem
 {
-    private int count = 3;
+    private int count;
     private float originalSpeed;
     private float boostedSpeed;
     private bool isBoosting = false;
-    public GameObject[] particleSystem; 
+    public GameObject[] particleSystem;
     public PlayerContoller player;
 
     public override void ApplyEffectToPlayer(PlayerContoller player)
@@ -22,6 +22,16 @@ public class Rocketboots : ActiveItem
             count--;
 
             StartCoroutine(BoostPlayerSpeed(1.0f));
+        }
+    }
+    public void OnEnable()
+    {
+        count = GameManager.instance.saveData.shopData.rocketUsageCount;
+
+        for(int i = 0; i < count; i++)
+        {
+            var x = transform.GetChild(i).gameObject;
+            x.SetActive(true);
         }
     }
     private IEnumerator BoostPlayerSpeed(float duration)
