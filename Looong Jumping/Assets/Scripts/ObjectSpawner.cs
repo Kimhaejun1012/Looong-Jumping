@@ -30,9 +30,12 @@ public class ObjectSpawner : MonoBehaviour
     public GameObject[] coins;
     public GameObject[] parts;
 
+    public float playerMoveSpeed;
+
     PoolManager poolManager;
 
     public Transform spawnZone;
+    public PlayerContoller playerContoller;
 
     private Camera cam;
     public float meteorSpawnMax = 0.1f;
@@ -68,6 +71,7 @@ public class ObjectSpawner : MonoBehaviour
     {
         //transform.position = target.transform.position + offset.magnitude * cam.transform.forward;
         //transform.position = target.transform.position + offset.magnitude * target.transform.forward;
+        offset.z = playerContoller.moveSpeed;
         transform.position = offset + target.transform.position;
         transform.LookAt(target);
     }

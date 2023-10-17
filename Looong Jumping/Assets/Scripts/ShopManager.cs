@@ -97,6 +97,18 @@ public class ShopManager : MonoBehaviour
             SaveLoadSystem.AutoSave(GameManager.instance.saveData);
         }
     }
+    public void PurchasePortal()
+    {
+        if (GameManager.instance.saveData.playerData.gold >= accelerationCost)
+        {
+            GameManager.instance.saveData.playerData.gold -= accelerationCost;
+            playerMoney.text = $"Gold : {GameManager.instance.saveData.playerData.gold}";
+            portalPurChaseButton.gameObject.SetActive(false);
+            portalEquipButton.gameObject.SetActive(true);
+            GameManager.instance.saveData.shopData.portalParchase = true;
+            SaveLoadSystem.AutoSave(GameManager.instance.saveData);
+        }
+    }
     public void CollisionReductionSpeed()
     {
         GameManager.instance.saveData.playerData.speedReduction *= 0.9f;
@@ -127,19 +139,13 @@ public class ShopManager : MonoBehaviour
         GameManager.instance.saveData.shopData.portalIncreaseSpeed += 0.2f;
         SaveLoadSystem.AutoSave(GameManager.instance.saveData);
     }
-
-    public void PurchasePortal()
+    public void IncreasePerfectJumpPower()
     {
-        if (GameManager.instance.saveData.playerData.gold >= accelerationCost)
-        {
-            GameManager.instance.saveData.playerData.gold -= accelerationCost;
-            playerMoney.text = $"Gold : {GameManager.instance.saveData.playerData.gold}";
-            portalPurChaseButton.gameObject.SetActive(false);
-            portalEquipButton.gameObject.SetActive(true);
-            GameManager.instance.saveData.shopData.portalParchase = true;
-            SaveLoadSystem.AutoSave(GameManager.instance.saveData);
-        }
+        GameManager.instance.saveData.playerData.perfectJumpPowerIncrease += 0.1f;
+        SaveLoadSystem.AutoSave(GameManager.instance.saveData);
     }
+
+
     public void PortalEquip()
     {
         GameManager.instance.saveData.playerData.active = Active.Portal;
@@ -149,12 +155,6 @@ public class ShopManager : MonoBehaviour
     {
         GameManager.instance.saveData.playerData.active = Active.RocketBoots;
         SaveLoadSystem.AutoSave(GameManager.instance.saveData);
-    }
-
-    public void TestDeductMoney()
-    {
-        GameManager.instance.saveData.playerData.gold -= accelerationCost;
-        playerMoney.text = $"Gold : {GameManager.instance.saveData.playerData.gold}";
     }
 
     public void ChangeScene()

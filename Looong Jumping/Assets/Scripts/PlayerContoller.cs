@@ -43,6 +43,7 @@ public class PlayerContoller : MonoBehaviour
     Vector3 currentPosition;
 
     public ParticleSystem hitEffect;
+    public ParticleSystem positiveEffect;
 
     public ObjectSpawner spawner;
     public BarContoller barContoller;
@@ -105,12 +106,21 @@ public class PlayerContoller : MonoBehaviour
                 if (Physics.Raycast(currentPosition, moveVector, out hit, moveVector.magnitude, groundLayer))
                 {
                     // 충돌이 감지된 경우, 이전 위치로 돌아가기
+                    Debug.Log("벽 뚫어서 되돌아옴");
                     rb.MovePosition(hit.point);/* = previousPosition*/
                     rb.isKinematic = true;
                     playerAnimator.SetBool("Jumping", false);
                     GameManager.instance.Landing();
-                    Debug.Log("벽 뚫음");
                 }
+                //if (Physics.Raycast(currentPosition, currentPosition - newPosition,out hit, Vector3.Distance(newPosition, currentPosition), groundLayer))
+                //{
+                //    // 충돌이 감지된 경우, 이전 위치로 돌아가기
+                //    Debug.Log("벽 뚫어서 되돌아옴");
+                //    rb.MovePosition(hit.point);/* = previousPosition*/
+                //    rb.isKinematic = true;
+                //    playerAnimator.SetBool("Jumping", false);
+                //    GameManager.instance.Landing();
+                //}
                 else
                 {
                     // 충돌하지 않았을 경우, 이동 위치로 이동하고 이전 위치 업데이트
@@ -147,9 +157,8 @@ public class PlayerContoller : MonoBehaviour
             GameManager.instance.saveData.shopData.rocketPartsCount++;
             SaveLoadSystem.AutoSave(GameManager.instance.saveData);
         }
-
         //Vector3 v3 = transform.position + transform.up * -raycastOffset;
-        //line.SetPosition(0, v3);
+        //line.SetPosition(0, v3);`
         //v3.y += groundCheckDistance;
         //line.SetPosition(1, v3);
         //Debug.DrawLine(transform.position + Vector3.up * raycastOffset, transform.position + Vector3.down * groundCheckDistance, Color.red, groundCheckDistance);
@@ -275,7 +284,7 @@ public class PlayerContoller : MonoBehaviour
     {
         if (isOnStartLine)
         {
-            rb.AddForce(0f, (GameManager.instance.saveData.playerData.jumpingPower * 1.2f) * (barContoller.angleValue), (GameManager.instance.saveData.playerData.jumpingPower * 1.2f) * (100 - barContoller.angleValue));
+            rb.AddForce(0f, (GameManager.instance.saveData.playerData.jumpingPower * GameManager.instance.saveData.playerData.perfectJumpPowerIncrease) * (barContoller.angleValue), (GameManager.instance.saveData.playerData.jumpingPower * GameManager.instance.saveData.playerData.perfectJumpPowerIncrease) * (100 - barContoller.angleValue));
             jumpButton.gameObject.SetActive(false);
             accelerationButton.gameObject.SetActive(false);
             UIManager.instance.ShowPerfectText();
@@ -313,7 +322,6 @@ public class PlayerContoller : MonoBehaviour
             isPortal = false;
             rb.isKinematic = false;
             moveSpeed *= GameManager.instance.saveData.shopData.portalIncreaseSpeed;
-            Debug.Log("포탈");
         }
         else if(other.CompareTag("Silver"))
         {
@@ -339,6 +347,7 @@ public class PlayerContoller : MonoBehaviour
             GameManager.instance.saveData.shopData.rocketPartsCount++;
             GameManager.instance.saveData.shopData.rocketParts[GameManager.instance.saveData.shopData.rocketPartsCount] = true;
             SaveLoadSystem.AutoSave(GameManager.instance.saveData);
+            positiveEffect.Play();
 
         }
         else if (other.CompareTag("PortalParts"))
@@ -374,15 +383,20 @@ public class PlayerContoller : MonoBehaviour
     public void SpeedItem()
     {
         moveSpeed += GameManager.instance.saveData.playerData.speedIncrease;
+        positiveEffect.Play();
     }
 
     public void HitMeteor()
     {
         hitEffect.Play();
-        if(!playerAnimator.GetBool("Rocket"))
+        if (!playerAnimator.GetBool("Rocket"))
         {
             //moveSpeed += GameManager.instance.saveData.playerData.speedReduction;
-            moveSpeed = Math.Clamp(moveSpeed + GameManager.instance.saveData.playerData.speedReduction, 0, moveSpeed);
+            //Debug.Log("계산된 값 : " + moveSpeed + GameManager.instance.saveData.playerData.speedReduction);
+            Debug.Log($"MoveSpeed 감소 전 : {moveSpeed}");
+            moveSpeed = Math.Clamp(moveSpeed += GameManager.instance.saveData.playerData.speedReduction, 0, moveSpeed);
+            Debug.Log($"MoveSpeed 감소 후 : {moveSpeed}");
+
         }
     }
 }

@@ -16,8 +16,9 @@ public class PlayerData
     public float acceleration = 1f;
     public float jumpingPower = 100f;
     public int gold = 0;
-    public float speedReduction = 10f;
-    public float speedIncrease = -20f;
+    public float speedReduction = -30f;
+    public float speedIncrease = 10f;
+    public float perfectJumpPowerIncrease = 1.1f;
     public Active active = Active.None;
 
 }
