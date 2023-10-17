@@ -10683,18 +10683,6 @@ Transform:
   - {fileID: 1728081558}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-<<<<<<< HEAD
---- !u!198 &1970210295 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 4366105758893293804, guid: b37f987162456c74c963b336a2a41de4, type: 3}
-  m_PrefabInstance: {fileID: 4747269857677221352}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1970210297 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8843264774137773719, guid: b37f987162456c74c963b336a2a41de4, type: 3}
-  m_PrefabInstance: {fileID: 4747269857677221352}
-  m_PrefabAsset: {fileID: 0}
-=======
 --- !u!1 &1970492799
 GameObject:
   m_ObjectHideFlags: 0
@@ -10829,7 +10817,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1970492799}
   m_CullTransparentMesh: 1
->>>>>>> feature/메인화면,_인게임UI수정
 --- !u!1 &1996388138 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5562084605334202181, guid: 9561f8d33423a4977992b0a71350e4b5, type: 3}
