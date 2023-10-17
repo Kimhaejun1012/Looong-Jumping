@@ -19,6 +19,7 @@ TagManager:
   - PortalParts
   - CyborgParts
   - Ground
+  - CC
   layers:
   - Default
   - TransparentFX

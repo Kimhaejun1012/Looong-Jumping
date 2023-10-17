@@ -145,7 +145,6 @@ public class ShopManager : MonoBehaviour
         SaveLoadSystem.AutoSave(GameManager.instance.saveData);
     }
 
-
     public void PortalEquip()
     {
         GameManager.instance.saveData.playerData.active = Active.Portal;
@@ -156,6 +155,7 @@ public class ShopManager : MonoBehaviour
         GameManager.instance.saveData.playerData.active = Active.RocketBoots;
         SaveLoadSystem.AutoSave(GameManager.instance.saveData);
     }
+
 
     public void ChangeScene()
     {
@@ -168,6 +168,6 @@ public class ShopManager : MonoBehaviour
         //PlayerPrefs.SetFloat(playerInfo.accelerationKey, playerInfo.acceleration);
         //PlayerPrefs.SetInt(playerInfo.moneyKey, playerInfo.money);
         //PlayerPrefs.Save();
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 }

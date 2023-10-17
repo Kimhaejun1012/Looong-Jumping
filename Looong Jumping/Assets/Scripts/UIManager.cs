@@ -21,6 +21,8 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI playerMoney;
 
     public GameObject gameoverUI;
+    public GameObject pauseScreen;
+    public GameObject settingScreen;
 
     public float perfectTextDuration = 1f;
 
@@ -36,10 +38,7 @@ public class UIManager : MonoBehaviour
             return m_instance;
         }
     }
-    private void Awake()
-    {
-        bestScore = PlayerPrefs.GetFloat(bestScroeKey, 0f);
-    }
+
     private static UIManager m_instance;
     public void ShowPerfectText()
     {
@@ -74,13 +73,14 @@ public class UIManager : MonoBehaviour
         }
         resultScoreText.text = scoreText.text;
         bestScoreText.text = $"BEST SCORE : {(int)GameManager.instance.saveData.gameData.bestScore}";
-        GameManager.instance.saveData.playerData.gold += (int)score * 50;
+        GameManager.instance.saveData.playerData.gold += (int)score;
         SaveLoadSystem.AutoSave(GameManager.instance.saveData);
         //PlayerPrefs.SetInt(playerInfo.moneyKey, playerInfo.money);
         //PlayerPrefs.Save();
     }
-    public void Restart()
+    public void RestartButton()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     public void Store()
@@ -88,6 +88,48 @@ public class UIManager : MonoBehaviour
         //PlayerPrefs.SetFloat(playerInfo.jumpingPowerKey, playerInfo.jumpingPower);
         //PlayerPrefs.SetFloat(playerInfo.accelerationKey, playerInfo.acceleration);
         //PlayerPrefs.Save();
+        SceneManager.LoadScene(2);
+    }
+    public void PauseButton()
+    {
+        pauseScreen.SetActive(true);
+        Time.timeScale = 0f;
+    }
+    public void ContinueButton()
+    {
+        pauseScreen.SetActive(false);
+        Time.timeScale = 1f;
+    }
+    public void SettingButton()
+    {
+        settingScreen.SetActive(true);
+    }
+    public void ExitButton()
+    {
+        SceneManager.LoadScene(0);
+    }
+    public void PlayerButton()
+    {
+        Time.timeScale = 1f;
         SceneManager.LoadScene(1);
+    }
+    public void Resset()
+    {
+
+    }
+    public void SettingExitButton()
+    {
+        settingScreen.SetActive(false);
+    }
+
+    public void GameExit()
+    {
+        UnityEditor.EditorApplication.isPlaying = false;
+        //else
+        //    Application.Quit();
+    }
+    public void SettingSaveAndExit()
+    {
+        settingScreen.SetActive(false);
     }
 }

@@ -11,8 +11,6 @@ using SaveDataVC = SaveDataV1;
 
 public class PlayerContoller : MonoBehaviour
 {
-    //Playerinfo
-
     public float angleIncrement = 1f;
     public float moveSpeed;
     public float moveSpeedOffset;
@@ -28,6 +26,7 @@ public class PlayerContoller : MonoBehaviour
     private float currentGravity;
     private float maxGravity = 0.5f;
     private float addGravity = 0.005f;
+    public bool portalTime;
 
     private LineRenderer line; // 총알 궤적을 그리기 위한 렌더러
 
@@ -96,14 +95,14 @@ public class PlayerContoller : MonoBehaviour
             if (isPortal == true)
             {
                 rb.isKinematic = true;
-                rb.MovePosition(rb.transform.position + Vector3.down * 0.05f);
+                rb.MovePosition(rb.transform.position + Vector3.forward * 0.05f);
             }
             else
             {
                 RaycastHit hit;
                 newPosition = currentPosition + moveDirection * moveSpeed * Time.deltaTime;
                 moveVector = moveDirection * moveSpeed * Time.deltaTime;
-                if (Physics.Raycast(currentPosition, moveVector, out hit, moveVector.magnitude, groundLayer))
+                if (Physics.Raycast(currentPosition, newPosition - currentPosition, out hit, moveVector.magnitude, groundLayer))
                 {
                     // 충돌이 감지된 경우, 이전 위치로 돌아가기
                     Debug.Log("벽 뚫어서 되돌아옴");
