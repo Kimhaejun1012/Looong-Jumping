@@ -102,7 +102,7 @@ public class PlayerContoller : MonoBehaviour
                 RaycastHit hit;
                 newPosition = currentPosition + moveDirection * moveSpeed * Time.deltaTime;
                 moveVector = moveDirection * moveSpeed * Time.deltaTime;
-                if (Physics.Raycast(currentPosition, newPosition - currentPosition, out hit, moveVector.magnitude, groundLayer))
+                if (Physics.Raycast(newPosition, newPosition - currentPosition, out hit, moveVector.magnitude, groundLayer))
                 {
                     // 충돌이 감지된 경우, 이전 위치로 돌아가기
                     Debug.Log("벽 뚫어서 되돌아옴");
@@ -111,15 +111,6 @@ public class PlayerContoller : MonoBehaviour
                     playerAnimator.SetBool("Jumping", false);
                     GameManager.instance.Landing();
                 }
-                //if (Physics.Raycast(currentPosition, currentPosition - newPosition,out hit, Vector3.Distance(newPosition, currentPosition), groundLayer))
-                //{
-                //    // 충돌이 감지된 경우, 이전 위치로 돌아가기
-                //    Debug.Log("벽 뚫어서 되돌아옴");
-                //    rb.MovePosition(hit.point);/* = previousPosition*/
-                //    rb.isKinematic = true;
-                //    playerAnimator.SetBool("Jumping", false);
-                //    GameManager.instance.Landing();
-                //}
                 else
                 {
                     // 충돌하지 않았을 경우, 이동 위치로 이동하고 이전 위치 업데이트

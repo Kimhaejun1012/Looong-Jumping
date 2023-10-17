@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static Cinemachine.CinemachineTargetGroup;
 using static UnityEngine.GraphicsBuffer;
 
 public class CameraContoller : MonoBehaviour
@@ -10,9 +11,19 @@ public class CameraContoller : MonoBehaviour
     public Transform player;
     public Vector3 offset;
     public PlayerContoller playerContoller;
-    public Vector3 relativePosition;
-    public float flowCamTime = 0.5f;
+
+    private Vector3 relativePosition;
+
+    public float flowCamTime;
+
+    public float moveSpeed = 2f;
+    private float startTime;
+    private float journeyLength;
+
+    private float camSpeed;
+
     public bool portal;
+
 
     private void Start()
     {
@@ -23,34 +34,45 @@ public class CameraContoller : MonoBehaviour
 
     void Update()
     {
+
+        float distanceCovered = (Time.time - startTime) * moveSpeed;
+        float fractionOfJourney = distanceCovered / journeyLength;
+
         if (portal)
         {
             transform.position = relativePosition;
         }
+        else if(!portal && fractionOfJourney < 1f)
+        {
+            camSpeed += Time.deltaTime * 3f;
+            //transform.localPosition = offset;
+            transform.position = Vector3.Lerp(relativePosition, GameObject.FindGameObjectWithTag("CC").transform.position, fractionOfJourney + camSpeed);
+        }
         else
         {
-            //transform.localPosition = Mathf.
             transform.localPosition = offset;
         }
 
-        if(portal)
+
+        if (portal)
         {
             flowCamTime -= Time.deltaTime;
         }
 
-
-
-        if(flowCamTime < 0)
+        if (flowCamTime < 0)
         {
             portal = false;
-            flowCamTime = 2f;
         }
     }
 
     public void PortalOn()
     {
         relativePosition = GameObject.FindGameObjectWithTag("CC").transform.position;
-        flowCamTime = 2f;
+        flowCamTime = 1.2f;
         portal = true;
+
+        startTime = Time.time;
+        journeyLength = Vector3.Distance(relativePosition, player.position);
     }
+
 }

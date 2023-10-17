@@ -20,11 +20,15 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI bestScoreText;
     public TextMeshProUGUI playerMoney;
 
+    private float fadeDuration = 1.0f; // 텍스트가 사라지는 데 걸리는 시간 (초)
+    private float startAlpha;
+
     public GameObject gameoverUI;
     public GameObject pauseScreen;
     public GameObject settingScreen;
 
     public float perfectTextDuration = 1f;
+    private float timer = 0.0f;
 
     public static UIManager instance
     {
@@ -44,13 +48,27 @@ public class UIManager : MonoBehaviour
     {
         perfectText.text = "Perfect";
         perfectText.gameObject.SetActive(true);
+        startAlpha = perfectText.color.a;
         StartCoroutine(HidePerfectText());
     }
 
     IEnumerator HidePerfectText()
     {
-        yield return new WaitForSeconds(perfectTextDuration);
-        perfectText.gameObject.SetActive(false);
+        while(perfectText.gameObject.activeSelf)
+        {
+            //yield return new WaitForSeconds(perfectTextDuration);
+            yield return null;
+            timer += Time.deltaTime;
+
+            // 타이머를 이용하여 알파 값을 서서히 감소시켜 텍스트를 사라지게 함
+            Color textColor = perfectText.color;
+            textColor.a = Mathf.Lerp(startAlpha, 0.0f, timer / fadeDuration);
+            perfectText.color = textColor;
+            if (timer >= fadeDuration)
+            {
+                perfectText.gameObject.SetActive(false);
+            }
+        }
     }
 
     void Update()
