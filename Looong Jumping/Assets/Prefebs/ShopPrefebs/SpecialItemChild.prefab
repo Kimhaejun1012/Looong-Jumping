@@ -32,8 +32,8 @@ RectTransform:
   - {fileID: 1568300590193642485}
   - {fileID: 3071336946949579693}
   - {fileID: 2252443579527597348}
-  - {fileID: 1689095961981065729}
   - {fileID: 5545214955446950542}
+  - {fileID: 1689095961981065729}
   - {fileID: 8419003369384268437}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -717,7 +717,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8223069462836948012, guid: 59119b710e8aaae45a0bc207873a67f3, type: 3}
       propertyPath: m_Name
-      value: SpecialItemIngredient 2
+      value: SpecialItemIngredient1
       objectReference: {fileID: 0}
     - target: {fileID: 8223069462836948013, guid: 59119b710e8aaae45a0bc207873a67f3, type: 3}
       propertyPath: m_Pivot.x
@@ -823,7 +823,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8223069462836948012, guid: 59119b710e8aaae45a0bc207873a67f3, type: 3}
       propertyPath: m_Name
-      value: SpecialItemIngredient
+      value: SpecialItemIngredient2
       objectReference: {fileID: 0}
     - target: {fileID: 8223069462836948013, guid: 59119b710e8aaae45a0bc207873a67f3, type: 3}
       propertyPath: m_Pivot.x
