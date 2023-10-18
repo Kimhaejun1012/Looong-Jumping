@@ -46,12 +46,6 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
 
-
-        //Debug.Log("게임 매니저 스타트");
-        //Debug.Log("버전 : " + saveData.Version);
-        //Debug.Log("게임 데이터 : " + saveData.gameData);
-        //Debug.Log("상점 데이터 : " + saveData.shopData);
-        //Debug.Log("플레이어 데이터 : " + saveData.playerData);
     }
 
     private void Update()

@@ -131,9 +131,9 @@ public class UIManager : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene(1);
     }
-    public void Resset()
+    public void DataReset()
     {
-
+        SaveLoadSystem.Clear(GameManager.instance.saveData);
     }
     public void SettingExitButton()
     {

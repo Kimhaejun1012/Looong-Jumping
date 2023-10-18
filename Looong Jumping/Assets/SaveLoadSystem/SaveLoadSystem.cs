@@ -89,6 +89,12 @@ public static class SaveLoadSystem
         }
     }
 
+    public static void Clear(SaveData data)
+    {
+        data.ClearData();
+        AutoSave(data);
+    }
+
     public static SaveData Load(string filename)
     {
         var path = Path.Combine(SaveDirectory, filename);

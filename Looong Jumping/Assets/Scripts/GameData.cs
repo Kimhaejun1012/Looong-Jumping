@@ -29,11 +29,12 @@ public class ShopData
     public float rocketSpeed = 3f;
     public int rocketUsageCount = 3;
     public bool rocketParchase = false;
-    public float portalIncreaseSpeed = 1.2f;
-
-    public bool portalParchase = false;
-    public int portalUsageCount = 1;
     public int rocketPartsCount;
+
+    public int portalUsageCount = 1;
+    public float portalIncreaseSpeed = 1.2f;
+    public bool portalParchase = false;
+
     public bool[] rocketParts = new bool[6];
     public bool[] portalParts = new bool[6];
     public bool[] cyborgParts = new bool[6];

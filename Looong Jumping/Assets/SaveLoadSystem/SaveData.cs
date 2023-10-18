@@ -10,6 +10,7 @@ public abstract class SaveData
     public int Version { get; set; }
 
     public abstract SaveData VersionUp();
+    public abstract void ClearData();
 }
 
 public class SaveDataV1 : SaveData
@@ -28,6 +29,14 @@ public class SaveDataV1 : SaveData
         //data.Gold = Gold;
         Debug.Log("VersionUp");
         return null;
+    }
+
+    public override void ClearData()
+    {
+        playerData = new PlayerData();
+        shopData = new ShopData();
+        gameData = new GameData();
+        
     }
 }
 //public class SaveDataV2 : SaveData

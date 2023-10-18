@@ -15,6 +15,7 @@ public class ShopTable : DataTable
         public string Description { get; set; }
         public int Require { get; set; }
         public int UpGrade { get; set; }
+        
     }
 
     protected Dictionary<int, Data> dic = new Dictionary<int, Data>();

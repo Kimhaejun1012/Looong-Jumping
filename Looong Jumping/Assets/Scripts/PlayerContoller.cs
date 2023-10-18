@@ -15,6 +15,7 @@ public class PlayerContoller : MonoBehaviour
     public float moveSpeed;
     public float moveSpeedOffset;
     public bool isPortal;
+    public bool isMove;
 
     private float groundCheckDistance = 0.2f;
     private float raycastOffset = 0.1f;
@@ -35,8 +36,8 @@ public class PlayerContoller : MonoBehaviour
     public Button jumpButton;
     public Button accelerationButton;
     public Image tap;
+    Vector2 direction;
 
-    private Vector3 previousPosition;
     Vector3 newPosition;
     Vector3 moveVector;
     Vector3 currentPosition;
@@ -68,13 +69,26 @@ public class PlayerContoller : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // Debug.DrawRay(transform.position, transform.forward, Color.green);
+
         if (!GameManager.instance.isLanding)
         {
             float x = joystick.Horizontal;
             float y = joystick.Vertical;
-
+            direction = new Vector2(x,y);
             rotateX += x;
             rotateY += y;
+
+            var directionMag = direction.magnitude;
+
+            if (directionMag > 1)
+            {
+                directionMag = 1f;
+            }
+
+            moveSpeed -= Math.Abs(directionMag * 0.1f);
+            //moveSpeed -= Math.Abs(x * 0.1f);
+            //moveSpeed -= Math.Abs(y * 0.1f);
 
             Vector3 moveDirection = rb.transform.forward;
 
@@ -102,23 +116,26 @@ public class PlayerContoller : MonoBehaviour
                 RaycastHit hit;
                 newPosition = currentPosition + moveDirection * moveSpeed * Time.deltaTime;
                 moveVector = moveDirection * moveSpeed * Time.deltaTime;
-                if (Physics.Raycast(newPosition, newPosition - currentPosition, out hit, moveVector.magnitude, groundLayer))
-                {
-                    // 충돌이 감지된 경우, 이전 위치로 돌아가기
-                    Debug.Log("벽 뚫어서 되돌아옴");
-                    rb.MovePosition(hit.point);/* = previousPosition*/
-                    rb.isKinematic = true;
-                    playerAnimator.SetBool("Jumping", false);
-                    GameManager.instance.Landing();
-                }
-                else
-                {
-                    // 충돌하지 않았을 경우, 이동 위치로 이동하고 이전 위치 업데이트
-                    rb.MovePosition(newPosition);
+                Move(isMove);
 
-                    //transform.position = newPosition;
-                    //previousPosition = currentPosition;
-                }
+                //if (Physics.Raycast(currentPosition, newPosition - currentPosition, out hit, moveVector.magnitude, groundLayer))
+                //{
+                //    //2차로 벽 뚫었을 경우를 대비하여 Raycast로 MovePosition()하기 전 포지션과 MovePosition을 할 포지션
+                //    Debug.Log("벽 뚫어서 되돌아옴");
+                //    rb.MovePosition(hit.point);/* = previousPosition*/
+                //    rb.isKinematic = true;
+                //    playerAnimator.SetBool("Jumping", false);
+                //    GameManager.instance.Landing();
+                //}
+                //else
+                //{
+                //    // 충돌하지 않았을 경우, 이동 위치로 이동하고 이전 위치 업데이트
+                //    rb.MovePosition(newPosition);
+                //    Debug.DrawRay(transform.position, transform.forward, Color.green);
+
+                //    //transform.position = newPosition;
+                //    //previousPosition = currentPosition;
+                //}
             }
             rb.MoveRotation(Quaternion.Euler(-rotateY, rotateX, 0));
 
@@ -131,8 +148,6 @@ public class PlayerContoller : MonoBehaviour
 
     private void Update()
     {
-        CheckLanding();
-
         if (Input.GetKeyDown(KeyCode.R))
         {
             moveSpeed += moveSpeed * 2f;
@@ -147,6 +162,31 @@ public class PlayerContoller : MonoBehaviour
             GameManager.instance.saveData.shopData.rocketPartsCount++;
             SaveLoadSystem.AutoSave(GameManager.instance.saveData);
         }
+
+
+        Debug.DrawRay(rb.transform.position, rb.transform.forward, Color.green);
+        if (!GameManager.instance.isLanding && Physics.Raycast(currentPosition, newPosition - currentPosition, out RaycastHit hit, moveVector.magnitude, groundLayer))
+        {
+            //2차로 벽 뚫었을 경우를 대비하여 Raycast로 MovePosition()하기 전 포지션과 MovePosition을 할 포지션
+            Debug.Log("벽 뚫어서 되돌아옴");
+            rb.MovePosition(hit.point);/* = previousPosition*/
+            rb.isKinematic = true;
+            playerAnimator.SetBool("Jumping", false);
+            isMove = false;
+            GameManager.instance.Landing();
+        }
+        else
+        {
+            isMove = true;
+            //transform.position = newPosition;
+            // 충돌하지 않았을 경우, 이동 위치로 이동하고 이전 위치 업데이트
+            //rb.MovePosition(newPosition);
+            //Debug.DrawRay(transform.position, transform.forward, Color.green);
+
+            //transform.position = newPosition;
+            //previousPosition = currentPosition;
+        }
+
         //Vector3 v3 = transform.position + transform.up * -raycastOffset;
         //line.SetPosition(0, v3);`
         //v3.y += groundCheckDistance;
@@ -157,6 +197,12 @@ public class PlayerContoller : MonoBehaviour
         {
             SetGauge();
         }
+    }
+    
+    public void Move(bool move)
+    {
+        if(move)
+        rb.MovePosition(newPosition);
     }
 
     public void JumpButtonDown()
@@ -199,6 +245,7 @@ public class PlayerContoller : MonoBehaviour
         playerAnimator.SetInteger("AccelCount", accelCount);
         playerAnimator.SetBool("Run", true);
         tap.gameObject.SetActive(false);
+        ObjectSpawner.instance.IncreaseSpawnerZ(GameManager.instance.saveData.playerData.acceleration);
         //if (accelCount < 3)
         //{
         // playerAnimator.SetTrigger("Slow Run");
@@ -211,6 +258,9 @@ public class PlayerContoller : MonoBehaviour
 
     public void OnCollisionEnter(Collision collision)
     {
+        //플레이어가 rigidbody.MovePosition()으로 움직이는데
+        //이게 벽을 가끔 뚫는 버그가 있습니다
+        //일단 벽을 안뚫었을때를 가정하여 아래로 충돌체크를 하고
         if (collision.gameObject.CompareTag("Ground"))
         {
             Debug.Log("땅닿았담너ㅔㅐㅇ레ㅐ먼러ㅔㅐ");
@@ -289,7 +339,8 @@ public class PlayerContoller : MonoBehaviour
         spawner.ObjectActive();
 
         isJump = true;
-
+        spawner.SetSpawn(transform.position.z);
+        GameManager.instance.isJumping = true;
         ActiveManager.instance.ActivateCurrentItemButton();
     }
 
@@ -312,6 +363,7 @@ public class PlayerContoller : MonoBehaviour
             isPortal = false;
             rb.isKinematic = false;
             moveSpeed *= GameManager.instance.saveData.shopData.portalIncreaseSpeed;
+            ObjectSpawner.instance.IncreaseSpawnerZ(moveSpeed / GameManager.instance.saveData.shopData.portalIncreaseSpeed);
         }
         else if(other.CompareTag("Silver"))
         {
@@ -338,7 +390,6 @@ public class PlayerContoller : MonoBehaviour
             GameManager.instance.saveData.shopData.rocketParts[GameManager.instance.saveData.shopData.rocketPartsCount] = true;
             SaveLoadSystem.AutoSave(GameManager.instance.saveData);
             positiveEffect.Play();
-
         }
         else if (other.CompareTag("PortalParts"))
         {
@@ -367,13 +418,13 @@ public class PlayerContoller : MonoBehaviour
             playerAnimator.SetBool("Jumping", true);
             playerAnimator.SetBool("Run", false);
         }
-
     }
 
     public void SpeedItem()
     {
         moveSpeed += GameManager.instance.saveData.playerData.speedIncrease;
         positiveEffect.Play();
+        ObjectSpawner.instance.IncreaseSpawnerZ(GameManager.instance.saveData.playerData.speedIncrease);
     }
 
     public void HitMeteor()
@@ -383,9 +434,8 @@ public class PlayerContoller : MonoBehaviour
         {
             //moveSpeed += GameManager.instance.saveData.playerData.speedReduction;
             //Debug.Log("계산된 값 : " + moveSpeed + GameManager.instance.saveData.playerData.speedReduction);
-            Debug.Log($"MoveSpeed 감소 전 : {moveSpeed}");
             moveSpeed = Math.Clamp(moveSpeed += GameManager.instance.saveData.playerData.speedReduction, 0, moveSpeed);
-            Debug.Log($"MoveSpeed 감소 후 : {moveSpeed}");
+            ObjectSpawner.instance.IncreaseSpawnerZ(GameManager.instance.saveData.playerData.speedReduction);
 
         }
     }
