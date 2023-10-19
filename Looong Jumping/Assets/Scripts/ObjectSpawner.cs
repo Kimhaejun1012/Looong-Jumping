@@ -65,9 +65,9 @@ public class ObjectSpawner : MonoBehaviour
     public float partsPosz;
     public float coinPosz;
 
-    private int meteorSpawnCount = 5;
-    private int itemSpawnCount = 3;
-    
+    private int meteorSpawnCount = 0;
+    private int itemSpawnCount = 0;
+    private int partsSpawnCount = 50;
 
     public Vector3 offset;
 
@@ -145,10 +145,13 @@ public class ObjectSpawner : MonoBehaviour
 
     public void PartsSpawn()
     {
-        int ran = Random.Range(5, 9);
-        Debug.Log(ran);
-        Parts newMeteor = poolManager.GetFromPool<Parts>(ran);
-        newMeteor.transform.position = SpawnPosition();
+        for(int i = 0; i < partsSpawnCount; i++)
+        {
+            int ran = Random.Range(5, 9);
+            Debug.Log(ran);
+            Parts newMeteor = poolManager.GetFromPool<Parts>(ran);
+            newMeteor.transform.position = SpawnPosition();
+        }
     }
 
     public void CoinSpawn()

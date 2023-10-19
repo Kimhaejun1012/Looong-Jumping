@@ -274,7 +274,7 @@ public class PlayerContoller : MonoBehaviour
             UIManager.instance.playerMoney.text = $"Gold : {GameManager.instance.saveData.playerData.gold}";
             Destroy(other.gameObject); SoundManager.instance.SoundPlay("GetCoinClip");
         }
-        else if(other.CompareTag("RocketParts"))
+        else if(other.CompareTag("RocketParts2"))
         {
             //GameManager.instance.saveData.shopData.rocketPartsCount++;
             if(GameManager.instance.saveData.gameData.rocketParts1 == 2)
@@ -293,29 +293,63 @@ public class PlayerContoller : MonoBehaviour
             SoundManager.instance.SoundPlay("GetSpecialparts");
             //SaveLoadSystem.AutoSave(GameManager.instance.saveData);
         }
-        else if (other.CompareTag("PortalParts"))
+        else if (other.CompareTag("RocketParts2"))
         {
             //GameManager.instance.saveData.shopData.rocketPartsCount++;
-            if (GameManager.instance.saveData.gameData.portalParts1 == 2)
+            if (GameManager.instance.saveData.gameData.rocketParts1 == 2)
             {
-                GameManager.instance.saveData.gameData.portalParts2++;
+                GameManager.instance.saveData.gameData.rocketParts2++;
             }
-            else if (GameManager.instance.saveData.gameData.portalParts2 == 2)
+            else if (GameManager.instance.saveData.gameData.rocketParts2 == 2)
             {
-                GameManager.instance.saveData.gameData.portalParts3++;
+                GameManager.instance.saveData.gameData.rocketParts3++;
             }
             else
             {
+                GameManager.instance.saveData.gameData.rocketParts1++;
+            }
+            positiveEffect.Play();
+            SoundManager.instance.SoundPlay("GetSpecialparts");
+            //SaveLoadSystem.AutoSave(GameManager.instance.saveData);
+        }
+        else if (other.CompareTag("PortalParts1"))
+        {
+            //GameManager.instance.saveData.shopData.rocketPartsCount++;
+            if (GameManager.instance.saveData.gameData.portalParts1 == 0)
+            {
                 GameManager.instance.saveData.gameData.portalParts1++;
+            }
+            else if (GameManager.instance.saveData.gameData.portalParts2 == 0)
+            {
+                GameManager.instance.saveData.gameData.portalParts2++;
+            }
+            else if(GameManager.instance.saveData.gameData.portalParts3 == 0)
+            {
+                GameManager.instance.saveData.gameData.portalParts3++;
             }
             SaveLoadSystem.AutoSave(GameManager.instance.saveData);
             positiveEffect.Play();
             SoundManager.instance.SoundPlay("GetSpecialparts");
         }
-        //else if (other.CompareTag("CybogParts"))
-        //{
-
-        //}
+        else if (other.CompareTag("PortalParts2"))
+        {
+            //GameManager.instance.saveData.shopData.rocketPartsCount++;
+            if (GameManager.instance.saveData.gameData.portalParts1 == 1)
+            {
+                GameManager.instance.saveData.gameData.portalParts1++;
+            }
+            else if (GameManager.instance.saveData.gameData.portalParts2 == 1)
+            {
+                GameManager.instance.saveData.gameData.portalParts2++;
+            }
+            else if (GameManager.instance.saveData.gameData.portalParts3 == 1)
+            {
+                GameManager.instance.saveData.gameData.portalParts3++;
+            }
+            SaveLoadSystem.AutoSave(GameManager.instance.saveData);
+            positiveEffect.Play();
+            SoundManager.instance.SoundPlay("GetSpecialparts");
+        }
     }
 
     private void OnTriggerExit(Collider other)

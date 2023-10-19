@@ -214,6 +214,7 @@ public class ShopManager : MonoBehaviour
         {
             GameManager.instance.saveData.playerData.gold -= specialPrice;
             GameManager.instance.saveData.shopData.rocketUsageCount += 2;
+            GameManager.instance.saveData.gameData.rocketParts2 = 0;
 
             playerMoney.text = $"Gold : {(int)GameManager.instance.saveData.playerData.gold}";
 
@@ -223,10 +224,12 @@ public class ShopManager : MonoBehaviour
     }
     public void IncreaseRocketSpeed()
     {
-        if (GameManager.instance.saveData.playerData.gold >= specialPrice && GameManager.instance.saveData.gameData.rocketParts2 == 2)
+        if (GameManager.instance.saveData.playerData.gold >= specialPrice && GameManager.instance.saveData.gameData.rocketParts3 == 2)
         {
             GameManager.instance.saveData.playerData.gold -= specialPrice;
             GameManager.instance.saveData.shopData.rocketSpeed *= 1.3f;
+            GameManager.instance.saveData.gameData.rocketParts2 = 0;
+            GameManager.instance.saveData.gameData.rocketParts3 = 0;
 
             playerMoney.text = $"Gold : {(int)GameManager.instance.saveData.playerData.gold}";
             SoundManager.instance.SoundPlay("GetBoost");
@@ -255,6 +258,7 @@ public class ShopManager : MonoBehaviour
         {
             GameManager.instance.saveData.playerData.gold -= specialPrice;
             GameManager.instance.saveData.shopData.portalUsageCount++;
+            GameManager.instance.saveData.gameData.portalParts2 = 0;
 
             playerMoney.text = $"Gold : {(int)GameManager.instance.saveData.playerData.gold}";
 
@@ -264,10 +268,11 @@ public class ShopManager : MonoBehaviour
     }
     public void IncreasePortalSpeed()
     {
-        if (GameManager.instance.saveData.playerData.gold >= specialPrice && GameManager.instance.saveData.gameData.portalParts2 == 2)
+        if (GameManager.instance.saveData.playerData.gold >= specialPrice && GameManager.instance.saveData.gameData.portalParts3 == 2)
         {
             GameManager.instance.saveData.playerData.gold -= specialPrice;
             GameManager.instance.saveData.shopData.portalIncreaseSpeed += 0.2f;
+            GameManager.instance.saveData.gameData.portalParts3 = 0;
 
             playerMoney.text = $"Gold : {(int)GameManager.instance.saveData.playerData.gold}";
 
