@@ -14,12 +14,12 @@ public static class DataTableManager
     {
         tables.Clear();
 
-        var stringTable = new StringTable();
+        //var stringTable = new StringTable();
         var shopTable = new ShopTable();
 
-        stringTable.Load();
+        //stringTable.Load();
         shopTable.Load();
-        tables.Add(typeof(StringTable), stringTable);
+        //tables.Add(typeof(StringTable), stringTable);
         tables.Add(typeof(ShopTable), shopTable);
     }
 

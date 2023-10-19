@@ -9,14 +9,13 @@ public class BarContoller : MonoBehaviour
     public RectTransform button;
     public float angleValue = 0f;
 
-    private void Awake()
-    {
-    }
-
     // Update is called once per frame
     void Update()
     {
-        HealthChange(angleValue);
+        if (!GameManager.instance.isJumping)
+        {
+            HealthChange(angleValue);
+        }
     }
 
     void HealthChange(float angleValue)

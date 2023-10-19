@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
 
     public bool isLanding { get; set; }
     public bool isCamZone { get; set; }
-    public bool isJumping {  get; set; }
+    public bool isJumping { get; set; }
     private void Awake()
     {
         if (instance != this)
@@ -45,7 +45,6 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-
     }
 
     private void Update()
@@ -54,6 +53,8 @@ public class GameManager : MonoBehaviour
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
+
+        Debug.Log("마스터 오디오 벨류 : " + saveData.gameData.masterAudioValue);
     }
 
     public void Landing()

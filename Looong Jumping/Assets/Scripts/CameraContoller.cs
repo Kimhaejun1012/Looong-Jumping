@@ -53,7 +53,6 @@ public class CameraContoller : MonoBehaviour
             transform.localPosition = offset;
         }
 
-
         if (portal)
         {
             flowCamTime -= Time.deltaTime;
@@ -69,10 +68,9 @@ public class CameraContoller : MonoBehaviour
     {
         relativePosition = GameObject.FindGameObjectWithTag("CC").transform.position;
         flowCamTime = 1.2f;
-        portal = true;
-
+        camSpeed = 0f;
         startTime = Time.time;
         journeyLength = Vector3.Distance(relativePosition, player.position);
+        portal = true;
     }
-
 }

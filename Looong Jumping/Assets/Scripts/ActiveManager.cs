@@ -32,10 +32,8 @@ public class ActiveManager : MonoBehaviour
 
     void Start()
     {
-        // 시작 시 모든 액티브 아이템 버튼 비활성화
         DeactivateAllItemButtons();
 
-        // 플레이어의 현재 액티브 아이템 버튼 활성화
     }
 
     public void DeactivateAllItemButtons()

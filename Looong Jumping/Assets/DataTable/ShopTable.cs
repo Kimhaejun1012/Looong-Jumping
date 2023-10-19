@@ -12,17 +12,17 @@ public class ShopTable : DataTable
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
-        public int Require { get; set; }
-        public int UpGrade { get; set; }
-        
+        public int GoldValue { get; set; }
+        public float GoldIncrement { get; set; }
+        public float InitialValue { get; set; }
+        public float NumericChange { get; set; }
     }
 
     protected Dictionary<int, Data> dic = new Dictionary<int, Data>();
 
     public ShopTable()
     {
-        path = "Tables/TestTable";
+        path = "Tables/LoongJumpTable";
         //Load();
     }
 
