@@ -78,7 +78,7 @@ public class UIManager : MonoBehaviour
             score = playerPos.position.z - startLine.position.z;
         }
         scoreText.text = $"SCORE : {(int)score}";
-        //playerMoney.text = $"Gold : {GameManager.instance.saveData.playerData.gold}";
+        playerMoney.text = $"Gold : {(int)GameManager.instance.saveData.playerData.gold}";
     }
 
     public void GameOver()
@@ -161,9 +161,9 @@ public class UIManager : MonoBehaviour
 
     public void GameExit()
     {
-        UnityEditor.EditorApplication.isPlaying = false;
+        //UnityEditor.EditorApplication.isPlaying = false;
         //else
-        //    Application.Quit();
+        Application.Quit();
     }
     public void SettingSaveAndExit()
     {

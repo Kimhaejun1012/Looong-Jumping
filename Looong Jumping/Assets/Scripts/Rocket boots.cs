@@ -63,7 +63,6 @@ public class Rocketboots : ActiveItem
     }
     private void SetPlayerSpeed(float speed)
     {
-
         player.moveSpeed = speed;
     }
 }

@@ -55,19 +55,19 @@ public class ObjectSpawner : MonoBehaviour
     //private float partsSpawnMin = 0.2f;
     //private float partsTimeBetSpawn;
 
-    private float spawnMeteorLength = 15f;
-    private float spawnItemLength = 50f;
-    private float spawnPartsLength = 25f;
-    private float spawnCoinLength = 25f;
+    private float spawnMeteorLength = 150f;
+    private float spawnItemLength = 500f;
+    private float spawnPartsLength = 250f;
+    private float spawnCoinLength = 250f;
 
     public float meteorPosz;
     public float itemPosz;
     public float partsPosz;
     public float coinPosz;
 
-    private int meteorSpawnCount = 0;
-    private int itemSpawnCount = 0;
-    private int partsSpawnCount = 50;
+    private int meteorSpawnCount = 30;
+    private int itemSpawnCount = 10;
+    private int partsSpawnCount = 10;
 
     public Vector3 offset;
 
@@ -111,7 +111,7 @@ public class ObjectSpawner : MonoBehaviour
         }
         if (target.transform.position.z - coinPosz > spawnCoinLength && GameManager.instance.isJumping)
         {
-            CoinSpawn();
+            //CoinSpawn();
             coinPosz = target.transform.position.z;
             Debug.Log("코인 생성");
         }

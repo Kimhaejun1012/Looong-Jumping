@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
     public bool isJumping { get; set; }
     private void Awake()
     {
+        Screen.SetResolution(1980, 1080, false);
         if (instance != this)
         {
             Destroy(gameObject);
@@ -62,7 +63,8 @@ public class GameManager : MonoBehaviour
         playerContoller.joystick.gameObject.SetActive(false);
 
         ActiveManager.instance.DeactivateAllItemButton();
-        UIManager.instance.gameoverUI.SetActive(true);
+
+        //UIManager.instance.gameoverUI.SetActive(true);
         UIManager.instance.GameOver();
     }
 

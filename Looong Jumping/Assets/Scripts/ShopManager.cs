@@ -25,11 +25,18 @@ public class ShopManager : MonoBehaviour
     public TextMeshProUGUI rocketbootsEquip;
     public TextMeshProUGUI portalEquip;
 
+    public TextMeshProUGUI rocketpurchased;
+    public TextMeshProUGUI portalpurchased;
+
+    public bool rocketcount;
+    public bool portalcount;
 
     public int specialPrice = 2500;
 
     public GameObject[] rocketIcons;
     public GameObject[] portalIcons;
+    public GameObject nonoPanel;
+
 
 
     public static ShopManager instance
@@ -121,6 +128,11 @@ public class ShopManager : MonoBehaviour
             SoundManager.instance.SoundPlay("Buy");
             SaveLoadSystem.AutoSave(GameManager.instance.saveData);
         }
+        else
+        {
+            SoundManager.instance.SoundPlay("Click");
+            nonoPanel.SetActive(true);
+        }
     }
 
     public void UpgradeJumpPower()
@@ -134,6 +146,11 @@ public class ShopManager : MonoBehaviour
             playerMoney.text = $"Gold : {(int)GameManager.instance.saveData.playerData.gold}";
             SoundManager.instance.SoundPlay("Buy");
             SaveLoadSystem.AutoSave(GameManager.instance.saveData);
+        }
+        else
+        {
+            SoundManager.instance.SoundPlay("Click");
+            nonoPanel.SetActive(true);
         }
     }
     public void IncreasePerfectJumpPower()
@@ -149,6 +166,11 @@ public class ShopManager : MonoBehaviour
 
             SoundManager.instance.SoundPlay("Buy");
             SaveLoadSystem.AutoSave(GameManager.instance.saveData);
+        }
+        else
+        {
+            SoundManager.instance.SoundPlay("Click");
+            nonoPanel.SetActive(true);
         }
     }
 
@@ -166,6 +188,11 @@ public class ShopManager : MonoBehaviour
             SoundManager.instance.SoundPlay("Buy");
             SaveLoadSystem.AutoSave(GameManager.instance.saveData);
         }
+        else
+        {
+            SoundManager.instance.SoundPlay("Click");
+            nonoPanel.SetActive(true);
+        }
     }
     public void CollisionReductionSpeed()
     {
@@ -179,6 +206,11 @@ public class ShopManager : MonoBehaviour
             colliderReductionPricePirceText.text = $"{(int)GameManager.instance.saveData.shopData.colliderReductionPrice}";
             SoundManager.instance.SoundPlay("Buy");
             SaveLoadSystem.AutoSave(GameManager.instance.saveData);
+        }
+        else
+        {
+            SoundManager.instance.SoundPlay("Click");
+            nonoPanel.SetActive(true);
         }
     }
     public void CollisionIncreaseSpeed()
@@ -194,6 +226,11 @@ public class ShopManager : MonoBehaviour
             SoundManager.instance.SoundPlay("Buy");
             SaveLoadSystem.AutoSave(GameManager.instance.saveData);
         }
+        else
+        {
+            SoundManager.instance.SoundPlay("Click");
+            nonoPanel.SetActive(true);
+        }
     }
     public void PurchaseRocketBoots()
     {
@@ -207,33 +244,50 @@ public class ShopManager : MonoBehaviour
             SaveLoadSystem.AutoSave(GameManager.instance.saveData);
             SoundManager.instance.SoundPlay("GetBoost");
         }
+        else
+        {
+            SoundManager.instance.SoundPlay("Click");
+            nonoPanel.SetActive(true);
+        }
     }
     public void IncreaseRocketCount()
     {
-        if (GameManager.instance.saveData.playerData.gold >= specialPrice && GameManager.instance.saveData.gameData.rocketParts2 == 2)
+        if (GameManager.instance.saveData.playerData.gold >= specialPrice && GameManager.instance.saveData.gameData.rocketParts3 == 2 && !rocketcount)
         {
             GameManager.instance.saveData.playerData.gold -= specialPrice;
             GameManager.instance.saveData.shopData.rocketUsageCount += 2;
-            GameManager.instance.saveData.gameData.rocketParts2 = 0;
-
+            rocketcount = true;
             playerMoney.text = $"Gold : {(int)GameManager.instance.saveData.playerData.gold}";
-
+            rocketpurchased.text = "PURCHASED";
             SoundManager.instance.SoundPlay("GetBoost");
             SaveLoadSystem.AutoSave(GameManager.instance.saveData);
+        }
+        else
+        {
+            SoundManager.instance.SoundPlay("Click");
+            nonoPanel.SetActive(true);
         }
     }
     public void IncreaseRocketSpeed()
     {
-        if (GameManager.instance.saveData.playerData.gold >= specialPrice && GameManager.instance.saveData.gameData.rocketParts3 == 2)
+        if (GameManager.instance.saveData.playerData.gold >= specialPrice && GameManager.instance.saveData.gameData.rocketParts2 == 2)
         {
             GameManager.instance.saveData.playerData.gold -= specialPrice;
             GameManager.instance.saveData.shopData.rocketSpeed *= 1.3f;
+            for (int i = 0; i < GameManager.instance.saveData.gameData.rocketParts2; i++)
+            {
+                rocketIcons[i + 2].SetActive(false);
+            }
             GameManager.instance.saveData.gameData.rocketParts2 = 0;
-            GameManager.instance.saveData.gameData.rocketParts3 = 0;
 
             playerMoney.text = $"Gold : {(int)GameManager.instance.saveData.playerData.gold}";
             SoundManager.instance.SoundPlay("GetBoost");
             SaveLoadSystem.AutoSave(GameManager.instance.saveData);
+        }
+        else
+        {
+            SoundManager.instance.SoundPlay("Click");
+            nonoPanel.SetActive(true);
         }
     }
     public void PurchasePortal()
@@ -250,35 +304,57 @@ public class ShopManager : MonoBehaviour
             SoundManager.instance.SoundPlay("Wormhole");
             SaveLoadSystem.AutoSave(GameManager.instance.saveData);
         }
+        else
+        {
+            SoundManager.instance.SoundPlay("Click");
+            nonoPanel.SetActive(true);
+        }
     }
 
     public void IncreasePortalCount()
     {
-        if (GameManager.instance.saveData.playerData.gold >= specialPrice && GameManager.instance.saveData.gameData.portalParts2 == 2)
+        if (GameManager.instance.saveData.playerData.gold >= specialPrice && GameManager.instance.saveData.gameData.portalParts3 == 2 && !portalcount)
         {
             GameManager.instance.saveData.playerData.gold -= specialPrice;
             GameManager.instance.saveData.shopData.portalUsageCount++;
-            GameManager.instance.saveData.gameData.portalParts2 = 0;
-
+            portalcount = true;
             playerMoney.text = $"Gold : {(int)GameManager.instance.saveData.playerData.gold}";
-
+            portalpurchased.text = "PURCHASED";
             SoundManager.instance.SoundPlay("Wormhole");
             SaveLoadSystem.AutoSave(GameManager.instance.saveData);
+        }
+        else
+        {
+            SoundManager.instance.SoundPlay("Click");
+            nonoPanel.SetActive(true);
         }
     }
     public void IncreasePortalSpeed()
     {
-        if (GameManager.instance.saveData.playerData.gold >= specialPrice && GameManager.instance.saveData.gameData.portalParts3 == 2)
+        if (GameManager.instance.saveData.playerData.gold >= specialPrice && GameManager.instance.saveData.gameData.portalParts2 == 2)
         {
             GameManager.instance.saveData.playerData.gold -= specialPrice;
             GameManager.instance.saveData.shopData.portalIncreaseSpeed += 0.2f;
-            GameManager.instance.saveData.gameData.portalParts3 = 0;
 
             playerMoney.text = $"Gold : {(int)GameManager.instance.saveData.playerData.gold}";
+            for (int i = 0; i < GameManager.instance.saveData.gameData.portalParts2; i++)
+            {
+                portalIcons[i + 2].SetActive(false);
+            }
+            GameManager.instance.saveData.gameData.portalParts2 = 0;
 
             SoundManager.instance.SoundPlay("Wormhole");
             SaveLoadSystem.AutoSave(GameManager.instance.saveData);
         }
+        else
+        {
+            SoundManager.instance.SoundPlay("Click");
+            nonoPanel.SetActive(true);
+        }
+    }
+    public void NoNoPanelExit()
+    {
+        nonoPanel.SetActive(false);
     }
     public void RocketBootsEquip()
     {

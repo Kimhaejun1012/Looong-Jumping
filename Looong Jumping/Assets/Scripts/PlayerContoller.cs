@@ -109,7 +109,6 @@ public class PlayerContoller : MonoBehaviour
                 Move(isMove);
             }
             rb.MoveRotation(Quaternion.Euler(-rotateY, rotateX, 0));
-
         }
         else
         {
@@ -192,6 +191,7 @@ public class PlayerContoller : MonoBehaviour
         accelCount++;
         playerAnimator.SetInteger("AccelCount", accelCount);
         playerAnimator.SetBool("Run", true);
+        if(tap.gameObject.activeSelf)
         tap.gameObject.SetActive(false);
         ObjectSpawner.instance.IncreaseSpawnerZ(GameManager.instance.saveData.playerData.acceleration);
     }
@@ -207,6 +207,11 @@ public class PlayerContoller : MonoBehaviour
             playerAnimator.SetBool("Jumping", false);
             GameManager.instance.Landing();
         }
+    }
+
+    public void LandingAnimationEvnet()
+    {
+        UIManager.instance.gameoverUI.SetActive(true);
     }
 
     public void PlayerJump()
@@ -304,7 +309,7 @@ public class PlayerContoller : MonoBehaviour
             {
                 GameManager.instance.saveData.gameData.rocketParts2++;
             }
-            else if(GameManager.instance.saveData.gameData.rocketParts3 < 1)
+            else if(GameManager.instance.saveData.gameData.rocketParts3 < 2)
             {
                 GameManager.instance.saveData.gameData.rocketParts3++;
             }
