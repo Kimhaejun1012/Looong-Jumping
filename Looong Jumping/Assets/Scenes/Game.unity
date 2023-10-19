@@ -1421,6 +1421,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2076148659}
+    - target: {fileID: 8737820268825728338, guid: 97295e67ba9df5248ad4c1d903c25b7f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SettingSaveAndExit
+      objectReference: {fileID: 0}
     - target: {fileID: 8737820268825728349, guid: 97295e67ba9df5248ad4c1d903c25b7f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -7760,7 +7764,7 @@ GameObject:
   - component: {fileID: 944102056}
   m_Layer: 0
   m_Name: Floor
-  m_TagString: Untagged
+  m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8774,7 +8778,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1132088057
 RectTransform:
   m_ObjectHideFlags: 0

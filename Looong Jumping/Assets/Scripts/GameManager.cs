@@ -53,6 +53,8 @@ public class GameManager : MonoBehaviour
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
+
+        Debug.Log("마스터 오디오 벨류 : " + saveData.gameData.masterAudioValue);
     }
 
     public void Landing()

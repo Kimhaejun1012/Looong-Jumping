@@ -3,22 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
+using Unity.VisualScripting;
 
 public class AudioManager : MonoBehaviour
 {
     [SerializeField] private AudioMixer m_AudioMixer;
-    [SerializeField] private Slider m_MusicMasterSlider;
-    [SerializeField] private Slider m_MusicBGMSlider;
-    [SerializeField] private Slider m_MusicSFXSlider;
-
-    public AudioClip clip;
-    private AudioSource bgm;
+    [SerializeField] public Slider m_MusicMasterSlider;
+    [SerializeField] public Slider m_MusicBGMSlider;
+    [SerializeField] public Slider m_MusicSFXSlider;
 
     private void Start()
     {
         m_MusicMasterSlider.onValueChanged.AddListener(SetMasterVolume);
         m_MusicBGMSlider.onValueChanged.AddListener(SetMusicVolume);
         m_MusicSFXSlider.onValueChanged.AddListener(SetSFXVolume);
+        m_MusicMasterSlider.value = GameManager.instance.saveData.gameData.masterAudioValue;
+        m_MusicSFXSlider.value = GameManager.instance.saveData.gameData.fxAudioValue;
+        m_MusicBGMSlider.value = GameManager.instance.saveData.gameData.bgmAudioValue;
+        SetMasterVolume(m_MusicMasterSlider.value);
+        SetMusicVolume(m_MusicBGMSlider.value);
+        SetSFXVolume(m_MusicSFXSlider.value);
     }
     public static AudioManager instance
     {

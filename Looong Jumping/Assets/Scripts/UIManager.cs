@@ -143,11 +143,7 @@ public class UIManager : MonoBehaviour
         //SaveLoadSystem.AutoLoad();
         SoundManager.instance.SoundPlay("Click");
     }
-    public void SettingExitButton()
-    {
-        SoundManager.instance.SoundPlay("Click");
-        settingScreen.SetActive(false);
-    }
+
 
     public void GameExit()
     {
@@ -157,6 +153,18 @@ public class UIManager : MonoBehaviour
     }
     public void SettingSaveAndExit()
     {
+        GameManager.instance.saveData.gameData.masterAudioValue = AudioManager.instance.m_MusicMasterSlider.value;
+        GameManager.instance.saveData.gameData.bgmAudioValue = AudioManager.instance.m_MusicBGMSlider.value;
+        GameManager.instance.saveData.gameData.fxAudioValue = AudioManager.instance.m_MusicSFXSlider.value;
+
+        SaveLoadSystem.AutoSave(GameManager.instance.saveData);
+        SoundManager.instance.SoundPlay("Click");
+        settingScreen.SetActive(false);
+    }
+
+    public void SettingExitButton()
+    {
+
         SoundManager.instance.SoundPlay("Click");
         settingScreen.SetActive(false);
     }

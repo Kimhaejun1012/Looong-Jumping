@@ -22,6 +22,10 @@ public class ShopManager : MonoBehaviour
     public TextMeshProUGUI colliderReductionPricePirceText;
     public TextMeshProUGUI colliderIncreasePrice;
 
+    public TextMeshProUGUI rocketbootsEquip;
+    public TextMeshProUGUI portalEquip;
+
+
     public int specialPrice = 2500;
 
     public GameObject[] rocketIcons;
@@ -78,10 +82,6 @@ public class ShopManager : MonoBehaviour
             portalIcons[i + 4].SetActive(true);
         }
     }
-    private void Update()
-    {
-        //playerMoney.text = $"Gold : {GameManager.instance.saveData.playerData.gold}";
-    }
 
     private void OnEnable()
     {
@@ -92,8 +92,22 @@ public class ShopManager : MonoBehaviour
         perfectPirceText.text = $"{(int)GameManager.instance.saveData.shopData.perfectPrice}";
         colliderReductionPricePirceText.text = $"{(int)GameManager.instance.saveData.shopData.colliderReductionPrice}";
         colliderIncreasePrice.text = $"{(int)GameManager.instance.saveData.shopData.colliderIncreasePrice}";
+
+        switch (GameManager.instance.saveData.playerData.active)
+        {
+            case Active.None:
+                break;
+            case Active.RocketBoots:
+                rocketbootsEquip.text = "EQUIPPED";
+                break;
+            case Active.Portal:
+                portalEquip.text = "EQUIPPED";
+                break;
+            default:
+                break;
+        }
     }
-    public void UpgradeAcceleration()
+        public void UpgradeAcceleration()
     {
         if (GameManager.instance.saveData.playerData.gold >= GameManager.instance.saveData.shopData.accelPrice)
         {
@@ -265,17 +279,20 @@ public class ShopManager : MonoBehaviour
     {
         GameManager.instance.saveData.playerData.active = Active.RocketBoots;
         SoundManager.instance.SoundPlay("GetBoost");
+        rocketbootsEquip.text = "EQUIPPED";
         SaveLoadSystem.AutoSave(GameManager.instance.saveData);
     }
     public void PortalEquip()
     {
         GameManager.instance.saveData.playerData.active = Active.Portal;
         SoundManager.instance.SoundPlay("Wormhole");
+        portalEquip.text = "EQUIPPED";
         SaveLoadSystem.AutoSave(GameManager.instance.saveData);
     }
 
     public void LoadGameScene()
     {
         SceneManager.LoadScene(1);
+    }
     }
 }

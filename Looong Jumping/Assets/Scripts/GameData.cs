@@ -10,8 +10,7 @@ public class PlayerData
     {
         None,
         RocketBoots,
-        Portal,
-        Reloading
+        Portal
     }
     public float acceleration = 1f;
     public float jumpingPower = 100f;
@@ -42,6 +41,8 @@ public class ShopData
     public float colliderReductionPrice = 200f;
     public float colliderIncreasePrice = 200f;
 
+    public float floorIncrease;
+
     //public bool[] rocketParts = new bool[6];
     //public bool[] portalParts = new bool[6];
     //public bool[] cyborgParts = new bool[6];
@@ -58,5 +59,9 @@ public class GameData
     public int portalParts1 = 0;
     public int portalParts2 = 0;
     public int portalParts3 = 0;
+
+    public float masterAudioValue = 0.5f;
+    public float bgmAudioValue = 0.5f;
+    public float fxAudioValue = 0.5f;
 
 }
