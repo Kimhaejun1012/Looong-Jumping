@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2164508138290661168}
   - component: {fileID: 8871065863322572963}
   - component: {fileID: -6235178889226362718}
+  - component: {fileID: 8291696235231187667}
   m_Layer: 0
   m_Name: PortalParts
   m_TagString: PortalParts
@@ -29,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 8.468, y: 16.64, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 56.880005, y: 56.880005, z: 56.880005}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -106,3 +107,16 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: ab48a76429fe0f1468b8c7a8fbb8b816, type: 3}
+--- !u!114 &8291696235231187667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5538770866072668852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 968b61b2a633e174ea1d521371c50053, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  idName: PortalParts

@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
 
     public bool isLanding { get; set; }
     public bool isCamZone { get; set; }
-    public bool isJumping {  get; set; }
+    public bool isJumping { get; set; }
     private void Awake()
     {
         if (instance != this)
@@ -45,7 +45,6 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-
     }
 
     private void Update()

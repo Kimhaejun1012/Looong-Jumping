@@ -86,7 +86,14 @@ public class PlayerContoller : MonoBehaviour
                 directionMag = 1f;
             }
 
-            moveSpeed -= Math.Abs(directionMag * 0.1f);
+            if(moveSpeed >= 0f)
+            {
+                moveSpeed -= Math.Abs(directionMag * GameManager.instance.saveData.playerData.airResist);
+            }
+            else
+            {
+                moveSpeed = 0f;
+            }
             //moveSpeed -= Math.Abs(x * 0.1f);
             //moveSpeed -= Math.Abs(y * 0.1f);
 
@@ -158,13 +165,11 @@ public class PlayerContoller : MonoBehaviour
         }
         else if(Input.GetKeyDown(KeyCode.Q))
         {
-            GameManager.instance.saveData.shopData.rocketParts[GameManager.instance.saveData.shopData.rocketPartsCount] = true;
-            GameManager.instance.saveData.shopData.rocketPartsCount++;
-            SaveLoadSystem.AutoSave(GameManager.instance.saveData);
+
         }
 
 
-        Debug.DrawRay(rb.transform.position, rb.transform.forward, Color.green);
+        //Debug.DrawRay(rb.transform.position, rb.transform.forward, Color.green);
         if (!GameManager.instance.isLanding && Physics.Raycast(currentPosition, newPosition - currentPosition, out RaycastHit hit, moveVector.magnitude, groundLayer))
         {
             //2차로 벽 뚫었을 경우를 대비하여 Raycast로 MovePosition()하기 전 포지션과 MovePosition을 할 포지션
@@ -235,6 +240,7 @@ public class PlayerContoller : MonoBehaviour
     }
     public void PerformActionOnClick()
     {
+        SoundManager.instance.SoundPlay("Footstep");
         moveSpeed += GameManager.instance.saveData.playerData.acceleration;
         jumpButton.gameObject.SetActive(true);
         //rb.velocity = rb.transform.forward * moveSpeed * Time.deltaTime;
@@ -263,7 +269,7 @@ public class PlayerContoller : MonoBehaviour
         //일단 벽을 안뚫었을때를 가정하여 아래로 충돌체크를 하고
         if (collision.gameObject.CompareTag("Ground"))
         {
-            Debug.Log("땅닿았담너ㅔㅐㅇ레ㅐ먼러ㅔㅐ");
+            SoundManager.instance.SoundPlay("Gameover");
             rb.isKinematic = true;
             //hasLanded = true;
             //땅에 닿았을 때의 동작
@@ -360,45 +366,73 @@ public class PlayerContoller : MonoBehaviour
             newPosition.z += 30f;
             newPosition.y += 10f;
             transform.position = newPosition;
-            isPortal = false;
             rb.isKinematic = false;
             moveSpeed *= GameManager.instance.saveData.shopData.portalIncreaseSpeed;
+            isPortal = false;
             ObjectSpawner.instance.IncreaseSpawnerZ(moveSpeed / GameManager.instance.saveData.shopData.portalIncreaseSpeed);
+            SoundManager.instance.SoundPlay("Wormhole");
         }
         else if(other.CompareTag("Silver"))
         {
-
             GameManager.instance.saveData.playerData.gold += 500;
             UIManager.instance.playerMoney.text = $"Gold : {GameManager.instance.saveData.playerData.gold}";
             Destroy(other.gameObject);
+            SoundManager.instance.SoundPlay("GetCoinClip");
         }
         else if (other.CompareTag("Copper"))
         {
             GameManager.instance.saveData.playerData.gold += 100;
             UIManager.instance.playerMoney.text = $"Gold : {GameManager.instance.saveData.playerData.gold}";
-            Destroy(other.gameObject);
+            Destroy(other.gameObject); SoundManager.instance.SoundPlay("GetCoinClip");
         }
         else if (other.CompareTag("Gold"))
         {
             GameManager.instance.saveData.playerData.gold += 1000;
             UIManager.instance.playerMoney.text = $"Gold : {GameManager.instance.saveData.playerData.gold}";
-            Destroy(other.gameObject);
+            Destroy(other.gameObject); SoundManager.instance.SoundPlay("GetCoinClip");
         }
         else if(other.CompareTag("RocketParts"))
         {
-            GameManager.instance.saveData.shopData.rocketPartsCount++;
-            GameManager.instance.saveData.shopData.rocketParts[GameManager.instance.saveData.shopData.rocketPartsCount] = true;
-            SaveLoadSystem.AutoSave(GameManager.instance.saveData);
+            //GameManager.instance.saveData.shopData.rocketPartsCount++;
+            if(GameManager.instance.saveData.gameData.rocketParts1 == 2)
+            {
+                GameManager.instance.saveData.gameData.rocketParts2++;
+            }
+            else if (GameManager.instance.saveData.gameData.rocketParts2 == 2)
+            {
+                GameManager.instance.saveData.gameData.rocketParts3++;
+            }
+            else
+            {
+                GameManager.instance.saveData.gameData.rocketParts1++;
+            }
             positiveEffect.Play();
+            SoundManager.instance.SoundPlay("GetSpecialparts");
+            //SaveLoadSystem.AutoSave(GameManager.instance.saveData);
         }
         else if (other.CompareTag("PortalParts"))
         {
-
+            //GameManager.instance.saveData.shopData.rocketPartsCount++;
+            if (GameManager.instance.saveData.gameData.portalParts1 == 2)
+            {
+                GameManager.instance.saveData.gameData.portalParts2++;
+            }
+            else if (GameManager.instance.saveData.gameData.portalParts2 == 2)
+            {
+                GameManager.instance.saveData.gameData.portalParts3++;
+            }
+            else
+            {
+                GameManager.instance.saveData.gameData.portalParts1++;
+            }
+            SaveLoadSystem.AutoSave(GameManager.instance.saveData);
+            positiveEffect.Play();
+            SoundManager.instance.SoundPlay("GetSpecialparts");
         }
-        else if (other.CompareTag("CybogParts"))
-        {
+        //else if (other.CompareTag("CybogParts"))
+        //{
 
-        }
+        //}
     }
 
     private void OnTriggerExit(Collider other)
@@ -425,6 +459,7 @@ public class PlayerContoller : MonoBehaviour
         moveSpeed += GameManager.instance.saveData.playerData.speedIncrease;
         positiveEffect.Play();
         ObjectSpawner.instance.IncreaseSpawnerZ(GameManager.instance.saveData.playerData.speedIncrease);
+        SoundManager.instance.SoundPlay("GetBoost");
     }
 
     public void HitMeteor()
@@ -436,7 +471,7 @@ public class PlayerContoller : MonoBehaviour
             //Debug.Log("계산된 값 : " + moveSpeed + GameManager.instance.saveData.playerData.speedReduction);
             moveSpeed = Math.Clamp(moveSpeed += GameManager.instance.saveData.playerData.speedReduction, 0, moveSpeed);
             ObjectSpawner.instance.IncreaseSpawnerZ(GameManager.instance.saveData.playerData.speedReduction);
-
+            SoundManager.instance.SoundPlay("HitMeteor");
         }
     }
 }

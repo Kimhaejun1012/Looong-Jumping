@@ -14,7 +14,6 @@ public class Portal : ActiveItem
 
     public override void ApplyEffectToPlayer(PlayerContoller player)
     {
-
         if (count != 0)
         {
             player.isPortal = true;
@@ -31,7 +30,6 @@ public class Portal : ActiveItem
             portalPosition.z += 30f;
             portalPosition.y += 10f;
             exi.transform.position = portalPosition;
-            player.isPortal = true;
             count--;
             camContoller.PortalOn();
 

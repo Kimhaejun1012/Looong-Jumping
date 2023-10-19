@@ -119,4 +119,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 968b61b2a633e174ea1d521371c50053, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idName: Parts
+  idName: RocketParts

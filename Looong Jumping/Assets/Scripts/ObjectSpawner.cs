@@ -126,7 +126,7 @@ public class ObjectSpawner : MonoBehaviour
         for (int i = 0; i < spawnCount; i++)
         {
             //Instantiate(meteors[Random.Range(0,4)], spawnPosition, Quaternion.identity);
-            int ran = Random.Range(1, 3);
+            int ran = Random.Range(0, 4);
 
             Meteor newMeteor = poolManager.GetFromPool<Meteor>(ran);
             newMeteor.transform.position = SpawnPosition();
@@ -145,15 +145,16 @@ public class ObjectSpawner : MonoBehaviour
     {
         for (int i = 0; i < 10; i++)
         {
-
-            Parts newMeteor = poolManager.GetFromPool<Parts>(5);
+            int ran = Random.Range(5, 7);
+            Debug.Log(ran);
+            Parts newMeteor = poolManager.GetFromPool<Parts>(ran);
             newMeteor.transform.position = SpawnPosition();
         }
     }
 
     public void CoinSpawn()
     {
-            int ran = Random.Range(6,8);
+            int ran = Random.Range(7,10);
             Coin newCoin = poolManager.GetFromPool<Coin>(ran);
             newCoin.transform.position = SpawnPosition();
     }

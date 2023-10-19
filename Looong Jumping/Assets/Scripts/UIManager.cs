@@ -60,7 +60,6 @@ public class UIManager : MonoBehaviour
             yield return null;
             timer += Time.deltaTime;
 
-            // 타이머를 이용하여 알파 값을 서서히 감소시켜 텍스트를 사라지게 함
             Color textColor = perfectText.color;
             textColor.a = Mathf.Lerp(startAlpha, 0.0f, timer / fadeDuration);
             perfectText.color = textColor;
@@ -78,7 +77,7 @@ public class UIManager : MonoBehaviour
             score = playerPos.position.z - startLine.position.z;
         }
         scoreText.text = $"SCORE : {(int)score}";
-        playerMoney.text = $"Gold : {GameManager.instance.saveData.playerData.gold}";
+        //playerMoney.text = $"Gold : {GameManager.instance.saveData.playerData.gold}";
     }
 
     public void GameOver()
@@ -100,43 +99,53 @@ public class UIManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SoundManager.instance.SoundPlay("Click");
     }
     public void Store()
     {
         //PlayerPrefs.SetFloat(playerInfo.jumpingPowerKey, playerInfo.jumpingPower);
         //PlayerPrefs.SetFloat(playerInfo.accelerationKey, playerInfo.acceleration);
         //PlayerPrefs.Save();
+        SoundManager.instance.SoundPlay("Click");
         SceneManager.LoadScene(2);
     }
     public void PauseButton()
     {
         pauseScreen.SetActive(true);
+        SoundManager.instance.SoundPlay("Click");
         Time.timeScale = 0f;
     }
     public void ContinueButton()
     {
         pauseScreen.SetActive(false);
+        SoundManager.instance.SoundPlay("Click");
         Time.timeScale = 1f;
     }
     public void SettingButton()
     {
         settingScreen.SetActive(true);
+        SoundManager.instance.SoundPlay("Click");
     }
     public void ExitButton()
     {
+        SoundManager.instance.SoundPlay("Click");
         SceneManager.LoadScene(0);
     }
     public void PlayerButton()
     {
+        SoundManager.instance.SoundPlay("Click");
         Time.timeScale = 1f;
         SceneManager.LoadScene(1);
     }
     public void DataReset()
     {
         SaveLoadSystem.Clear(GameManager.instance.saveData);
+        //SaveLoadSystem.AutoLoad();
+        SoundManager.instance.SoundPlay("Click");
     }
     public void SettingExitButton()
     {
+        SoundManager.instance.SoundPlay("Click");
         settingScreen.SetActive(false);
     }
 
@@ -148,6 +157,7 @@ public class UIManager : MonoBehaviour
     }
     public void SettingSaveAndExit()
     {
+        SoundManager.instance.SoundPlay("Click");
         settingScreen.SetActive(false);
     }
 }
