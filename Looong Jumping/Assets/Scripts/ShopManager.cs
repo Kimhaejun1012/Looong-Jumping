@@ -285,6 +285,7 @@ public class ShopManager : MonoBehaviour
         GameManager.instance.saveData.playerData.active = Active.RocketBoots;
         SoundManager.instance.SoundPlay("GetBoost");
         rocketbootsEquip.text = "EQUIPPED";
+        portalEquip.text = "EQUIP";
         SaveLoadSystem.AutoSave(GameManager.instance.saveData);
     }
     public void PortalEquip()
@@ -292,6 +293,7 @@ public class ShopManager : MonoBehaviour
         GameManager.instance.saveData.playerData.active = Active.Portal;
         SoundManager.instance.SoundPlay("Wormhole");
         portalEquip.text = "EQUIPPED";
+        rocketbootsEquip.text = "EQUIP";
         SaveLoadSystem.AutoSave(GameManager.instance.saveData);
     }
 

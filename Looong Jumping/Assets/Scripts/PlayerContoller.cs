@@ -277,40 +277,40 @@ public class PlayerContoller : MonoBehaviour
         else if(other.CompareTag("RocketParts1"))
         {
             //GameManager.instance.saveData.shopData.rocketPartsCount++;
-            if(GameManager.instance.saveData.gameData.rocketParts1 > 1)
+            if(GameManager.instance.saveData.gameData.rocketParts1 < 1)
             {
                 GameManager.instance.saveData.gameData.rocketParts1++;
             }
-            else if (GameManager.instance.saveData.gameData.rocketParts2 > 1)
+            else if (GameManager.instance.saveData.gameData.rocketParts2 < 1)
             {
                 GameManager.instance.saveData.gameData.rocketParts2++;
             }
-            else if (GameManager.instance.saveData.gameData.rocketParts3 > 1)
+            else if (GameManager.instance.saveData.gameData.rocketParts3 < 1)
             {
                 GameManager.instance.saveData.gameData.rocketParts3++;
             }
             positiveEffect.Play();
             SoundManager.instance.SoundPlay("GetSpecialparts");
-            //SaveLoadSystem.AutoSave(GameManager.instance.saveData);
+            SaveLoadSystem.AutoSave(GameManager.instance.saveData);
         }
         else if (other.CompareTag("RocketParts2"))
         {
             //GameManager.instance.saveData.shopData.rocketPartsCount++;
-            if (GameManager.instance.saveData.gameData.rocketParts1 > 2)
+            if (GameManager.instance.saveData.gameData.rocketParts1 < 2)
             {
                 GameManager.instance.saveData.gameData.rocketParts1++;
             }
-            else if (GameManager.instance.saveData.gameData.rocketParts2 > 2)
+            else if (GameManager.instance.saveData.gameData.rocketParts2 < 2)
             {
                 GameManager.instance.saveData.gameData.rocketParts2++;
             }
-            else if(GameManager.instance.saveData.gameData.rocketParts3 > 1)
+            else if(GameManager.instance.saveData.gameData.rocketParts3 < 1)
             {
                 GameManager.instance.saveData.gameData.rocketParts3++;
             }
             positiveEffect.Play();
             SoundManager.instance.SoundPlay("GetSpecialparts");
-            //SaveLoadSystem.AutoSave(GameManager.instance.saveData);
+            SaveLoadSystem.AutoSave(GameManager.instance.saveData);
         }
         else if (other.CompareTag("PortalParts1"))
         {
