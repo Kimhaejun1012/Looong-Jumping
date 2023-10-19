@@ -26,6 +26,7 @@ public class UIManager : MonoBehaviour
     public GameObject gameoverUI;
     public GameObject pauseScreen;
     public GameObject settingScreen;
+    public GameObject resetPanel;
 
     public float perfectTextDuration = 1f;
     private float timer = 0.0f;
@@ -139,9 +140,22 @@ public class UIManager : MonoBehaviour
     }
     public void DataReset()
     {
-        SaveLoadSystem.Clear(GameManager.instance.saveData);
         //SaveLoadSystem.AutoLoad();
+        resetPanel.SetActive(true);
         SoundManager.instance.SoundPlay("Click");
+    }
+    public void ResetOK()
+    {
+        SaveLoadSystem.Clear(GameManager.instance.saveData);
+        resetPanel.SetActive(false);
+        SoundManager.instance.SoundPlay("Click");
+
+    }
+    public void ResetNo()
+    {
+        resetPanel.SetActive(false);
+        SoundManager.instance.SoundPlay("Click");
+
     }
 
 

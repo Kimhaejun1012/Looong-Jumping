@@ -55,17 +55,19 @@ public class ObjectSpawner : MonoBehaviour
     //private float partsSpawnMin = 0.2f;
     //private float partsTimeBetSpawn;
 
-    private float spawnMeteorLength = 30f;
-    private float spawnItemLength = 100f;
-    private float spawnPartsLength = 50f;
-    private float spawnCoinLength = 45f;
+    private float spawnMeteorLength = 15f;
+    private float spawnItemLength = 50f;
+    private float spawnPartsLength = 25f;
+    private float spawnCoinLength = 25f;
 
     public float meteorPosz;
     public float itemPosz;
     public float partsPosz;
     public float coinPosz;
 
-    private int spawnCount = 10;
+    private int meteorSpawnCount = 5;
+    private int itemSpawnCount = 3;
+    
 
     public Vector3 offset;
 
@@ -123,7 +125,7 @@ public class ObjectSpawner : MonoBehaviour
 
     public void MeteorSpawn()
     {
-        for (int i = 0; i < spawnCount; i++)
+        for (int i = 0; i < meteorSpawnCount; i++)
         {
             //Instantiate(meteors[Random.Range(0,4)], spawnPosition, Quaternion.identity);
             int ran = Random.Range(0, 4);
@@ -134,7 +136,7 @@ public class ObjectSpawner : MonoBehaviour
     }
     public void ItemSpawn()
     {
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < itemSpawnCount; i++)
         {
             Item newItem = poolManager.GetFromPool<Item>(4);
             newItem.transform.position = SpawnPosition();
@@ -143,20 +145,17 @@ public class ObjectSpawner : MonoBehaviour
 
     public void PartsSpawn()
     {
-        for (int i = 0; i < 10; i++)
-        {
-            int ran = Random.Range(5, 7);
-            Debug.Log(ran);
-            Parts newMeteor = poolManager.GetFromPool<Parts>(ran);
-            newMeteor.transform.position = SpawnPosition();
-        }
+        int ran = Random.Range(5, 9);
+        Debug.Log(ran);
+        Parts newMeteor = poolManager.GetFromPool<Parts>(ran);
+        newMeteor.transform.position = SpawnPosition();
     }
 
     public void CoinSpawn()
     {
-            int ran = Random.Range(7,10);
-            Coin newCoin = poolManager.GetFromPool<Coin>(ran);
-            newCoin.transform.position = SpawnPosition();
+        int ran = Random.Range(9, 12);
+        Coin newCoin = poolManager.GetFromPool<Coin>(ran);
+        newCoin.transform.position = SpawnPosition();
     }
 
     public void SetSpawn(float targetZ)

@@ -119,7 +119,7 @@ GameObject:
   - component: {fileID: -3845492988242940703}
   - component: {fileID: 3151804684294356378}
   m_Layer: 0
-  m_Name: RocketBootsParts
+  m_Name: PartsFrame
   m_TagString: RocketParts
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

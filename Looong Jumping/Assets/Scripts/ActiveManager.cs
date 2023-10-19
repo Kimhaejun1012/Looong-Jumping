@@ -33,7 +33,6 @@ public class ActiveManager : MonoBehaviour
     void Start()
     {
         DeactivateAllItemButtons();
-
     }
 
     public void DeactivateAllItemButtons()
@@ -49,6 +48,13 @@ public class ActiveManager : MonoBehaviour
         if (currentActiveItemIndex >= 0 && currentActiveItemIndex < activeItemButtons.Length)
         {
             activeItemButtons[(int)GameManager.instance.saveData.playerData.active - 1].gameObject.SetActive(true);
+        }
+    }
+    public void DeactivateAllItemButton()
+    {
+        if (currentActiveItemIndex >= 0 && currentActiveItemIndex < activeItemButtons.Length)
+        {
+            activeItemButtons[(int)GameManager.instance.saveData.playerData.active - 1].gameObject.SetActive(false);
         }
     }
 }
