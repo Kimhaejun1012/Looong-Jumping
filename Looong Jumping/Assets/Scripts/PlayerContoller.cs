@@ -274,20 +274,20 @@ public class PlayerContoller : MonoBehaviour
             UIManager.instance.playerMoney.text = $"Gold : {GameManager.instance.saveData.playerData.gold}";
             Destroy(other.gameObject); SoundManager.instance.SoundPlay("GetCoinClip");
         }
-        else if(other.CompareTag("RocketParts2"))
+        else if(other.CompareTag("RocketParts1"))
         {
             //GameManager.instance.saveData.shopData.rocketPartsCount++;
-            if(GameManager.instance.saveData.gameData.rocketParts1 == 2)
+            if(GameManager.instance.saveData.gameData.rocketParts1 > 1)
+            {
+                GameManager.instance.saveData.gameData.rocketParts1++;
+            }
+            else if (GameManager.instance.saveData.gameData.rocketParts2 > 1)
             {
                 GameManager.instance.saveData.gameData.rocketParts2++;
             }
-            else if (GameManager.instance.saveData.gameData.rocketParts2 == 2)
+            else if (GameManager.instance.saveData.gameData.rocketParts3 > 1)
             {
                 GameManager.instance.saveData.gameData.rocketParts3++;
-            }
-            else
-            {
-                GameManager.instance.saveData.gameData.rocketParts1++;
             }
             positiveEffect.Play();
             SoundManager.instance.SoundPlay("GetSpecialparts");
@@ -296,17 +296,17 @@ public class PlayerContoller : MonoBehaviour
         else if (other.CompareTag("RocketParts2"))
         {
             //GameManager.instance.saveData.shopData.rocketPartsCount++;
-            if (GameManager.instance.saveData.gameData.rocketParts1 == 2)
+            if (GameManager.instance.saveData.gameData.rocketParts1 > 2)
+            {
+                GameManager.instance.saveData.gameData.rocketParts1++;
+            }
+            else if (GameManager.instance.saveData.gameData.rocketParts2 > 2)
             {
                 GameManager.instance.saveData.gameData.rocketParts2++;
             }
-            else if (GameManager.instance.saveData.gameData.rocketParts2 == 2)
+            else if(GameManager.instance.saveData.gameData.rocketParts3 > 1)
             {
                 GameManager.instance.saveData.gameData.rocketParts3++;
-            }
-            else
-            {
-                GameManager.instance.saveData.gameData.rocketParts1++;
             }
             positiveEffect.Play();
             SoundManager.instance.SoundPlay("GetSpecialparts");

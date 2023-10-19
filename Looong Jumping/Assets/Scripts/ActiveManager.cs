@@ -52,7 +52,7 @@ public class ActiveManager : MonoBehaviour
     }
     public void DeactivateAllItemButton()
     {
-        if (currentActiveItemIndex >= 0 && currentActiveItemIndex < activeItemButtons.Length)
+        if (currentActiveItemIndex > 0 && currentActiveItemIndex < activeItemButtons.Length)
         {
             activeItemButtons[(int)GameManager.instance.saveData.playerData.active - 1].gameObject.SetActive(false);
         }
