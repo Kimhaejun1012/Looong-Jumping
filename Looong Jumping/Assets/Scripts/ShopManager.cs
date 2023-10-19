@@ -47,7 +47,7 @@ public class ShopManager : MonoBehaviour
     private void Start()
     {
         shopTable = DataTableManager.GetTable<ShopTable>();
-        if(GameManager.instance.saveData.shopData.rocketParchase)
+        if (GameManager.instance.saveData.shopData.rocketParchase)
         {
             rocketbootsPurChaseButton.gameObject.SetActive(false);
             rocketbootsEquipButton.gameObject.SetActive(true);
@@ -57,7 +57,7 @@ public class ShopManager : MonoBehaviour
             portalPurChaseButton.gameObject.SetActive(false);
             portalEquipButton.gameObject.SetActive(true);
         }
-        for(int i = 0; i < GameManager.instance.saveData.gameData.rocketParts1; i++)
+        for (int i = 0; i < GameManager.instance.saveData.gameData.rocketParts1; i++)
         {
             rocketIcons[i].SetActive(true);
         }
@@ -107,7 +107,7 @@ public class ShopManager : MonoBehaviour
                 break;
         }
     }
-        public void UpgradeAcceleration()
+    public void UpgradeAcceleration()
     {
         if (GameManager.instance.saveData.playerData.gold >= GameManager.instance.saveData.shopData.accelPrice)
         {
@@ -125,7 +125,7 @@ public class ShopManager : MonoBehaviour
 
     public void UpgradeJumpPower()
     {
-        if(GameManager.instance.saveData.playerData.gold >= GameManager.instance.saveData.shopData.jumpPrice)
+        if (GameManager.instance.saveData.playerData.gold >= GameManager.instance.saveData.shopData.jumpPrice)
         {
             GameManager.instance.saveData.playerData.gold -= GameManager.instance.saveData.shopData.jumpPrice;
             GameManager.instance.saveData.shopData.jumpPrice *= DataTableManager.GetTable<ShopTable>().GetValue(2).GoldIncrement;
@@ -293,6 +293,5 @@ public class ShopManager : MonoBehaviour
     public void LoadGameScene()
     {
         SceneManager.LoadScene(1);
-    }
     }
 }
