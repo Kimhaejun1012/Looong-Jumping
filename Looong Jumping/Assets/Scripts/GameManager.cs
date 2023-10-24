@@ -30,13 +30,12 @@ public class GameManager : MonoBehaviour
     public PlayerContoller playerContoller;
 
     public SaveDataVC saveData = new SaveDataVC();
-
+    
     public bool isLanding { get; set; }
     public bool isCamZone { get; set; }
     public bool isJumping { get; set; }
     private void Awake()
     {
-        Screen.SetResolution(1980, 1080, false);
         if (instance != this)
         {
             Destroy(gameObject);
