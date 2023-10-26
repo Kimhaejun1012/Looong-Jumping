@@ -17,16 +17,10 @@ public class PlayerContoller : MonoBehaviour
     public bool isPortal;
     public bool isMove;
 
-    private float groundCheckDistance = 0.2f;
-    private float raycastOffset = 0.1f;
-
     private bool isOnStartLine;
     private bool isJumpButtonClick;
     private bool isJump;
 
-    private float currentGravity;
-    private float maxGravity = 0.5f;
-    private float addGravity = 0.005f;
     public bool portalTime;
 
     private LineRenderer line; // ÃÑ¾Ë ±ËÀûÀ» ±×¸®±â À§ÇÑ ·»´õ·¯

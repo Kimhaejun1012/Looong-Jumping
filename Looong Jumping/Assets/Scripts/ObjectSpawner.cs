@@ -85,7 +85,10 @@ public class ObjectSpawner : MonoBehaviour
     {
         //transform.position = target.transform.position + offset.magnitude * cam.transform.forward;
         //transform.position = target.transform.position + offset.magnitude * target.transform.forward;
+
+
         transform.position = offset + target.transform.position;
+        //transform.position = offset + target.transform.forward * target.transform.position.magnitude;
         transform.LookAt(target);
     }
 

@@ -91,7 +91,7 @@ public class UIManager : MonoBehaviour
         }
         resultScoreText.text = scoreText.text;
         bestScoreText.text = $"BEST SCORE : {(int)GameManager.instance.saveData.gameData.bestScore}";
-        GameManager.instance.saveData.playerData.gold += (int)score;
+        GameManager.instance.saveData.playerData.gold += (int)score * 30;
         SaveLoadSystem.AutoSave(GameManager.instance.saveData);
         //PlayerPrefs.SetInt(playerInfo.moneyKey, playerInfo.money);
         //PlayerPrefs.Save();

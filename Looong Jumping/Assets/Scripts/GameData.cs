@@ -18,7 +18,7 @@ public class PlayerData
     public float speedReduction = -30f;
     public float speedIncrease = 10f;
     public float perfectJumpPowerIncrease = 1.1f;
-    public float airResist = 0.5f;
+    public float airResist = 0.05f;
     public Active active = Active.None;
 }
 public class ShopData
@@ -43,9 +43,6 @@ public class ShopData
 
     public float floorIncrease;
 
-    //public bool[] rocketParts = new bool[6];
-    //public bool[] portalParts = new bool[6];
-    //public bool[] cyborgParts = new bool[6];
 }
 
 public class GameData
